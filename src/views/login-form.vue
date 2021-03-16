@@ -29,7 +29,7 @@
       rember me
     </b-form-checkbox>
     </div>
-        <router-link to="/dashboard" class ="iterms"><b-button  class="searchBtn" variant="primary">login</b-button></router-link>
+        <router-link to="/home" class ="iterms"><b-button  class="searchBtn" variant="primary">login</b-button></router-link>
       <div class="admin"><b-link v-on:click="setAdmin()">Login as {{defaultUser}} </b-link>|<b-link v-on:click="setAgent()" > fogot password</b-link></div>
     </b-form>
   </div>

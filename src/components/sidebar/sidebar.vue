@@ -1,7 +1,7 @@
 <template>
    <div id ="inner" >  
       <b-row class="mb-1 sidelink">
-        <b-col cols="12" sm="12" class="p-3 "><router-link to="/dashboard" class ="iterms"> <b-icon icon="card-checklist"></b-icon> Dashboard</router-link></b-col> 
+        <b-col cols="12" sm="12" class="p-3 "><router-link to="/home" class ="iterms"> <b-icon icon="card-checklist"></b-icon> Dashboard</router-link></b-col> 
       </b-row>
       <b-row class="mb-1 sidelink">
         <b-col cols="12" sm="12" class="p-3 "><router-link to="/dashboard/ticket" class ="iterms"> <b-icon icon="journals"></b-icon>    Tickets</router-link></b-col> 
