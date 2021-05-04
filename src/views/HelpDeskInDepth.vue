@@ -78,16 +78,16 @@
           <b-row> 
             <h4>Created Tickets Split By Source</h4>
              <bySource/> </b-row> 
-          <b-row> Created Tickets Split By Status
+         <!-- <b-row> Created Tickets Split By Status
             <byStatus/>
             
-          </b-row>
+          </b-row> -->
           <b-row></b-row>
 
         </b-col>
         <b-col cols="5"> 
-          <h4>Created Tickets Split By Priority</h4>
-          <byPriority/> </b-col>
+          <h4>Created Tickets Split By Status</h4>
+          <!--<byPriority/>   --> <byStatus/></b-col> 
 
       </b-row>
     </b-card>
@@ -96,12 +96,12 @@
 <script>
 import byStatus from "@/components/graphs/ticketsByStatus.vue";
 import bySource from "@/components/graphs/ticketsBySource.vue";
-import byPriority from "@/components/graphs/ticketsByPriority.vue";
+///import byPriority from "@/components/graphs/ticketsByPriority.vue";
 export default {
   name:"HelpDeskInDepth",
   components:{
           bySource,
-          byPriority,
+          //byPriority,
           byStatus
 
   }

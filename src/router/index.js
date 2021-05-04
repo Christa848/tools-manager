@@ -28,7 +28,8 @@ const routes = [
   {
     path: "/",
     name: "loginPage",
-    component:loginPage
+    component:loginPage,
+    meta:{hideSideBar: true}
   },
 
    {

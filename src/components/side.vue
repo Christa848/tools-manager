@@ -36,38 +36,47 @@
               <trent/>
             </b-tab>
             <b-tab  title="Unsolved" v-else-if="selected_tab === 'unsolved'" active>
-               <tick status="Unsolved" name="Sande Kakomo" />
-               <tick status="Unsolved" />
-               <tick status="Unsolved" />
+              <b-card>
+                <tick status="Unsolved" name="Sande Kakomo" />
+              </b-card>
+              <b-card>
+                <tick status="Unsolved" name="Sande Kakomo" />
+              </b-card>
+              <b-card>
+                <tick status="Unsolved" name="Sande Kakomo" />
+              </b-card>
+             
             </b-tab>
             <b-tab v-else-if="selected_tab === 'overdue'" title="Overdue" active>
-               <tick status="Overdue" />
-               <tick status="Overdue" />
-               <tick status="Overdue" />
+              <b-card><tick status="Overdue" /></b-card>
+              <b-card><tick status="Overdue" /></b-card>
+              <b-card><tick status="Overdue" /></b-card>
+              <b-card><tick status="Overdue" /></b-card>
+              
             </b-tab>
             <b-tab v-else-if="selected_tab === 'overdueToday'" title="Due Today" active>
-              <tick status="Due today" />
-              <tick status="Due today" />
-              <tick status="Due today" />
-              <tick status="Due today" />
+             <b-card><tick status="Due today" /> </b-card>
+             <b-card><tick status="Due today" /> </b-card>
+             <b-card><tick status="Due today" /> </b-card>
+             <b-card><tick status="Due today" /> </b-card>
+             
             </b-tab>
             <b-tab v-else-if="selected_tab === 'open'" title="Open" active>
-               <tick status="Open" />
-               <tick status="Open" />
-               <tick status="Open" />
+              <b-card> <tick status="Open" /></b-card>
+               <b-card> <tick status="Open" /></b-card>
+               <b-card> <tick status="Open" /></b-card>
             </b-tab>
             <b-tab v-else-if="selected_tab === 'unsigned'" title="Unassigned" active>
-               <tick status="Unsigned" />
-               <tick status="Unsigned" />
-               <tick status="Unsigned" />
-               <tick status="Unsigned" />
-               <tick status="Unsigned" />
+            <b-card>   <tick status="Unsigned" /> </b-card>
+              <b-card>   <tick status="Unsigned" /> </b-card>
+              <b-card>   <tick status="Unsigned" /> </b-card>
+              <b-card>   <tick status="Unsigned" /> </b-card>
             </b-tab>
             <b-tab v-else-if="selected_tab === 'onhold'" title="Onhold" active>
-               <tick status="Onhold" />
-               <tick status="Onhold" />
-               <tick status="Onhold" />
-               <tick status="Onhold" />
+              <b-card> <tick status="Onhold" /> </b-card>
+               <b-card> <tick status="Onhold" /> </b-card>
+               <b-card> <tick status="Onhold" /> </b-card>
+               <b-card> <tick status="Onhold" /> </b-card>
             </b-tab>
           </b-tabs>
         </b-col>

@@ -58,7 +58,7 @@
             </b-col>
 
             <b-col>
-                <h5> Car is offline</h5>
+                <h5>{{subject}} Car is offline</h5>
                 </b-col>
         </b-row>
 
@@ -68,7 +68,7 @@
             </b-col>
 
             <b-col cols="">
-                 kikie c    via email 
+                 {{name}}kikie c    via email 
                 <p><i>14 days ago</i></p>
                 </b-col>
         </b-row>
@@ -80,7 +80,7 @@
 
             <b-col>
                <p><i>Heey There</i></p>
- <p> My car has been oofline for days now and i havent been receiving my my reports. </p> 
+ <p>{{massage}} My car has been oofline for days now and i havent been receiving my my reports. </p> 
            <p><i>Regards</i></p>Kikie
                 </b-col>
         </b-row>
@@ -144,6 +144,7 @@
 
 <script>
 export default {
+  props:['subject','name','date','massage'],
   data() {
     return {
       options: ['Apple', 'Banana', 'Grape', 'Kiwi', 'Orange'],

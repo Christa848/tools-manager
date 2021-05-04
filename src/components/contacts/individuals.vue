@@ -10,28 +10,53 @@
     </b-col>
     <b-col cols="1" id="not" >
       <div>
+          <div>
      <b-button variant="outline-success" size="lg" id="show-btn" @click="showModal">Add</b-button>
-
-     <b-modal ref="my-modal" hide-footer title=" Add contact">
-      <div class="d-block text-center">
-       
-       <b-form @submit="tesr" @reset="onReset" v-if="show">
-
-         
+    <b-modal ref="my-modal" hide-footer title="Enter Contacts">
       
+<div>
+    <b-form @submit="createContact" @reset="onReset" v-if="show">
 
-       <b-form-group id="input-group-3" label="name:" label-for="input-2">
+
+      <b-form-group id="input-group-2" label="First Name:" label-for="input-2">
         <b-form-input
-          id="input-3"
-          v-model="name"
-          placeholder="Enter name"
+          id="input-2"
+          v-model="fname"
+          placeholder=" name"
           required
         ></b-form-input>
       </b-form-group>
 
-        <b-form-group
+          <b-form-group id="input-group-4" label="Last Name:" label-for="input-2">
+        <b-form-input
+          id="input-4"
+          v-model="lname"
+          placeholder=" last name"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-3" label="Contact:" label-for="input-2">
+        <b-form-input
+          id="input-3"
+          v-model="contact"
+          placeholder="contact"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+          <b-form-group id="input-group-6" label="Adress:" label-for="input-2">
+        <b-form-input
+          id="input-6"
+          v-model="adress"
+          placeholder="adress"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+            <b-form-group
         id="input-group-1"
-        label="Email:"
+        label="Email address:"
         label-for="input-1"
         description="We'll never share your email with anyone else."
       >
@@ -44,116 +69,120 @@
         ></b-form-input>
       </b-form-group>
 
-       <b-form-group id="input-group-2" label="massage:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="massage"
-          placeholder="massage"
-          required
-        ></b-form-input>
-      </b-form-group>
       
-
-    
-
-     
-
-     
 
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
-   
+    
+  </div>
 
-      </div>
+
+
+
+      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close </b-button>
       
-     
     </b-modal>
+  </div>
 
      </div>
     </b-col>
     </b-row>
-      <b-button  variant="primary" v-on:click="tesr">Submit</b-button>
+     
   <table>
+    
     <thead>
       <tr>
         <th>Firstname</th>
         <th>Lastname</th>
-        <th>Address</th>
+        <th>Adress</th>
         <th>Contact</th>
         <th>Email</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, index) in filteredRows" :key="`employee-${index}`">
-         <td v-html="highlightMatches(row.id)"></td>
-        <td v-html="highlightMatches([...row.name].sort().join(', '))"></td>
-         <td v-html="highlightMatches(row.email)"></td>
-        <td v-html="highlightMatches([...row.massage].sort().join(', '))"></td>
-        <td v-html="highlightMatches(row.date)"></td>
+      <tr v-for="(row, index) in  filteredRows" :key="`fname-${index}`">
+        <td v-html="highlightMatches(row.fname)"></td>
+        <td v-html="highlightMatches(row.lname)"></td>
+        <td v-html="highlightMatches(row.adress)"></td>
+        <td v-html="highlightMatches(row.contact)"></td>
+        <td v-html="highlightMatches(row.email)"></td>
+         <!--<td >{{row.fname}}</td>
+       <td >{{row.lname}}</td>
+         <td >{{row.adress}}</td>
+        <td >{{row.contact}}</td>
+        <td >{{row.email}}</td>-->
+                <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchData(row.id)">Edit</button></td>
+        <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td> 
          
       </tr>
-      
+       
     </tbody>
   </table>
+
 
   
 </div>
 </template>
 <script>
-import axios from 'axios';
+ import axios from 'axios';
    export default{
-  
+
   data (){ return{
     filter: "",
-    rows: [
-      { firstname: "Christabel",
-       lastname: "Chings",
-        address:"harare",
-        contact:"O773 55476", 
-        email: "Ch@gmail.com",},
-    ],
+    data: []
 
-    data: {
-       
-        },
+    ,
+
+    form: {
+          email: '',
           name: '',
-           email: '',
-            massage: '',
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-        show: true
+          food: null,
+          checked: []
+        },
+        show: true,
+
+         fname:"",
+          lname:"",
+          contact:"",
+          adress:"",
+          email:""
+    
+
+         
+
+    
       }
+              
+        
+      
   },
   beforeMount(){
     this.getName();
   },
   methods: {
     async getName(){
-      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php');
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllcontacts.php');
       const data = await res.json();
       this.data = data;
     },
 
-    tesr()
-    {
-      console.log("meeee"),
-      console.log(this.name),
-      console.log(this.massage),
-       console.log(this.email)
-    },
-
-    createContact (){
+    createContact: function(){
         console.log("Create contact!")
 
         let formData = new FormData();
-        console.log("name:", this.data.name,
-                 "massage:", this.data.massage,
-                  "email:", this.data.email,                 )
-        formData.append('name', this.data.name,
-                    'massage', this.data.massage,
-                  'email', this.data.email
+        console.log("fname:", this.fname),
+        console.log("lname:", this.lname),
+        console.log("contact:", this.contact),
+        console.log("adress:", this.adress),
+        console.log("email:", this.email),
         
-        )
+
+        formData.append('fname', this.fname),
+        formData.append('lname', this.lname),
+        formData.append('contact', this.contact),
+        formData.append('adress', this.adress),
+        formData.append('email', this.email)
         
            
         var contact = {};
@@ -175,6 +204,34 @@ import axios from 'axios';
         });
     },
 
+    showModal() {
+        this.$refs['my-modal'].show()
+      },
+      hideModal() {
+        this.$refs['my-modal'].hide()
+      },
+      toggleModal() {
+        // We pass the ID of the button that we want to return focus to
+        // when the modal has hidden
+        this.$refs['my-modal'].toggle('#toggle-btn')
+      },
+
+            onReset(event) {
+        event.preventDefault()
+        // Reset our form values
+        this.email = ''
+        this.fname = ''
+        this.lname 
+        
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+            },
+
+
+   
     highlightMatches(text) {
       const matchExists = text
         .toLowerCase()
@@ -185,25 +242,20 @@ import axios from 'axios';
       return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
     },
 
-     showModal() {
-        this.$refs['my-modal'].show()
-      },
-      hideModal() {
-        this.$refs['my-modal'].hide()
-      },
+   
   },
   
   computed: {
     filteredRows() {
       return this.data.filter(row => {
-        const id = row.id.toString().toLowerCase();
-        const name = row.name.toLowerCase();
-         const massage = row.massage.toLowerCase();
+        const fname = row.fname.toString().toLowerCase();
+        const lname = row.lname.toLowerCase();
+         const contact = row.contact.toLowerCase();
         
         const searchTerm = this.filter.toLowerCase();
 
         return (
-          id.includes(searchTerm) || name.includes(searchTerm)|| massage.includes(searchTerm)
+          fname.includes(searchTerm) || lname.includes(searchTerm)|| contact.includes(searchTerm)
         );
       });
     }

@@ -1,10 +1,10 @@
 <template>
 
   <div id="app">
-    <div class="login-page" v-if="is_logged_in === false">
+    <div class="login-page" v-if="hideSideBar ">
       <router-view v-on:log-in= "logIn" />
     </div>
-    <div class="application" v-if="is_logged_in === true">
+    <div v-else class="application">
       <div id="nav" >
         <!-- if it does not work put back the parentesis on togleSideBar() -->
        <supportnav v-on:togle-sidebar="togleSidebar"/>
@@ -22,7 +22,7 @@
     </b-col>
      <b-col >
        <div class="main">
-         <router-view />
+         <router-view :massage="myname" />
        </div>
     </b-col>
       </b-row>
@@ -48,7 +48,8 @@ export default {
   data(){
     return{
       is_logged_in:false,
-      sidebar_shown:true
+      sidebar_shown:true,
+      myname:'elvin'
     }
   },
   methods:{
@@ -63,6 +64,12 @@ export default {
       else{
         this.sidebar_shown=true
       }
+    }
+
+  },
+  computed:{
+    hideSideBar(){
+      return this.$route.meta.hideSideBar
     }
 
   }

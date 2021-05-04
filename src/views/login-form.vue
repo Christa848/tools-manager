@@ -6,6 +6,7 @@
         <div class="inputgroups text-left">
             <label  for="inline-form-input-name">User Name:</label>
             <b-form-input
+               v-model="usern"
                 id="input-name"
                 class="mb-2 mr-sm-2 mb-sm-0 input"
                 placeholder="username"
@@ -13,6 +14,7 @@
 
             <label  for="inline-form-input-username">Password:</label>
             <b-form-input
+               v-model="passw"
                 id="input-password"
                 class="mb-2 mr-sm-2 mb-sm-0 input"
                 placeholder="password"
@@ -29,21 +31,44 @@
       remember me
     </b-form-checkbox>
     </div>
-        <router-link to="/home" class ="iterms"><b-button v-on:click="islogedIn()" class="searchBtn" variant="primary">login</b-button></router-link>
+        <b-button v-on:click="islogedIn()" class="searchBtn" variant="primary">login</b-button>
       <div class="admin"><b-link v-on:click="setAdmin()">Login as {{defaultUser}} </b-link>|<b-link v-on:click="setAgent()" > fogot password</b-link></div>
     </b-form>
   </div>
-    </div>    
+  {{data[0]["username"]}}
+
+  {{data.length}}
+    </div>
+        
 </template>
 <script>
+//import axios from 'axios';
 export default {
   data(){
       return {
           user:"Tools Manager",
-          defaultUser: "Admin"
+          defaultUser: "Admin",
+
+          data: {
+
+          },
+                usern: "",
+                passw: "",
+                
       }
   },
+
+    beforeMount(){
+    this.getName();
+    },
   methods:{
+      async getName(){
+      const res = await fetch('https://itrackdevs.geo-fuel.com/tools_manager_api/login.php');
+      const data = await res.json();
+      this.data = data;
+      
+      
+    },
       setAdmin(){
           this.user = "Admin"
           if ( this.defaultUser == "Tools Manager") {
@@ -54,8 +79,67 @@ export default {
                 this.user = "Admin"
           }
       },
-      islogedIn(){
-          this.$emit("log-in");
+
+
+      islogedIn:function() {
+       var i =0
+        while(i < this.data.length){
+            if (this.usern == this.data[i]["username"] && this.passw == this.data[i]["password"])
+            {
+               
+                this.$router.push('/home')
+                this.$emit("log-in");
+                break;
+            }
+            
+            else if(this.usernn == "" || this.passw == ""){
+                alert("Enter Username and Password");
+                break;
+            }
+             i++
+        }
+      
+
+        /*
+      
+      if(this.usern != "" && this.passw != "") {     
+        let formData = new FormData();
+        console.log("usern:", this.usern),
+
+        formData.append('usern', this.usern),
+        formData.append('passw', this.passw)
+        var contact = {};
+        formData.forEach(function(value, key){
+            contact[key] = value;
+        });
+
+        axios({
+            request: 1,
+            method: 'post',
+            url: 'http://itrackdevs.geo-fuel.com/tools_manager_api/logging.php',
+            data: formData,
+            config: { headers: {'Content-Type': 'multipart/form-data' }}
+        })
+        .then(function(response) {
+        console.log(response);
+        if (response.data[0].status == 1) {
+         alert('Login Successfully');
+        } else {
+         alert("User does not exist");
+        }
+       })
+
+        .catch(function (response) {
+            //handle error
+            console.log(response)
+            
+        });
+              
+    this.$emit("log-in");
+          }
+      else {
+      alert('Please enter username & password');
+     } */
       }
   }
 }

@@ -7,6 +7,7 @@
       :width="600"
       :height="300"
     />
+    {{data}}
   </mdb-container>
 </template>
 <script>
@@ -19,10 +20,15 @@
     },
     data() {
       return {
+        data:[], 
+        
+    
+
         pieChartData: {
           labels: ["WhatsApp", "Facebook", "Email"],
           datasets: [
             {
+              
               data: [300, 50, 100],
               backgroundColor: [
                 "#F7464A",
@@ -61,6 +67,22 @@
           }
         }
       };
+      
+      
+    },
+ beforeMount(){
+    this.getName();
+  },
+  methods: {
+    async getName(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php');
+      const data = await res.json();
+      this.data = data;
+      const a = this.data.length;
+      console.log(a)
+      
     }
-  };
+    
+  }
+  }
 </script>
