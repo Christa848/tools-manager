@@ -7,12 +7,31 @@
   >
 <p>
 Received</p> 
-<h3>100 </h3>   
+<h3>{{data.length}} </h3>   
   </b-card>
 </template>
 <script>
 export default {
    props: ['active'],
+
+    data(){
+      return{
+        data:[], 
+        selected:[],
+      }
+    },
+
+    beforeMount(){
+    this.getName();
+  },
+  methods: {
+    async getName(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php');
+      const data = await res.json();
+      this.data = data;
+    }
+  }
+   
 }
 </script>
 <style>

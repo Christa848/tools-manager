@@ -86,7 +86,25 @@ export default {
          lowerbottom
 
 
+    },
+
+     data(){
+      return{
+        data:[], 
+        selected:[],
+      }
+    },
+
+    beforeMount(){
+    this.getName();
+  },
+  methods: {
+    async getName(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php');
+      const data = await res.json();
+      this.data = data;
     }
+  }
 }
 </script>
 <style>

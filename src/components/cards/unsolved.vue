@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     async getName(){
-      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php');
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php?action=unsolved');
       const data = await res.json();
       this.data = data;
     }
