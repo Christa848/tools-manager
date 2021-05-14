@@ -16,7 +16,19 @@
        </div>
 </b-col>  
  <b-col cols="10">
-    <b-dropdown id="dropdown-1" text="Assign" class="m-md-2" variant="outline-success">
+
+   <b-dropdown id="dropdown-1" text="All" class="m-md-2" variant="outline-success">
+    <b-dropdown-item>Support</b-dropdown-item>
+     <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item>Finance</b-dropdown-item>
+     <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item>Admin</b-dropdown-item>
+     <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item>Marketing</b-dropdown-item>
+    <b-dropdown-divider></b-dropdown-divider>
+   
+  </b-dropdown>
+    <b-dropdown id="dropdown-2" text="Assign" class="m-md-2" variant="outline-success">
     <b-dropdown-item>Support</b-dropdown-item>
      <b-dropdown-divider></b-dropdown-divider>
     <b-dropdown-item>Finance</b-dropdown-item>

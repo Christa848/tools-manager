@@ -36,47 +36,180 @@
               <trent/>
             </b-tab>
             <b-tab  title="Unsolved" v-else-if="selected_tab === 'unsolved'" active>
-              <b-card>
-                <tick status="Unsolved" name="Sande Kakomo" />
-              </b-card>
-              <b-card>
-                <tick status="Unsolved" name="Sande Kakomo" />
-              </b-card>
-              <b-card>
-                <tick status="Unsolved" name="Sande Kakomo" />
-              </b-card>
+              <b-card> <ol>
+      <li v-for="ticket in unsolved" :key="ticket.id">
+        <b-card-text class="ticket-card" >
+        <b-row  align-v="center">
+          <b-col cols="1">
+           <b-form-checkbox
+           id="checkbox-1"
+           v-model="selected"
+           name="checkbox-1"
+            :value="ticket.id" number
+            
+            
+    >
+    </b-form-checkbox> 
+    </b-col>
+    <b-col >
+
+         <tick status="Unsolved"
+         :name="ticket.name"
+                :massage="ticket.message"
+                 :date="ticket.date"/> 
+                 </b-col>
+        </b-row>
+         </b-card-text>
+      </li>
+    </ol> </b-card>
+            
              
             </b-tab>
             <b-tab v-else-if="selected_tab === 'overdue'" title="Overdue" active>
-              <b-card><tick status="Overdue" /></b-card>
-              <b-card><tick status="Overdue" /></b-card>
-              <b-card><tick status="Overdue" /></b-card>
-              <b-card><tick status="Overdue" /></b-card>
+               <b-card> <ol>
+      <li v-for="ticket in overdue" :key="ticket.id">
+        <b-card-text class="ticket-card" >
+        <b-row  align-v="center">
+          <b-col cols="1">
+           <b-form-checkbox
+           id="checkbox-1"
+           v-model="selected"
+           name="checkbox-1"
+            :value="ticket.id" number
+            
+            
+    >
+    </b-form-checkbox> 
+    </b-col>
+    <b-col >
+
+         <tick status="Overdue"
+         :name="ticket.name"
+                :massage="ticket.message"
+                 :date="ticket.date"/> 
+                 </b-col>
+        </b-row>
+         </b-card-text>
+      </li>
+    </ol> </b-card>
               
             </b-tab>
             <b-tab v-else-if="selected_tab === 'overdueToday'" title="Due Today" active>
-             <b-card><tick status="Due today" /> </b-card>
-             <b-card><tick status="Due today" /> </b-card>
-             <b-card><tick status="Due today" /> </b-card>
-             <b-card><tick status="Due today" /> </b-card>
+             <b-card> <ol>
+      <li v-for="ticket in data" :key="ticket.id">
+        <b-card-text class="ticket-card" >
+        <b-row  align-v="center">
+          <b-col cols="1">
+           <b-form-checkbox
+           id="checkbox-1"
+           v-model="selected"
+           name="checkbox-1"
+            :value="ticket.id" number
+            
+            
+    >
+    </b-form-checkbox> 
+    </b-col>
+    <b-col >
+
+         <tick status="Due today"
+         :name="ticket.name"
+                :massage="ticket.message"
+                 :date="ticket.date"/> 
+                 </b-col>
+        </b-row>
+         </b-card-text>
+      </li>
+    </ol> </b-card>
+            
              
             </b-tab>
             <b-tab v-else-if="selected_tab === 'open'" title="Open" active>
-              <b-card> <tick status="Open" /></b-card>
-               <b-card> <tick status="Open" /></b-card>
-               <b-card> <tick status="Open" /></b-card>
+             <b-card> <ol>
+      <li v-for="ticket in open" :key="ticket.id">
+        <b-card-text class="ticket-card" >
+        <b-row  align-v="center">
+          <b-col cols="1">
+           <b-form-checkbox
+           id="checkbox-1"
+           v-model="selected"
+           name="checkbox-1"
+            :value="ticket.id" number
+            
+            
+    >
+    </b-form-checkbox> 
+    </b-col>
+    <b-col >
+
+         <tick status="Open"
+         :name="ticket.name"
+                :massage="ticket.message"
+                 :date="ticket.date"/> 
+                 </b-col>
+        </b-row>
+         </b-card-text>
+      </li>
+    </ol> </b-card>
             </b-tab>
             <b-tab v-else-if="selected_tab === 'unsigned'" title="Unassigned" active>
-            <b-card>   <tick status="Unsigned" /> </b-card>
-              <b-card>   <tick status="Unsigned" /> </b-card>
-              <b-card>   <tick status="Unsigned" /> </b-card>
-              <b-card>   <tick status="Unsigned" /> </b-card>
+            <b-card> <ol>
+      <li v-for="ticket in unassigned" :key="ticket.id">
+        <b-card-text class="ticket-card" >
+        <b-row  align-v="center">
+          <b-col cols="1">
+           <b-form-checkbox
+           id="checkbox-1"
+           v-model="selected"
+           name="checkbox-1"
+            :value="ticket.id" number
+            
+            
+    >
+    </b-form-checkbox> 
+    </b-col>
+    <b-col >
+
+         <tick status="Unassigned"
+         :name="ticket.name"
+                :massage="ticket.message"
+                 :date="ticket.date"/> 
+                 </b-col>
+        </b-row>
+         </b-card-text>
+      </li>
+    </ol> </b-card>
             </b-tab>
             <b-tab v-else-if="selected_tab === 'onhold'" title="Onhold" active>
-              <b-card> <tick status="Onhold" /> </b-card>
-               <b-card> <tick status="Onhold" /> </b-card>
-               <b-card> <tick status="Onhold" /> </b-card>
-               <b-card> <tick status="Onhold" /> </b-card>
+              
+
+              <b-card> <ol>
+      <li v-for="ticket in onhold" :key="ticket.id">
+        <b-card-text class="ticket-card" >
+        <b-row  align-v="center">
+          <b-col cols="1">
+           <b-form-checkbox
+           id="checkbox-1"
+           v-model="selected"
+           name="checkbox-1"
+            :value="ticket.id" number
+            
+            
+    >
+    </b-form-checkbox> 
+    </b-col>
+    <b-col >
+
+         <tick status="Onhold"
+         :name="ticket.name"
+                :massage="ticket.message"
+                 :date="ticket.date"/> 
+                 </b-col>
+        </b-row>
+         </b-card-text>
+      </li>
+    </ol> </b-card>
+              
             </b-tab>
           </b-tabs>
         </b-col>
@@ -146,10 +279,56 @@ export default {
   data(){
     return{
       selected_tab:"trend",
-      isactive:false
+      isactive:false,
+      data: [],
+      unsolved: [],
+       overdue: [],
+       open: [],
+       unassigned: [],
+       onhold: []
     }
   },
+    beforeMount(){
+    this.getName();
+    this.getUnsolved();
+    this.getOverdue();
+    this.getOpen();
+    this.getUnassigned();
+    this.getOnhold();
+  },
   methods:{
+
+     async getName(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php?action=duetoday');
+      const data = await res.json();
+      this.data = data;
+    },
+
+    async getUnsolved(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php?action=unsolved');
+      const unsolved = await res.json();
+      this.unsolved = unsolved;
+    },
+     async getOverdue(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php?action=overdue');
+      const overdue = await res.json();
+      this.overdue = overdue;
+    },
+    async getOpen(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php?action=open');
+      const open = await res.json();
+      this.open = open;
+    },
+    async getUnassigned(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php?action=unassigned');
+      const unassigned = await res.json();
+      this.unassigned = unassigned;
+    },
+     async getOnhold(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php?action=onhold');
+      const onhold = await res.json();
+      this.onhold = onhold;
+    },
     selectTab: function (tab) {
       if(this.selected_tab != tab){
           this.selected_tab = tab;
@@ -160,7 +339,9 @@ export default {
       }
       
     }
-  }
+  },
+
+ 
 }
 </script>
 <style>

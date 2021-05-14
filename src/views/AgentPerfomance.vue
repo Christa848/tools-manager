@@ -20,94 +20,201 @@
       </b-row>
     </b-card>
 
-<div id="agentTable">
-    <mdb-tbl bordered>
-          <mdb-tbl hover>
-      <mdb-tbl-head color="grey">
-        <tr>
-          <th>Id</th>
-          <th>FirstName</th>
-          <th>LastName</th>
-          <th>Received Tickets</th>
-          <th>Resolved Tickets</th>
-          <th>Unresolved Tickets</th>
-        </tr>
-      </mdb-tbl-head>
-      <mdb-tbl-body>
-        <tr>
-          <th>1</th>
-          <td>Mark</td>
-          <td>Chinya</td>
-          <td>10</td>
-          <td>7</td>
-          <td>3</td>
-        </tr>
-        <tr>
-          <th>2</th>
-          <td>Cristiano</td>
-          <td>Roo</td>
-          <td>20</td>
-          <td>10</td>
-          <td>10</td>
-        </tr>
-         <tr>
-          <th>2</th>
-          <td>florence</td>
-          <td>MEki</td>
-          <td>12</td>
-          <td>10</td>
-          <td>2</td>
-        </tr>
+<b-row >
+  <b-col cols="2">
+    <input type="text" id="srch" placeholder="Search " v-model="filter" />
+    </b-col>
+    <b-col cols="1" id="not" >
+      <div>
+          <div>
+    
+    
 
-         <tr>
-          <th>2</th>
-          <td>MImie</td>
-          <td>Ruvangwe</td>
-          <td>5</td>
-          <td>3</td>
-          <td>2</td>
-        </tr>
 
-         <tr>
-          <th>2</th>
-          <td>Ruvarashe</td>
-          <td>Mututwa</td>
-          <td>11</td>
-          <td>10</td>
-          <td>1</td>
-        </tr>
-         <tr>
-          <th>6</th>
-          <td>Kiiki</td>
-          <td>CEE</td>
-          <td>12</td>
-          <td>10</td>
-          <td>2</td>
-        </tr>
-      </mdb-tbl-body>
-    </mdb-tbl>
-     </mdb-tbl>
+     
+ 
   </div>
 
+     </div>
+    </b-col>
+    </b-row>
+
+
+
+  <table>
+    
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Received Tickets</th>
+        <th>Resolved Tickets</th>
+        <th>Unresolved Tickets</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr v-for="(row, index) in  filteredRows" :key="`first_name-${index}`">
+        <td v-html="highlightMatches(row.first_name)"></td>
+        <td v-html="highlightMatches(row.last_name)"></td>
+        <td v-html="highlightMatches(row.received_tickets)"></td>
+        <td v-html="highlightMatches(row.resolved_tickets)"></td>
+        <td v-html="highlightMatches(row.unresolved_tickets)"></td>
+         <!--<td >{{row.fname}}</td>
+       <td >{{row.lname}}</td>
+         <td >{{row.adress}}</td>
+        <td >{{row.contact}}</td>
+        <td >{{row.email}}</td>-->
+        
+                
+      </tr>
+       
+    </tbody>
+  </table>
 
 </div>
 
 </template>
 
 <script>
-  import { mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
-  export default {
-    name: 'TablePage',
-    components: {
-      mdbTbl,
-      mdbTblHead,
-      mdbTblBody
+ 
+   export default{
+
+  data (){ return{
+    filter: "",
+    data: []
+
+    ,
+
+    form: {
+          email: '',
+          name: '',
+          food: null,
+          checked: []
+        },
+        show: true,
+
+         fname:"",
+          lname:"",
+          contact:"",
+          adress:"",
+          email:""
+    
+
+         
+
+    
+      }
+              
+        
+      
+  },
+  beforeMount(){
+    this.getName();
+  },
+  methods: {
+    async getName(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/reports.php?action=agent');
+      const data = await res.json();
+      this.data = data;
+    },
+
+   
+            onReset(event) {
+        event.preventDefault()
+        // Reset our form values
+        this.email = ''
+        this.fname = ''
+        this.lname 
+        
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+            },
+
+
+   
+    highlightMatches(text) {
+      const matchExists = text
+        .toLowerCase()
+        .includes(this.filter.toLowerCase());
+      if (!matchExists) return text;
+
+      const re = new RegExp(this.filter, "ig");
+      return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
+    },
+
+   
+  },
+  
+  computed: {
+    filteredRows() {
+      return this.data.filter(row => {
+        const first_name = row.first_name.toString().toLowerCase();
+        const last_name = row.last_name.toLowerCase();
+         
+        
+        const searchTerm = this.filter.toLowerCase();
+
+        return (
+          first_name.includes(searchTerm) || last_name.includes(searchTerm)
+        );
+      });
     }
   }
+};
+
 </script>
+
 <style scoped>
-#agentTable{
-    margin: 20px;
-    background: white;
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #dddddd;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid lawngreen;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 25px;
+}
+#srch{
+  width: 180px;
+}
+#not{
+  margin-top: 25px;
+}
+</style> -->
+
+
+
+
+
+<style>
+#app{
+  margin-top: 10px;
+}
+#back{
+  margin-left: 98%;
+  margin-top: 2px;
+}
+
 </style>
+

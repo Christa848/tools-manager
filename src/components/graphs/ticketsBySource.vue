@@ -7,7 +7,7 @@
       :width="600"
       :height="300"
     />
-    {{data}}
+    {{emails}}
   </mdb-container>
 </template>
 <script>
@@ -20,16 +20,16 @@
     },
     data() {
       return {
-        data:[], 
-        
-    
+        emails:[], 
+        kiki:300,
 
         pieChartData: {
           labels: ["WhatsApp", "Facebook", "Email"],
+        
           datasets: [
             {
               
-              data: [300, 50, 100],
+              data: [1,100,5],
               backgroundColor: [
                 "#F7464A",
                 "#46BFBD",
@@ -47,8 +47,9 @@
             }
           ]
         },
+        
         pieChartOptions: {
-          responsive: false,
+          responsive: true,
           maintainAspectRatio: false,
           plugins: {
             datalabels: {
@@ -75,12 +76,13 @@
   },
   methods: {
     async getName(){
-      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getticketCard.php');
-      const data = await res.json();
-      this.data = data;
-      const a = this.data.length;
-      console.log(a)
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php?action=read');
+      const emails = await res.json();
+      this.emails = emails;
+      const kiki = this.emails.length;
+      console.log(kiki)
       
+      return kiki
     }
     
   }

@@ -55,19 +55,28 @@
     
     
     <b-col id="td"><h4> To-do</h4>
-    <p><small>Add a to do</small></p>
-             
- <b-container class="bv-example-row">
-  <b-row>
+    <div id="todoApp">
+  
+  <form name="todo-form" method="post" action="" v-on:submit.prevent="addTask">
+    <input name="add-todo" type="text" v-model="addTodoInput"  v-bind:class="{error: hasError}"/>
+    <button type="submit">Add</button>
+  </form>
+</div>
 
-    <b-col><lowerbottom/></b-col>
-    <div class="w-100"></div>
-    <hr>
-    
-    
-  </b-row>
-</b-container>
-    
+<div class="todo-lists" v-if="lists.length">
+          <h3>My Todo Tasks</h3>
+          <ol>
+            <li v-for="list in filterLists" :key="list.id">
+               <input type="checkbox" v-on:change="completeTask(list)" v-bind:checked="list.isComplete"/>
+                <span class="title"
+          contenteditable="true"
+          v-on:keydown.enter="updateTask($event, list)"
+          v-on:blur="updateTask($event, list)"
+          v-bind:class="{completed: list.isComplete}"> {{list.title}} </span>
+          <span class="remove" v-on:click="removeTask(list)">x</span>
+            </li>
+          </ol>
+        </div>
     </b-col>
   
   
@@ -78,12 +87,12 @@
 </b-container>  
 </template>
 <script>
-
-import lowerbottom from "@/components/checkbox/checked.vue";
+import _ from 'lodash';
+//import lowerbottom from "@/components/checkbox/checked.vue";
 export default {
     name:"lower",
     components:{
-         lowerbottom
+        // lowerbottom
 
 
     },
@@ -92,9 +101,31 @@ export default {
       return{
         data:[], 
         selected:[],
+        
+         addTodoInput: '',
+         lists: [
+
+            {
+          id: 1,              // Unique identifier
+          title: 'Go Home',   // Todo's title
+          isComplete: false    // Default: false. Mark as complete with a strike-through. We will see this later
+        },
+        {
+          id: 2,
+          title: 'Pack Bag',
+          isComplete: false
+        }
+         ],
+         hasError: false
+        
       }
     },
-
+    
+computed: {
+          filterLists: function(){
+            return _.orderBy(this.lists, ['isComplete', false])
+          }
+        },
     beforeMount(){
     this.getName();
   },
@@ -103,11 +134,42 @@ export default {
       const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php');
       const data = await res.json();
       this.data = data;
+    },
+
+    addTask: function(){
+ if(!this.addTodoInput){ // <--- If no value then we are setting error to `true`
+      this.hasError = true;
+      return;               // <--- stops here
     }
+ this.hasError = false;
+       this.lists.push({
+    id: this.lists.length+1,
+    title: this.addTodoInput,
+    isComplete: false
+  });
+
+  this.addTodoInput = ''; //clear the input after successful submission
+
+
+    },
+    updateTask: function(e, list){
+            e.preventDefault();
+            list.title = e.target.innerText;
+            e.target.blur();},
+
+            completeTask: function(list){
+            list.isComplete = !list.isComplete;
+          },
+           removeTask: function(list){
+              var index = _.findIndex(this.lists, list);
+              this.lists.splice(index, 1);
+            }
   }
 }
 </script>
-<style>
+<style scoped>
+
+
 #un{
   margin-right: 0.5rem;
   background-color: white;
@@ -132,4 +194,77 @@ transform: scale(1.1);
 #td:hover{
 transform: scale(1.1);
 }
+
+
+
+:root{font-family: Arial;}
+input[type=text]{
+  font-size:16px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #c4c4c4;
+}
+
+button{
+  background: #3498db;
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  border-radius: 28px;
+  
+  color: #ffffff;
+  font-size: 16px;
+  padding: 8px 20px;
+  border: none;
+  cursor:pointer;
+}
+button:hover {
+  background: #3cb0fd;
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+}
+input[type=text].error{border: 1px solid red;}
+[contenteditable=true]:focus{
+  
+  
+  overflow: hidden;
+  border: 1px solid transparent;
+
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+
+  white-space: nowrap;
+  border-radius: 10px;
+  
+  
+  
+}
+
+.title{
+  display: inline-block;
+  width: 200px;
+  border: 1px solid transparent;
+  padding: 8px;
+  font-size: 16px;
+  vertical-align:middle;
+}
+
+.title:hover{
+  border:1px solid #c4c4c4;
+  border-radius: 10px;
+}
+
+.remove{
+  cursor:pointer;
+  display:inline-block;
+  border: 1px solid #c4c4c4;
+  border-radius: 50%;
+  padding:0px 4px;
+}
+.remove:hover{
+  background: #3cb0fd;
+}
+
+.completed{
+  text-decoration: line-through;
+}
+
 </style>

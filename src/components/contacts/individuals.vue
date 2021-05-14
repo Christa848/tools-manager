@@ -101,6 +101,7 @@
       </tr>
     </thead>
     <tbody>
+     
       <tr v-for="(row, index) in  filteredRows" :key="`fname-${index}`">
         <td v-html="highlightMatches(row.fname)"></td>
         <td v-html="highlightMatches(row.lname)"></td>
@@ -112,6 +113,7 @@
          <td >{{row.adress}}</td>
         <td >{{row.contact}}</td>
         <td >{{row.email}}</td>-->
+        
                 <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchData(row.id)">Edit</button></td>
         <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td> 
          

@@ -20,87 +20,201 @@
       </b-row>
     </b-card>
 
-<div id="agentTable">
-    <mdb-tbl bordered>
-          <mdb-tbl hover>
-      <mdb-tbl-head color="grey">
-        <tr>
-          <th>Group</th>
-          <th>Tickets Assigned</th>
-          <th>Tickets Resolved</th>
-          <th>Tickets Reopened</th>
-          <th>Tickets Reassigned</th>
-          <th>First Response SLA%</th>
-        </tr>
-      </mdb-tbl-head>
-      <mdb-tbl-body>
-        <tr>
-          <th>Admin</th>
-          <td>20</td>
-          <td>20</td>
-          <td>10</td>
-          <td>5</td>
-          <td>100%</td>
-        </tr>
-        <tr>
-          <th>Finance</th>
-          <td>100</td>
-          <td>50</td>
-          <td>50</td>
-          <td>10</td>
-          <td>100%</td>
-        </tr>
-         <tr>
-          <th>Support</th>
-          <td>20</td>
-          <td>2</td>
-          <td>5</td>
-          <td>3</td>
-          <td>50%</td>
-        </tr>
+<b-row >
+  <b-col cols="2">
+    <input type="text" id="srch" placeholder="Search by Group" v-model="filter" />
+    </b-col>
+    <b-col cols="1" id="not" >
+      <div>
+          <div>
+    
+    
 
-         <tr>
-          <th>Software Development</th>
-          <td>10</td>
-          <td>5</td>
-          <td>5</td>
-          <td>3</td>
-          <td>20%</td>
-        </tr>
 
-         <tr>
-          <th>Marketing</th>
-          <td>400</td>
-          <td>300</td>
-          <td>200</td>
-          <td>10</td>
-          <td>90%</td>
-        </tr>
-         
-      </mdb-tbl-body>
-    </mdb-tbl>
-     </mdb-tbl>
+     
+ 
   </div>
 
+     </div>
+    </b-col>
+    </b-row>
+
+
+
+  <table>
+    
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th>Received Tickets</th>
+        <th>Resolved Tickets</th>
+        <th>Unresolved Tickets</th>
+         
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr v-for="(row, index) in  filteredRows" :key="`group-${index}`">
+        <td v-html="highlightMatches(row.group)"></td>
+        <td v-html="highlightMatches(row.received_tickets)"></td>
+        <td v-html="highlightMatches(row.resolved_tickets)"></td>
+        <td v-html="highlightMatches(row.unresolved_tickets)"></td>
+        
+       
+         <!--<td >{{row.fname}}</td>
+       <td >{{row.lname}}</td>
+         <td >{{row.adress}}</td>
+        <td >{{row.contact}}</td>
+        <td >{{row.email}}</td>-->
+        
+                
+      </tr>
+       {{data.length}}
+    </tbody>
+  </table>
 
 </div>
 
 </template>
 
 <script>
-  import { mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
-  export default {
-    name: 'TablePage',
-    components: {
-      mdbTbl,
-      mdbTblHead,
-      mdbTblBody
+ 
+   export default{
+
+  data (){ return{
+    filter: "",
+    data: []
+
+    ,
+
+    form: {
+          email: '',
+          name: '',
+          food: null,
+          checked: []
+        },
+        show: true,
+
+         fname:"",
+          lname:"",
+          contact:"",
+          adress:"",
+          email:""
+    
+
+         
+
+    
+      }
+              
+        
+      
+  },
+  beforeMount(){
+    this.getName();
+  },
+  methods: {
+    async getName(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/groupPerfomnce.php');
+      const data = await res.json();
+      this.data = data;
+    },
+
+   
+            onReset(event) {
+        event.preventDefault()
+        // Reset our form values
+        this.email = ''
+        this.fname = ''
+        this.lname 
+        
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+            },
+
+
+   
+    highlightMatches(text) {
+      const matchExists = text
+        .toLowerCase()
+        .includes(this.filter.toLowerCase());
+      if (!matchExists) return text;
+
+      const re = new RegExp(this.filter, "ig");
+      return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
+    },
+
+   
+  },
+  
+  computed: {
+    filteredRows() {
+      return this.data.filter(row => {
+        const group = row.group.toString().toLowerCase();
+        
+         
+        
+        const searchTerm = this.filter.toLowerCase();
+
+        return (
+          group.includes(searchTerm) 
+        );
+      });
     }
   }
+};
+
 </script>
+
 <style scoped>
-#agentTable{
-    margin: 20px;
-    background: white;
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #dddddd;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid lawngreen;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 25px;
+}
+#srch{
+  width: 180px;
+}
+#not{
+  margin-top: 25px;
+}
+</style> -->
+
+
+
+
+
+<style>
+#app{
+  margin-top: 10px;
+}
+#back{
+  margin-left: 98%;
+  margin-top: 2px;
+}
+
 </style>

@@ -8,7 +8,7 @@
     </b-col>
     <b-col cols="7" @click="showModal">
         <b-badge v-if="status === 'Unsolved'" variant= "light">{{status}}</b-badge>
-        <b-badge v-else-if="status === 'Unsigned'" variant= "secondary">{{status}}</b-badge>
+        <b-badge v-else-if="status === 'Unassigned'" variant= "secondary">{{status}}</b-badge>
         <b-badge v-else-if="status === 'Open'" variant= "success">{{status}}</b-badge>
         <b-badge v-else-if="status === 'Overdue'" variant= "danger">{{status}}</b-badge>
         <b-badge v-else-if="status === 'Due today'" variant= "warning">{{status}}</b-badge>
