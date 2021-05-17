@@ -77,9 +77,6 @@
     
   </div>
 
-
-
-
       <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close </b-button>
       
     </b-modal>
@@ -150,13 +147,7 @@
           adress:"",
           email:""
     
-
-         
-
-    
       }
-              
-        
       
   },
   beforeMount(){
