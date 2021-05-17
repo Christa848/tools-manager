@@ -183,9 +183,8 @@ export default {
       this.data = data;
     },
 
-    createContact: function () {
+    createContact: function() {
       console.log("Create contact!");
-
       let formData = new FormData();
       console.log("Name:", this.Name),
         console.log("Region:", this.Region),
@@ -199,7 +198,7 @@ export default {
         formData.append("Adress", this.Adress);
 
       var contact = {};
-      formData.forEach(function (value, key) {
+      formData.forEach(function(value, key) {
         contact[key] = value;
       });
 
@@ -209,11 +208,22 @@ export default {
           "http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
-      }).catch(function (response) {
+      }).catch(function(response) {
         //handle error
         console.log(response);
       });
     },
+
+    deleteData: function(id) {
+      axios({
+      method: "delete",
+      url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
+      data: id    
+    }).catch(error => {
+      console.error(error);
+    });
+    },
+
 
     showModal() {
       this.$refs["my-modal"].show();
@@ -253,6 +263,7 @@ export default {
         (matchedText) => `<strong>${matchedText}</strong>`
       );
     },
+     
   },
 
   computed: {
@@ -310,11 +321,8 @@ select {
 #not {
   margin-top: 25px;
 }
-</style> -->
-
-
-
-
+</style>
+-->
 
 <style>
 #app {
@@ -325,5 +333,3 @@ select {
   margin-top: 2px;
 }
 </style>
-
-

@@ -34,9 +34,7 @@
 import supportnav from "@/components/naavi.vue";
 import supportside from "@/components/sidebar/sidebar.vue";
 import minisiderbar from "@/components/sidebar/mini-sidebar.vue";
-
-
-
+//TODO: Configure the alert system for new tickets
 export default {
   name: "App",
   components: {
@@ -92,7 +90,4 @@ export default {
   height: calc(100vh - 100px);
   overflow: scroll;
 }
-
-
-
 </style>

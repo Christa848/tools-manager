@@ -1,230 +1,261 @@
-
-
-
 <template>
-
   <div id="tabb">
-<b-row >
-  <b-col cols="2">
-    <input type="text" id="srch" placeholder="Search " v-model="filter" />
-    </b-col>
-    <b-col cols="1" id="not" >
-      <div>
+    <b-row>
+      <b-col cols="2">
+        <input type="text" id="srch" placeholder="Search " v-model="filter" />
+      </b-col>
+      <b-col cols="1" id="not">
+        <div>
           <div>
-     <b-button variant="outline-success" size="lg" id="show-btn" @click="showModal">Add</b-button>
-    <b-modal ref="my-modal" hide-footer title="Enter Contacts">
-      
-<div>
-    <b-form @submit="createContact" @reset="onReset" v-if="show">
+            <b-button
+              variant="outline-success"
+              size="lg"
+              id="show-btn"
+              @click="showModal"
+              >Add</b-button
+            >
+            <b-modal ref="my-modal" hide-footer title="Enter Contacts">
+              <div>
+                <b-form @submit="createContact" @reset="onReset" v-if="show">
+                  <b-form-group
+                    id="input-group-2"
+                    label="First Name:"
+                    label-for="input-2"
+                  >
+                    <b-form-input
+                      id="input-2"
+                      v-model="fname"
+                      placeholder="First Name"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
 
+                  <b-form-group
+                    id="input-group-4"
+                    label="Last Name:"
+                    label-for="input-2"
+                  >
+                    <b-form-input
+                      id="input-4"
+                      v-model="lname"
+                      placeholder="Last name"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
 
-      <b-form-group id="input-group-2" label="First Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="fname"
-          placeholder=" name"
-          required
-        ></b-form-input>
-      </b-form-group>
+                  <b-form-group
+                    id="input-group-3"
+                    label="Contact:"
+                    label-for="input-2"
+                  >
+                    <b-form-input
+                      id="input-3"
+                      v-model="contact"
+                      placeholder="Contact"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
 
-          <b-form-group id="input-group-4" label="Last Name:" label-for="input-2">
-        <b-form-input
-          id="input-4"
-          v-model="lname"
-          placeholder=" last name"
-          required
-        ></b-form-input>
-      </b-form-group>
+                  <b-form-group
+                    id="input-group-6"
+                    label="Adress:"
+                    label-for="input-2"
+                  >
+                    <b-form-input
+                      id="input-6"
+                      v-model="adress"
+                      placeholder="Address"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
 
-      <b-form-group id="input-group-3" label="Contact:" label-for="input-2">
-        <b-form-input
-          id="input-3"
-          v-model="contact"
-          placeholder="contact"
-          required
-        ></b-form-input>
-      </b-form-group>
+                  <b-form-group
+                    id="input-group-1"
+                    label="Email address:"
+                    label-for="input-1"
+                    description="We'll never share your email with anyone else."
+                  >
+                    <b-form-input
+                      id="input-1"
+                      v-model="email"
+                      type="email"
+                      placeholder="Enter email"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
 
-          <b-form-group id="input-group-6" label="Adress:" label-for="input-2">
-        <b-form-input
-          id="input-6"
-          v-model="adress"
-          placeholder="adress"
-          required
-        ></b-form-input>
-      </b-form-group>
+                  <b-button type="submit" variant="primary">Submit</b-button>
+                  <b-button type="reset" variant="danger">Reset</b-button>
+                </b-form>
+              </div>
 
-            <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-        description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="input-1"
-          v-model="email"
-          type="email"
-          placeholder="Enter email"
-          required
-        ></b-form-input>
-      </b-form-group>
-
-      
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
-    
-  </div>
-
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close </b-button>
-      
-    </b-modal>
-  </div>
-
-     </div>
-    </b-col>
+              <b-button
+                class="mt-3"
+                variant="outline-danger"
+                block
+                @click="hideModal"
+                >Close
+              </b-button>
+            </b-modal>
+          </div>
+        </div>
+      </b-col>
     </b-row>
-     
-  <table>
-    
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Adress</th>
-        <th>Contact</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-     
-      <tr v-for="(row, index) in  filteredRows" :key="`fname-${index}`">
-        <td v-html="highlightMatches(row.fname)"></td>
-        <td v-html="highlightMatches(row.lname)"></td>
-        <td v-html="highlightMatches(row.adress)"></td>
-        <td v-html="highlightMatches(row.contact)"></td>
-        <td v-html="highlightMatches(row.email)"></td>
-         <!--<td >{{row.fname}}</td>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Address</th>
+          <th>Contact</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(row, index) in filteredRows" :key="`fname-${index}`">
+          <td v-html="highlightMatches(row.fname)"></td>
+          <td v-html="highlightMatches(row.lname)"></td>
+          <td v-html="highlightMatches(row.adress)"></td>
+          <td v-html="highlightMatches(row.contact)"></td>
+          <td v-html="highlightMatches(row.email)"></td>
+          <!--<td >{{row.fname}}</td>
        <td >{{row.lname}}</td>
          <td >{{row.adress}}</td>
         <td >{{row.contact}}</td>
         <td >{{row.email}}</td>-->
-        
-                <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchData(row.id)">Edit</button></td>
-        <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td> 
-         
-      </tr>
-       
-    </tbody>
-  </table>
 
-
-  
-</div>
+          <td>
+            <button
+              type="button"
+              name="edit"
+              class="btn btn-primary btn-xs edit"
+              @click="fetchData(row.id)"
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              name="delete"
+              class="btn btn-danger btn-xs delete"
+              @click="deleteData(row.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 <script>
- import axios from 'axios';
-   export default{
+import axios from "axios";
+export default {
+  data() {
+    return {
+      filter: "",
+      data: [],
 
-  data (){ return{
-    filter: "",
-    data: []
+      form: {
+        email: "",
+        name: "",
+        food: null,
+        checked: [],
+      },
+      show: true,
 
-    ,
-
-    form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
-        },
-        show: true,
-
-         fname:"",
-          lname:"",
-          contact:"",
-          adress:"",
-          email:""
-    
-      }
-      
+      fname: "",
+      lname: "",
+      contact: "",
+      adress: "",
+      email: "",
+    };
   },
-  beforeMount(){
+  beforeMount() {
     this.getName();
   },
   methods: {
-    async getName(){
-      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllcontacts.php');
+    async getName() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllcontacts.php"
+      );
       const data = await res.json();
       this.data = data;
     },
 
-    createContact: function(){
-        console.log("Create contact!")
+    createContact: function() {
+      console.log("Create contact!");
 
-        let formData = new FormData();
-        console.log("fname:", this.fname),
+      let formData = new FormData();
+      console.log("fname:", this.fname),
         console.log("lname:", this.lname),
         console.log("contact:", this.contact),
         console.log("adress:", this.adress),
         console.log("email:", this.email),
-        
+        formData.append("fname", this.fname),
+        formData.append("lname", this.lname),
+        formData.append("contact", this.contact),
+        formData.append("adress", this.adress),
+        formData.append("email", this.email);
 
-        formData.append('fname', this.fname),
-        formData.append('lname', this.lname),
-        formData.append('contact', this.contact),
-        formData.append('adress', this.adress),
-        formData.append('email', this.email)
-        
-           
-        var contact = {};
-        formData.forEach(function(value, key){
-            contact[key] = value;
-        });
+      var contact = {};
+      formData.forEach(function(value, key) {
+        contact[key] = value;
+      });
 
-        axios({
-            method: 'post',
-            url: 'http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php',
-            data: formData,
-            config: { headers: {'Content-Type': 'multipart/form-data' }}
-        })
-       
-        .catch(function (response) {
-            //handle error
-            console.log(response)
-            
-        });
+      axios({
+        method: "post",
+        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
+        data: formData,
+        config: { headers: { "Content-Type": "multipart/form-data" } },
+      }).catch(function(response) {
+        //handle error
+        console.log(response);
+      });
+    },
+    //TODO: Implement the Edit and Delete buttons
+    //FIXME: fix the CORS error
+    deleteData: function(id) {
+      axios({
+      method: "delete",
+      url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
+      data: id    
+    }).catch(error => {
+      console.error(error);
+    });
     },
 
+
     showModal() {
-        this.$refs['my-modal'].show()
-      },
-      hideModal() {
-        this.$refs['my-modal'].hide()
-      },
-      toggleModal() {
-        // We pass the ID of the button that we want to return focus to
-        // when the modal has hidden
-        this.$refs['my-modal'].toggle('#toggle-btn')
-      },
+      this.$refs["my-modal"].show();
+    },
+    hideModal() {
+      this.$refs["my-modal"].hide();
+    },
+    toggleModal() {
+      // We pass the ID of the button that we want to return focus to
+      // when the modal has hidden
+      this.$refs["my-modal"].toggle("#toggle-btn");
+    },
 
-            onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.email = ''
-        this.fname = ''
-        this.lname 
-        
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-            },
+    onReset(event) {
+      event.preventDefault();
+      // Reset our form values
+      this.email = "";
+      this.fname = "";
+      this.lname = "";
+      this.contact = "";
+      this.adress = "";
 
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
 
-   
     highlightMatches(text) {
       const matchExists = text
         .toLowerCase()
@@ -232,29 +263,31 @@
       if (!matchExists) return text;
 
       const re = new RegExp(this.filter, "ig");
-      return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
+      return text.replace(
+        re,
+        (matchedText) => `<strong>${matchedText}</strong>`
+      );
     },
-
-   
   },
-  
+
   computed: {
     filteredRows() {
-      return this.data.filter(row => {
+      return this.data.filter((row) => {
         const fname = row.fname.toString().toLowerCase();
         const lname = row.lname.toLowerCase();
-         const contact = row.contact.toLowerCase();
-        
+        const contact = row.contact.toLowerCase();
+
         const searchTerm = this.filter.toLowerCase();
 
         return (
-          fname.includes(searchTerm) || lname.includes(searchTerm)|| contact.includes(searchTerm)
+          fname.includes(searchTerm) ||
+          lname.includes(searchTerm) ||
+          contact.includes(searchTerm)
         );
       });
-    }
-  }
+    },
+  },
 };
-
 </script>
 
 <style scoped>
@@ -264,7 +297,8 @@ table {
   width: 100%;
 }
 
-td, th {
+td,
+th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
@@ -274,7 +308,8 @@ th {
   background-color: #dddddd;
 }
 
-input[type=text], select {
+input[type="text"],
+select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -284,26 +319,21 @@ input[type=text], select {
   box-sizing: border-box;
   margin-top: 25px;
 }
-#srch{
+#srch {
   width: 180px;
 }
-#not{
+#not {
   margin-top: 25px;
 }
-</style> -->
-
-
-
-
+</style>
+-->
 
 <style>
-#app{
+#app {
   margin-top: 10px;
 }
-#back{
+#back {
   margin-left: 98%;
   margin-top: 2px;
 }
-
 </style>
-

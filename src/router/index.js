@@ -13,8 +13,6 @@ import agentPerfomance from "../views/AgentPerfomance.vue";
 import groupPerfomance from "../views/GroupPerfomance.vue";
 import perfomanceAnalysis from "../views/PerfomanceAnalysis.vue";
 
-
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -97,9 +95,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/comContacts.vue")
   },
-
-
-
 ];
 
 const router = new VueRouter({
