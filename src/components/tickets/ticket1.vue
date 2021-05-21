@@ -50,8 +50,8 @@
             </b-col>
 
             <b-col>
-               <p><i>Heey There</i></p>
- <p>{{massage}}  </p> 
+               <p><i>Hie iTrack Zim</i></p>
+            <p>{{massage}}  </p> 
            <p><i>Regards</i></p> {{name}}
                 </b-col>
         </b-row>
@@ -67,6 +67,7 @@
     placeholder=" Reply"
     rows="3"
     no-resize
+     v-model="message"
   ></b-form-textarea>
  
 </div>
@@ -90,7 +91,7 @@
 </template>
 <script>
 export default {
-  props: ['status','name','massage','date'],
+  props: ['status','name','massage','date','id'],
    methods: {
       showModal() {
         this.$refs['my-modal'].show()

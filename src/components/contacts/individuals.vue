@@ -101,6 +101,7 @@
       </tr>
     </thead>
     <tbody>
+       
      
       <tr v-for="(row, index) in  filteredRows" :key="`fname-${index}`">
         <td v-html="highlightMatches(row.fname)"></td>
@@ -118,8 +119,9 @@
         <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td> 
          
       </tr>
-       
+        
     </tbody>
+  
   </table>
 
 
@@ -204,6 +206,38 @@
             console.log(response)
             
         });
+
+        
+    },
+
+     Delete: function(){
+        console.log("Create contact!")
+
+        let formData = new FormData();
+        console.log("id:", this.id),
+        formData.append('id', this.id)
+       
+        
+           
+        var contact = {};
+        formData.forEach(function(value, key){
+            contact[key] = value;
+        });
+
+        axios({
+            method: 'post',
+            url: 'http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php',
+            data: formData,
+            config: { headers: {'Content-Type': 'multipart/form-data' }}
+        })
+       
+        .catch(function (response) {
+            //handle error
+            console.log(response)
+            
+        });
+
+        
     },
 
     showModal() {

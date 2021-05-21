@@ -1,4 +1,4 @@
-<template>
+ <template>
   <b-col>
       <b-row class="mb-2 cards">
         <b-col cols="2" sm="2" class="p-3 ">
