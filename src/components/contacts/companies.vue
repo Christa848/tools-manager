@@ -25,7 +25,7 @@
                     <b-form-input
                       id="input-2"
                       v-model="Name"
-                      placeholder=" name"
+                      placeholder="Name"
                       required
                     ></b-form-input>
                   </b-form-group>
@@ -38,7 +38,7 @@
                     <b-form-input
                       id="input-4"
                       v-model="Region"
-                      placeholder=" region"
+                      placeholder="Region"
                       required
                     ></b-form-input>
                   </b-form-group>
@@ -51,7 +51,7 @@
                     <b-form-input
                       id="input-3"
                       v-model="Contact"
-                      placeholder="contact"
+                      placeholder="Contact"
                       required
                     ></b-form-input>
                   </b-form-group>
@@ -78,8 +78,8 @@
                   >
                     <b-form-input
                       id="input-6"
-                      v-model="Adress"
-                      placeholder="adress"
+                      v-model="Address"
+                      placeholder="Address"
                       required
                     ></b-form-input>
                   </b-form-group>
@@ -94,8 +94,8 @@
                 variant="outline-danger"
                 block
                 @click="hideModal"
-                >Close
-              </b-button>
+                >Close</b-button
+              >
             </b-modal>
           </div>
         </div>
@@ -107,7 +107,7 @@
         <tr>
           <th>Name</th>
           <th>Region</th>
-          <th>Adress</th>
+          <th>Address</th>
           <th>Contact</th>
           <th>Email</th>
         </tr>
@@ -157,17 +157,17 @@ export default {
     return {
       filter: "",
       data: [],
-      form: {
-        email: "",
-        name: "",
-        food: null,
-        checked: [],
-      },
+      // form: {
+      //   email: "",
+      //   name: "",
+      //   food: null,
+      //   checked: [],
+      // },
       show: true,
       Name: "",
       Region: "",
       Contact: "",
-      Adress: "",
+      Address: "",
       Email: "",
     };
   },
@@ -183,47 +183,48 @@ export default {
       this.data = data;
     },
 
-    createContact: function() {
+    createContact: function () {
       console.log("Create contact!");
       let formData = new FormData();
-      console.log("Name:", this.Name),
-        console.log("Region:", this.Region),
-        console.log("Contact:", this.Contact),
-        console.log("Email:", this.Email),
-        console.log("Adress:", this.Adress),
-        formData.append("Name", this.Name),
-        formData.append("Region", this.Region),
-        formData.append("Contact", this.Contact),
-        formData.append("Email", this.Email),
-        formData.append("Adress", this.Adress);
+      console.log("Name:", this.Name);
+      console.log("Region:", this.Region);
+      console.log("Contact:", this.Contact);
+      console.log("Email:", this.Email);
+      console.log("Address:", this.Address);
+      formData.append("Name", this.Name);
+      formData.append("Region", this.Region);
+      formData.append("Contact", this.Contact);
+      formData.append("Email", this.Email);
+      formData.append("Address", this.Address);
 
       var contact = {};
-      formData.forEach(function(value, key) {
+      formData.forEach(function (value, key) {
         contact[key] = value;
       });
 
+      console.log(formData);
+
       axios({
         method: "post",
-        url:
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
+        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
-      }).catch(function(response) {
+      }).catch(function (response) {
         //handle error
         console.log(response);
       });
     },
 
-    deleteData: function(id) {
+    // TODO: Resolve delete functionality
+    deleteData: function (id) {
       axios({
-      method: "delete",
-      url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-      data: id    
-    }).catch(error => {
-      console.error(error);
-    });
+        method: "delete",
+        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
+        data: id,
+      }).catch((error) => {
+        console.error(error);
+      });
     },
-
 
     showModal() {
       this.$refs["my-modal"].show();
@@ -242,7 +243,9 @@ export default {
       // Reset our form values
       this.Email = "";
       this.Name = "";
-      this.Address;
+      this.Adress = "";
+      this.Contact = "";
+      this.Region = "";
 
       // Trick to reset/clear native browser form validation state
       this.show = false;
@@ -263,16 +266,14 @@ export default {
         (matchedText) => `<strong>${matchedText}</strong>`
       );
     },
-     
   },
 
   computed: {
     filteredRows() {
       return this.data.filter((row) => {
-        const Name = row.Name.toString().toLowerCase();
-        const Region = row.Region.toLowerCase();
-        const Address = row.Address.toLowerCase();
-
+        const Name = row.Name.toString().toLowerCase() ? ""  : "NULL";
+        const Region =  row.Region.toString().toLowerCase() ? ""  : "NULL";
+        const Address = row.Address.toLowerCase() ? ""  : "NULL";
         const searchTerm = this.filter.toLowerCase();
 
         return (

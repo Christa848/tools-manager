@@ -39,7 +39,7 @@
 <company/>
    </b-col>
    <b-col>
-     <!--filtercomming here -->
+     <!--filtercoming here -->
     <!-- <filters /> -->
    </b-col>
 </b-row>

@@ -16,8 +16,6 @@
 
 import supportdisplay from "@/components/side.vue";
 
-
-
 export default {
   name: "Home",
   components: {

@@ -156,11 +156,6 @@ export default {
       const URL =
         "http://itrackdevs.geo-fuel.com/tools_manager_api/createTicket.php";
       console.log("Create Ticket!");
-      console.log(
-        `Issue: ${this.form.message} by ${this.form.contact} for ${
-          this.form.agent
-        } was issued on ${new Date()}`
-      );
 
       // FormData type used to compose values from form, preparing them for the database
       let formData = new FormData();
@@ -179,13 +174,15 @@ export default {
         ticket[key] = value;
       });
 
-      console.log(ticket);
+      console.log(formData);
       axios({
         method: "post",
         URL, 
-        ticket, 
+        formData, 
         headers: { "Content-Type": "multipart/form-data" },
-        }).catch(resp => console.log(resp.data));        
+        })
+        .then(resp => console.log(resp.data))
+        .catch(resp => console.log(resp.data));        
         
     },
   }

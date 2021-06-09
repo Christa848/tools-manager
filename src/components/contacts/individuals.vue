@@ -119,12 +119,6 @@
           <td v-html="highlightMatches(row.adress)"></td>
           <td v-html="highlightMatches(row.contact)"></td>
           <td v-html="highlightMatches(row.email)"></td>
-          <!--<td >{{row.fname}}</td>
-       <td >{{row.lname}}</td>
-         <td >{{row.adress}}</td>
-        <td >{{row.contact}}</td>
-        <td >{{row.email}}</td>-->
-
           <td>
             <button
               type="button"
@@ -140,7 +134,7 @@
               type="button"
               name="delete"
               class="btn btn-danger btn-xs delete"
-              @click="deleteData(row.id)"
+              @click="deleteData(row)"
             >
               Delete
             </button>
@@ -174,10 +168,10 @@ export default {
     };
   },
   beforeMount() {
-    this.getName();
+    this.GetAllContacts();
   },
   methods: {
-    async getName() {
+    async GetAllContacts() {
       const res = await fetch(
         "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllcontacts.php"
       );
@@ -185,48 +179,65 @@ export default {
       this.data = data;
     },
 
-    createContact: function() {
+    createContact: function () {
       console.log("Create contact!");
 
       let formData = new FormData();
-      console.log("fname:", this.fname),
-        console.log("lname:", this.lname),
-        console.log("contact:", this.contact),
-        console.log("adress:", this.adress),
-        console.log("email:", this.email),
-        formData.append("fname", this.fname),
-        formData.append("lname", this.lname),
-        formData.append("contact", this.contact),
-        formData.append("adress", this.adress),
-        formData.append("email", this.email);
+      formData.append("fname", this.fname);
+      formData.append("lname", this.lname);
+      formData.append("contact", this.contact);
+      formData.append("adress", this.adress);
+      formData.append("email", this.email);
 
       var contact = {};
-      formData.forEach(function(value, key) {
+      formData.forEach(function (value, key) {
         contact[key] = value;
       });
 
-      axios({
+     axios({
         method: "post",
         url: "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
-      }).catch(function(response) {
+      }).catch(function (response) {
         //handle error
         console.log(response);
       });
-    },
-    //TODO: Implement the Edit and Delete buttons
-    //FIXME: fix the CORS error
-    deleteData: function(id) {
-      axios({
-      method: "delete",
-      url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-      data: id    
-    }).catch(error => {
-      console.error(error);
-    });
-    },
 
+      console.log(contact);
+    },
+    deleteData: function (row) {
+      //console.log(id);
+
+      let formData = new FormData();
+      formData.append("fname", row.fname),
+        formData.append("lname", row.lname),
+        formData.append("contact", row.contact),
+        formData.append("adress", row.adress),
+        formData.append("email", row.email);
+
+      var contact = {};
+      formData.forEach(function (value, key) {
+        contact[key] = value;
+      });
+
+      axios({
+        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
+        methods: ["post", "delete"],
+        data: formData,
+        headers: {
+          "Access-Control-Allow-Headers": "Accept",
+          "Access-Control-Allow-Method": "post",
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((resp) => {
+          console.log(resp.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
 
     showModal() {
       this.$refs["my-modal"].show();
