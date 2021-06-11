@@ -134,7 +134,7 @@
               type="button"
               name="delete"
               class="btn btn-danger btn-xs delete"
-              @click="deleteData(row)"
+              @click="deleteData(row.id)"
             >
               Delete
             </button>
@@ -189,47 +189,34 @@ export default {
       formData.append("adress", this.adress);
       formData.append("email", this.email);
 
-      var contact = {};
-      formData.forEach(function (value, key) {
-        contact[key] = value;
+      axios.post("http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
+      formData,
+      {
+        headers: {
+            "Access-Control-Request-Headers": "Content-Type, Accept",
+            "Content-Type": "multipart/form-data"
+        }
+      })
+      .then(response => console.log(response.statustext))
+      .catch(function (error) {
+        console.log(error);
       });
-
-     axios({
-        method: "post",
-        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
-        data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } },
-      }).catch(function (response) {
-        //handle error
-        console.log(response);
-      });
-
-      console.log(contact);
     },
-    deleteData: function (row) {
-      //console.log(id);
 
+    deleteData: function (id) {
       let formData = new FormData();
-      formData.append("fname", row.fname),
-        formData.append("lname", row.lname),
-        formData.append("contact", row.contact),
-        formData.append("adress", row.adress),
-        formData.append("email", row.email);
+      formData.append("id", id);
 
-      var contact = {};
-      formData.forEach(function (value, key) {
-        contact[key] = value;
-      });
-
+      console.log(id);
+    
       axios({
         url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-        methods: ["post", "delete"],
+        methods: "post",
         data: formData,
         headers: {
-          "Access-Control-Allow-Headers": "Accept",
-          "Access-Control-Allow-Method": "post",
+          "Access-Control-Request-Headers": "Accept, Content-Type",
           "Content-Type": "multipart/form-data",
-        },
+        }
       })
         .then((resp) => {
           console.log(resp.data);

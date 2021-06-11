@@ -139,14 +139,14 @@ export default {
         //   isComplete: false,
         // },
       ],
-      hasError: false,
+      hasError: false
     };
   },
 
   computed: {
     filterLists: function () {
       return _.orderBy(this.lists, ["isComplete", false]);
-    },
+    }
   },
   beforeMount() {
     this.getName();
@@ -170,11 +170,10 @@ export default {
       this.lists.push({
         id: this.lists.length + 1,
         title: this.addTodoInput,
-        isComplete: false,
+        isComplete: false
       });
 
-      // this exists to format an acceptable content-type for CORS policy preflight request
-      
+      // To format a content-type for CORS preflight request
       let formData = new FormData();
       formData.append("task", this.addTodoInput);
       formData.append("owner", "sMidian");
@@ -185,7 +184,7 @@ export default {
           formData,
           {
             headers: {
-              "Access-Control-Request-Headers": "Content-Type",
+              "Access-Control-Accept-Headers": "Content-Type",
               "Content-Type": "multipart/form-data,",
             },
           }

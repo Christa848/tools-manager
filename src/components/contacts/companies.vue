@@ -124,7 +124,7 @@
               type="button"
               name="edit"
               class="btn btn-primary btn-xs edit"
-              @click="fetchData(row.id)"
+              @click="fetchData(row.Id)"
             >
               Edit
             </button>
@@ -134,17 +134,11 @@
               type="button"
               name="delete"
               class="btn btn-danger btn-xs delete"
-              @click="deleteData(row.id)"
+              @click="deleteData(row.Id)"
             >
               Delete
             </button>
           </td>
-
-          <!--<td >{{row.Name}}</td>
-         <td>{{row.Region}}</td>
-        <td >{{row.Address}}</td>
-        <td >{{row.Contact}}</td>
-        <td >{{row.Email}}</td> -->
         </tr>
       </tbody>
     </table>
@@ -157,13 +151,8 @@ export default {
     return {
       filter: "",
       data: [],
-      // form: {
-      //   email: "",
-      //   name: "",
-      //   food: null,
-      //   checked: [],
-      // },
       show: true,
+      Id: 0,
       Name: "",
       Region: "",
       Contact: "",
@@ -184,46 +173,55 @@ export default {
     },
 
     createContact: function () {
-      console.log("Create contact!");
       let formData = new FormData();
-      console.log("Name:", this.Name);
-      console.log("Region:", this.Region);
-      console.log("Contact:", this.Contact);
-      console.log("Email:", this.Email);
-      console.log("Address:", this.Address);
       formData.append("Name", this.Name);
       formData.append("Region", this.Region);
       formData.append("Contact", this.Contact);
       formData.append("Email", this.Email);
       formData.append("Address", this.Address);
 
-      var contact = {};
-      formData.forEach(function (value, key) {
-        contact[key] = value;
-      });
-
       console.log(formData);
 
-      axios({
-        method: "post",
-        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
-        data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } },
-      }).catch(function (response) {
-        //handle error
-        console.log(response);
+      axios.post("http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
+      formData,
+      {
+        headers: {
+            "Access-Control-Request-Headers": "Content-Type, Accept",
+            "Content-Type": "multipart/form-data"
+        }
+      })
+      .then(response => console.log(response.statustext))
+      .catch(function (error) {
+        console.log(error);
       });
     },
 
-    // TODO: Resolve delete functionality
     deleteData: function (id) {
-      axios({
-        method: "delete",
-        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-        data: id,
-      }).catch((error) => {
-        console.error(error);
-      });
+      let formData = new FormData();
+      formData.append("id", id);
+      axios
+        .post(
+          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteCompany.php",
+          formData,
+          {
+            headers: {
+              "Access-Control-Request-Headers": "Content-Type",
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => console.log(res.statusText))
+        .catch((error) => console.error(error));
+    },
+
+    // TODO: Resolve edit functionality
+    fetchData: function (id) {
+      let formData = new FormData();
+      formData.append("id", id);
+      axios
+        .get()
+        .then((response) => console.log(response))
+        .catch((error) => console.error(error));
     },
 
     showModal() {
@@ -271,9 +269,9 @@ export default {
   computed: {
     filteredRows() {
       return this.data.filter((row) => {
-        const Name = row.Name.toString().toLowerCase() ? ""  : "NULL";
-        const Region =  row.Region.toString().toLowerCase() ? ""  : "NULL";
-        const Address = row.Address.toLowerCase() ? ""  : "NULL";
+        const Name = row.Name.toString().toLowerCase() ? "" : "NULL";
+        const Region = row.Region.toString().toLowerCase() ? "" : "NULL";
+        const Address = row.Address.toLowerCase() ? "" : "NULL";
         const searchTerm = this.filter.toLowerCase();
 
         return (
@@ -322,10 +320,7 @@ select {
 #not {
   margin-top: 25px;
 }
-</style>
--->
 
-<style>
 #app {
   margin-top: 10px;
 }
