@@ -193,7 +193,7 @@ export default {
       formData,
       {
         headers: {
-            "Access-Control-Request-Headers": "Content-Type, Accept",
+            "Access-Control-Request-Headers": "Accept, Content-Type",
             "Content-Type": "multipart/form-data"
         }
       })
@@ -214,7 +214,7 @@ export default {
         methods: "post",
         data: formData,
         headers: {
-          "Access-Control-Request-Headers": "Accept, Content-Type",
+          "Access-Control-Accept-Headers": "Accept, Content-Type",
           "Content-Type": "multipart/form-data",
         }
       })
