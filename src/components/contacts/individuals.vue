@@ -189,41 +189,38 @@ export default {
       formData.append("adress", this.adress);
       formData.append("email", this.email);
 
-      axios.post("http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
-      formData,
-      {
-        headers: {
-            "Access-Control-Request-Headers": "Accept, Content-Type",
-            "Content-Type": "multipart/form-data"
-        }
-      })
-      .then(response => console.log(response.statustext))
-      .catch(function (error) {
-        console.log(error);
-      });
+      axios
+        .post(
+          "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
+          formData,
+          {
+            headers: {
+              "Access-Control-Request-Headers": "Accept, Content-Type",
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => console.log(response.statustext))
+        .catch(function (error) {
+          console.log(error);
+        });
     },
 
     deleteData: function (id) {
       let formData = new FormData();
       formData.append("id", id);
-
-      console.log(id);
-    
-      axios({
-        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-        methods: "post",
-        data: formData,
-        headers: {
-          "Access-Control-Accept-Headers": "Accept, Content-Type",
-          "Content-Type": "multipart/form-data",
-        }
-      })
-        .then((resp) => {
-          console.log(resp.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      axios
+        .post(
+          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => console.log(res.statusText))
+        .catch((error) => console.error(error));
     },
 
     showModal() {

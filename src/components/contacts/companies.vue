@@ -180,7 +180,7 @@ export default {
       formData.append("Email", this.Email);
       formData.append("Address", this.Address);
 
-      console.log(formData);
+      //console.log(formData);
 
       axios.post("http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
       formData,
@@ -205,7 +205,6 @@ export default {
           formData,
           {
             headers: {
-              "Access-Control-Request-Headers": "Content-Type",
               "Content-Type": "multipart/form-data",
             },
           }
