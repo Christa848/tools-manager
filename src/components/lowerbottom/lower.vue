@@ -2,8 +2,8 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col id="un">
-        <H4>Uresolved Tickets</H4>
-        <p><small> Accross Helpdesk</small></p>
+        <h4>Uresolved Tickets</h4>
+        <p><small> Across Helpdesk</small></p>
         <p />
         <b-row>
           <b-col cols="8">Marketing</b-col>
@@ -11,7 +11,7 @@
         </b-row>
         <hr />
         <b-row>
-          <b-col cols="8">IT Surport</b-col>
+          <b-col cols="8">IT Support</b-col>
           <b-col cols="4">35</b-col>
         </b-row>
         <hr />
@@ -27,7 +27,7 @@
       </b-col>
 
       <b-col id="cs"
-        ><h4>Cusomer Satisfaction</h4>
+        ><h4>Customer Satisfaction</h4>
         <p><small>Accross help desk this mounth</small></p>
         <b-container class="bv-example-row">
           <b-row>
@@ -66,8 +66,8 @@
         </b-container>
       </b-col>
 
-      <b-col id="td"
-        ><h4>To-do</h4>
+      <b-col id="td">
+        <h4>My To-do</h4>
         <div id="todoApp">
           <form
             name="todo-form"
@@ -92,16 +92,16 @@
               <input
                 type="checkbox"
                 v-on:change="completeTask(list)"
-                v-bind:checked="list.isComplete"
+                v-bind:checked="list.completed"
               />
               <span
                 class="title"
                 contenteditable="true"
                 v-on:keydown.enter="updateTask($event, list)"
                 v-on:blur="updateTask($event, list)"
-                v-bind:class="{ completed: list.isComplete }"
+                v-bind:class="{ completed: list.completed }"
               >
-                {{ list.title }}
+                {{ list.task }}
               </span>
               <span class="remove" v-on:click="removeTask(list)">x</span>
             </li>
@@ -114,43 +114,27 @@
 <script>
 import _ from "lodash";
 import axios from "axios";
-//import lowerbottom from "@/components/checkbox/checked.vue";
 export default {
   name: "lower",
-  components: {
-    // lowerbottom
-  },
-
   data() {
     return {
       data: [],
       selected: [],
-
       addTodoInput: "",
-      lists: [
-        // {
-        //   id: 1, // Unique identifier
-        //   title: "Go Home", // Todo's title
-        //   isComplete: false, // Default: false. Mark as complete with a strike-through. We will see this later
-        // },
-        // {
-        //   id: 2,
-        //   title: "Pack Bag",
-        //   isComplete: false,
-        // },
-      ],
-      hasError: false
+      lists: [],
+      hasError: false,
     };
   },
 
   computed: {
     filterLists: function () {
-      return _.orderBy(this.lists, ["isComplete", false]);
-    }
+      return _.orderBy(this.lists, ["completed", false]);
+    },
   },
   beforeMount() {
     this.getName();
   },
+  
   methods: {
     async getName() {
       const res = await fetch(
@@ -169,45 +153,50 @@ export default {
       this.hasError = false;
       this.lists.push({
         id: this.lists.length + 1,
-        title: this.addTodoInput,
-        isComplete: false
+        task: this.addTodoInput,
+        completed: false,
       });
 
       // To format a content-type for CORS preflight request
       let formData = new FormData();
       formData.append("task", this.addTodoInput);
-      formData.append("owner", "sMidian");
-      formData.append("completed", true);
+      formData.append("owner", "tinashe");
+      formData.append("completed", 1);
       axios
         .post(
           "http://itrackdevs.geo-fuel.com/tools_manager_api/addListItem.php",
           formData,
           {
             headers: {
-              "Access-Control-Accept-Headers": "Content-Type",
               "Content-Type": "multipart/form-data,",
             },
           }
         )
         .then((response) => {
           console.log("Success: " + response.statusText);
-          console.log(this.listItem);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
 
       this.addTodoInput = ""; //clear the input after successful submission
     },
 
+    async getTask() {
+      const response = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getItemList.php"
+      );
+      this.lists = await response.json();
+    },
+
     updateTask: function (e, list) {
       e.preventDefault();
-      list.title = e.target.innerText;
+      list.task = e.target.innerText;
       e.target.blur();
     },
 
     completeTask: function (list) {
-      list.isComplete = !list.isComplete;
+      list.completed = !list.completed;
     },
 
     removeTask: function (list) {

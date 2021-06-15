@@ -206,6 +206,7 @@ export default {
         });
     },
 
+    // Done 😃
     deleteData: function (id) {
       let formData = new FormData();
       formData.append("id", id);
@@ -219,8 +220,8 @@ export default {
             },
           }
         )
-        .then((res) => console.log(res.statusText))
-        .catch((error) => console.error(error));
+        .then(res => console.log(res.statusText))
+        .catch(error => console.error(error));
     },
 
     showModal() {

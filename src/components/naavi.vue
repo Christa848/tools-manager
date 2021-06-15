@@ -57,10 +57,9 @@
     <b-sidebar id="bar1-right" title=" New Contact" right shadow>
       <newIndi />
     </b-sidebar>
-    <b-sidebar id="company-right" title=" New company" right shadow>
+    <b-sidebar id="company-right" title=" New Company" right shadow>
       <newCom />
     </b-sidebar>
-    <!--sideba start-->
   </div>
 </template>
 
@@ -79,15 +78,14 @@ export default {
     msg,
     newt,
     newIndi,
-    newCom,
+    newCom
   },
-
   methods: {
     togleSidebar() {
       this.$emit("togle-sidebar");
       console.log("clicked");
-    },
-  },
+    }
+  }
 };
 </script>
 

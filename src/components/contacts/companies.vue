@@ -113,6 +113,7 @@
         </tr>
       </thead>
       <tbody>
+        <!--<tr v-for="(row, index) of filteredRows" :key="index">  -->
         <tr v-for="(row, index) in filteredRows" :key="`Name-${index}`">
           <td v-html="highlightMatches(row.Name)"></td>
           <td v-html="highlightMatches(row.Region)"></td>
@@ -147,6 +148,7 @@
 <script>
 import axios from "axios";
 export default {
+  emits: { valueChanged: null },
   data() {
     return {
       filter: "",
@@ -180,20 +182,20 @@ export default {
       formData.append("Email", this.Email);
       formData.append("Address", this.Address);
 
-      //console.log(formData);
-
-      axios.post("http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
-      formData,
-      {
-        headers: {
-            "Access-Control-Request-Headers": "Content-Type, Accept",
-            "Content-Type": "multipart/form-data"
-        }
-      })
-      .then(response => console.log(response.statustext))
-      .catch(function (error) {
-        console.log(error);
-      });
+      axios
+        .post(
+          "http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => console.log(response.statustext))
+        .catch(function (error) {
+          console.log(error);
+        });
     },
 
     deleteData: function (id) {
@@ -209,7 +211,7 @@ export default {
             },
           }
         )
-        .then((res) => console.log(res.statusText))
+        .then(this.$forceUpdate())
         .catch((error) => console.error(error));
     },
 
@@ -219,8 +221,8 @@ export default {
       formData.append("id", id);
       axios
         .get()
-        .then((response) => console.log(response))
-        .catch((error) => console.error(error));
+        .then(res => console.log(res))
+        .catch(error => console.error(error));
     },
 
     showModal() {
@@ -276,7 +278,7 @@ export default {
         return (
           Name.includes(searchTerm) ||
           Region.includes(searchTerm) ||
-          Address.includes(searchTerm)
+          Address.includes(searchTerm) 
         );
       });
     },
