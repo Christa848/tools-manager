@@ -179,7 +179,8 @@ export default {
       this.data = data;
     },
 
-    createContact: function () {
+    createContact: function (e) {
+      e.preventDefault();
       console.log("Create contact!");
 
       let formData = new FormData();
@@ -195,7 +196,6 @@ export default {
           formData,
           {
             headers: {
-              "Access-Control-Request-Headers": "Accept, Content-Type",
               "Content-Type": "multipart/form-data",
             },
           }

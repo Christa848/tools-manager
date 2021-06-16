@@ -83,9 +83,10 @@ export default {
       var i = 0;
       while (i < this.data.length) {
         if (
-          this.usern == this.data[i]["username"] &&
-          this.passw == this.data[i]["password"]
+          this.usern === this.data[i]["username"] &&
+          this.passw === this.data[i]["password"]
         ) {
+          localStorage.setItem('username', this.usern);
           this.$router.push("/home");
           this.$emit("log-in");
           break;

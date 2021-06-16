@@ -39,7 +39,7 @@
             <!-- Using 'button-content' slot -->
             <template #button-content id="llog">
               <em variant="light">
-                <b-icon-person-circle></b-icon-person-circle>Kikie</em
+                <b-icon-person-circle></b-icon-person-circle>{{username}}</em
               >
             </template>
             <b-dropdown-item href="#">Setting</b-dropdown-item>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+//import axios from 'axios';
 import newCom from "@/components/form/newCompany.vue";
 import newIndi from "@/components/form/newIndividual.vue";
 import newt from "@/components/form/newticket.vue";
@@ -78,7 +79,16 @@ export default {
     msg,
     newt,
     newIndi,
-    newCom
+    newCom,
+  },
+  data() {
+    return {
+      username: ''
+    }
+  },
+  async created() {
+      this.username = localStorage.getItem("username");
+      console.log(this.username);
   },
   methods: {
     togleSidebar() {
