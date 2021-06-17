@@ -6,7 +6,7 @@
         <div class="inputgroups text-left">
           <label for="inline-form-input-name">User Name:</label>
           <b-form-input
-            v-model="usern"
+            v-model="username"
             id="input-name"
             class="mb-2 mr-sm-2 mb-sm-0 input"
             placeholder="username"
@@ -49,10 +49,11 @@
 export default {
   data() {
     return {
+      status: "",
+      username: "",
       user: "Tools Manager",
       defaultUser: "Admin",
       data: {},
-      usern: "",
       passw: ""
     };
   },
@@ -83,14 +84,14 @@ export default {
       var i = 0;
       while (i < this.data.length) {
         if (
-          this.usern === this.data[i]["username"] &&
+          this.username === this.data[i]["username"] &&
           this.passw === this.data[i]["password"]
         ) {
-          localStorage.setItem('username', this.usern);
+          localStorage.setItem('username', this.username);
           this.$router.push("/home");
           this.$emit("log-in");
           break;
-        } else if (this.usernn == "" || this.passw == "") {
+        } else if (this.username == "" || this.passw == "") {
           alert("Enter Username and Password");
           break;
         }

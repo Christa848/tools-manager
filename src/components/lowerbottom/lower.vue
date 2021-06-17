@@ -119,6 +119,7 @@ export default {
   data() {
     return {
       data: [],
+      listData: [],
       selected: [],
       addTodoInput: "",
       lists: [],
@@ -133,8 +134,9 @@ export default {
   },
   beforeMount() {
     this.getName();
+    this.getTask();
   },
-  
+
   methods: {
     async getName() {
       const res = await fetch(
@@ -142,6 +144,7 @@ export default {
       );
       const data = await res.json();
       this.data = data;
+      //console.log(this.data);
     },
 
     addTask: function () {
@@ -159,50 +162,47 @@ export default {
 
       // To format a content-type for CORS preflight request
       let formData = new FormData();
+      let owner = localStorage.getItem("username");
       formData.append("task", this.addTodoInput);
-      formData.append("owner", "tinashe");
-      formData.append("completed", 1);
+      formData.append("owner", owner);
+      formData.append("completed", "not done");
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/addListItem.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data,",
-            },
-          }
-        )
+        .post("addListItem.php", formData)
         .then((response) => {
           console.log("Success: " + response.statusText);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
 
       this.addTodoInput = ""; //clear the input after successful submission
     },
 
+    // Resolve this mess 😞
     async getTask() {
-      const response = await fetch(
-        "http://itrackdevs.geo-fuel.com/tools_manager_api/getItemList.php"
+      //let owner = localStorage.getItem("username");
+      const tasks = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getListItem.php"
       );
-      this.lists = await response.json();
+      //let userItems = [];
+      this.listData = await tasks.json();
+      //console.log(this.listData);
     },
+  },
 
-    updateTask: function (e, list) {
-      e.preventDefault();
-      list.task = e.target.innerText;
-      e.target.blur();
-    },
+  updateTask: function (e, list) {
+    e.preventDefault();
+    list.task = e.target.innerText;
+    e.target.blur();
+  },
 
-    completeTask: function (list) {
-      list.completed = !list.completed;
-    },
+  completeTask: function (list) {
+    list.completed = !list.completed;
+  },
 
-    removeTask: function (list) {
-      var index = _.findIndex(this.lists, list);
-      this.lists.splice(index, 1);
-    },
+  removeTask: function (list) {
+    var index = _.findIndex(this.lists, list);
+    this.lists.splice(index, 1);
   },
 };
 </script>
