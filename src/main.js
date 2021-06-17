@@ -7,7 +7,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { BootstrapVueIcons } from 'bootstrap-vue';
-import VueTableDynamic from 'vue-table-dynamic'
+import VueTableDynamic from 'vue-table-dynamic';
+import './axios';
 //import { mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
 
 Vue.use(VueTableDynamic)

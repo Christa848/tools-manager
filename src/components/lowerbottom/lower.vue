@@ -1,10 +1,5 @@
 <template>
   <b-container class="bv-example-row">
-  <b-row>
-    
-    <b-col id="un">
-        <H4>Uresolved Tickets</H4>
-        <p><small> Accross Helpdesk</small><p/>
     <b-row>
     <b-col cols="8">Marketing</b-col>
     <b-col cols="4">{{marketing.length}}</b-col>
@@ -25,7 +20,7 @@
     <b-col cols="4">{{software.length}}</b-col>
   </b-row>
   
-  </b-col>
+
 
   
     <b-col id="cs"><h4> Cusomer Satisfaction</h4>
@@ -62,41 +57,57 @@
     <button type="submit">Add</button>
   </form>
 </div>
+<b-row>
+      <b-col id="td">
+        <h4>My To-do</h4>
+        <div id="todoApp">
+          <form
+            name="todo-form"
+            method="post"
+            action=""
+            v-on:submit.prevent="addTask"
+          >
+            <input
+              name="add-todo"
+              type="text"
+              v-model="addTodoInput"
+              v-bind:class="{ error: hasError }"
+            />
+            <button type="submit">Add</button>
+          </form>
+        </div>
 
-<div class="todo-lists" v-if="lists.length">
+        <div class="todo-lists" v-if="lists.length">
           <h3>My Todo Tasks</h3>
           <ol>
             <li v-for="list in filterLists" :key="list.id">
-               <input type="checkbox" v-on:change="completeTask(list)" v-bind:checked="list.isComplete"/>
-                <span class="title"
-          contenteditable="true"
-          v-on:keydown.enter="updateTask($event, list)"
-          v-on:blur="updateTask($event, list)"
-          v-bind:class="{completed: list.isComplete}"> {{list.title}} </span>
-          <span class="remove" v-on:click="removeTask(list)">x</span>
+              <input
+                type="checkbox"
+                v-on:change="completeTask(list)"
+                v-bind:checked="list.completed"
+              />
+              <span
+                class="title"
+                contenteditable="true"
+                v-on:keydown.enter="updateTask($event, list)"
+                v-on:blur="updateTask($event, list)"
+                v-bind:class="{ completed: list.completed }"
+              >
+                {{ list.task }}
+              </span>
+              <span class="remove" v-on:click="removeTask(list)">x</span>
             </li>
           </ol>
         </div>
-    </b-col>
-  
-  
-  </b-row>
-
- 
- 
-</b-container>  
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 <script>
-import _ from 'lodash';
-//import lowerbottom from "@/components/checkbox/checked.vue";
+import _ from "lodash";
+import axios from "axios";
 export default {
     name:"lower",
-    components:{
-        // lowerbottom
-
-
-    },
-
      data(){
       return{
         data:[], 
@@ -106,35 +117,20 @@ export default {
         itsupport:[],
         account:[],
         software:[],
+         listData: [],
+           lists: [],
+      hasError: false,
         
          addTodoInput: '',
-         lists: [
-
-            {
-          id: 1,              // Unique identifier
-          title: 'Go Home',   // Todo's title
-          isComplete: false    // Default: false. Mark as complete with a strike-through. We will see this later
-        },
-        {
-          id: 2,
-          title: 'Pack Bag',
-          isComplete: false
-        }
-         ],
-         hasError: false
-        
       }
-    },
+     },
 
+  computed: {
+    filterLists: function () {
+      return _.orderBy(this.lists, ["completed", false]);
+  }
+  }, 
 
-
-    
-    
-computed: {
-          filterLists: function(){
-            return _.orderBy(this.lists, ['isComplete', false])
-          }
-        },
     beforeMount(){
     this.getName();
     this.getSoftware();
@@ -142,12 +138,17 @@ computed: {
     this.getMarketing();
     this.getSupport();
     this.getAccounts();
+    this.getTask();
   },
+
   methods: {
-    async getName(){
-      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php');
+    async getName() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php"
+      );
       const data = await res.json();
       this.data = data;
+      //console.log(this.data);
     },
 
     async getSoftware(){
@@ -193,82 +194,105 @@ computed: {
     isComplete: false
   });
 
-  this.addTodoInput = ''; //clear the input after successful submission
+      // To format a content-type for CORS preflight request
+      let formData = new FormData();
+      let owner = localStorage.getItem("username");
+      formData.append("task", this.addTodoInput);
+      formData.append("owner", owner);
+      formData.append("completed", "not done");
+      axios
+        .post("addListItem.php", formData)
+        .then((response) => {
+          console.log("Success: " + response.statusText);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
-
+      this.addTodoInput = ""; //clear the input after successful submission
     },
-    updateTask: function(e, list){
-            e.preventDefault();
-            list.title = e.target.innerText;
-            e.target.blur();},
 
-            completeTask: function(list){
-            list.isComplete = !list.isComplete;
-          },
-           removeTask: function(list){
-              var index = _.findIndex(this.lists, list);
-              this.lists.splice(index, 1);
-            }
-  }
+    // Resolve this mess 😞
+    async getTask() {
+      //let owner = localStorage.getItem("username");
+      const tasks = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getListItem.php"
+      );
+      //let userItems = [];
+      this.listData = await tasks.json();
+      //console.log(this.listData);
+    },
+  },
+
+  updateTask: function (e, list) {
+    e.preventDefault();
+    list.task = e.target.innerText;
+    e.target.blur();
+  },
+
+  completeTask: function (list) {
+    list.completed = !list.completed;
+  },
+
+  removeTask: function (list) {
+    var index = _.findIndex(this.lists, list);
+    this.lists.splice(index, 1);
+  },
+  
 }
 </script>
 <style scoped>
-
-
-#un{
+#un {
   margin-right: 0.5rem;
   background-color: white;
 }
 
-#un:hover{
+#un:hover {
   transform: scale(1.1);
 }
-#cs{
-  
+#cs {
   background-color: white;
-  
 }
-#cs:hover{
-transform: scale(1.1);
+#cs:hover {
+  transform: scale(1.1);
 }
-#td{
-   margin-left: 0.5rem;
+#td {
+  margin-left: 0.5rem;
   background-color: white;
-   
 }
-#td:hover{
-transform: scale(1.1);
+#td:hover {
+  transform: scale(1.1);
 }
 
-
-
-:root{font-family: Arial;}
-input[type=text]{
-  font-size:16px;
+:root {
+  font-family: Arial;
+}
+input[type="text"] {
+  font-size: 16px;
   padding: 8px;
   border-radius: 10px;
   border: 1px solid #c4c4c4;
 }
 
-button{
+button {
   background: #3498db;
   background-image: linear-gradient(to bottom, #3498db, #2980b9);
   border-radius: 28px;
-  
+
   color: #ffffff;
   font-size: 16px;
   padding: 8px 20px;
   border: none;
-  cursor:pointer;
+  cursor: pointer;
 }
 button:hover {
   background: #3cb0fd;
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
 }
-input[type=text].error{border: 1px solid red;}
-[contenteditable=true]:focus{
-  
-  
+input[type="text"].error {
+  border: 1px solid red;
+}
+[contenteditable="true"]:focus {
   overflow: hidden;
   border: 1px solid transparent;
 
@@ -278,38 +302,34 @@ input[type=text].error{border: 1px solid red;}
 
   white-space: nowrap;
   border-radius: 10px;
-  
-  
-  
 }
 
-.title{
+.title {
   display: inline-block;
   width: 200px;
   border: 1px solid transparent;
   padding: 8px;
   font-size: 16px;
-  vertical-align:middle;
+  vertical-align: middle;
 }
 
-.title:hover{
-  border:1px solid #c4c4c4;
+.title:hover {
+  border: 1px solid #c4c4c4;
   border-radius: 10px;
 }
 
-.remove{
-  cursor:pointer;
-  display:inline-block;
+.remove {
+  cursor: pointer;
+  display: inline-block;
   border: 1px solid #c4c4c4;
   border-radius: 50%;
-  padding:0px 4px;
+  padding: 0px 4px;
 }
-.remove:hover{
+.remove:hover {
   background: #3cb0fd;
 }
 
-.completed{
+.completed {
   text-decoration: line-through;
 }
-
 </style>

@@ -1,7 +1,7 @@
 <template>
   <b-col>
     <b-row class="mb-2 cards">
-      <b-col cols="2" sm="2" class="p-3 ">
+      <b-col cols="2" sm="2" class="p-3">
         <opencard
           v-if="isactive === 'unsolved'"
           v-on:click.native="selectTab('unsolved')"
@@ -13,7 +13,7 @@
           active="notactive"
         />
       </b-col>
-      <b-col cols="2" sm="2" class="p-3 ">
+      <b-col cols="2" sm="2" class="p-3">
         <solvedcard
           v-if="isactive === 'overdue'"
           v-on:click.native="selectTab('overdue')"
@@ -25,7 +25,7 @@
           active="notactive"
         />
       </b-col>
-      <b-col cols="2" sm="2" class="p-3 ">
+      <b-col cols="2" sm="2" class="p-3">
         <newcard
           v-if="isactive === 'overdueToday'"
           v-on:click.native="selectTab('overdueToday')"
@@ -37,7 +37,7 @@
           active="notactive"
         />
       </b-col>
-      <b-col cols="2" sm="2" class="p-3 ">
+      <b-col cols="2" sm="2" class="p-3">
         <open
           v-if="isactive === 'open'"
           v-on:click.native="selectTab('open')"
@@ -45,7 +45,7 @@
         />
         <open v-else v-on:click.native="selectTab('open')" active="notactive" />
       </b-col>
-      <b-col cols="2" sm="2" class="p-3 ">
+      <b-col cols="2" sm="2" class="p-3">
         <unassighned
           v-if="isactive === 'unsigned'"
           v-on:click.native="selectTab('unsigned')"
@@ -57,7 +57,7 @@
           active="notactive"
         />
       </b-col>
-      <b-col cols="2" sm="2" class="p-3 ">
+      <b-col cols="2" sm="2" class="p-3">
         <onhold
           v-if="isactive === 'onhold'"
           v-on:click.native="selectTab('onhold')"
@@ -71,9 +71,9 @@
       </b-col>
     </b-row>
 
-    <b-row class="mb-2  ">
+    <b-row class="mb-2">
       <!-- tabs start -->
-      <b-col cols="7" sm="8" class="p-3 " id="trents">
+      <b-col cols="7" sm="8" class="p-3" id="trents">
         <b-tabs>
           <b-tab title="Trends" v-if="selected_tab === 'trend'">
             <trent />
@@ -273,7 +273,7 @@
         </b-tabs>
       </b-col>
       <!-- tabs start -->
-      <b-col cols="5" sm="4" class="p-3 ">
+      <b-col cols="5" sm="4" class="p-3">
         <b-container fluid class="bv-example-row">
           <b-row>
             <b-col sm="9">
@@ -306,9 +306,7 @@ import unassighned from "@/components/cards/unassigned.vue";
 import trent from "@/components/cards/Trents.vue";
 import resolved from "@/components/cards/resolved.vue";
 import received from "@/components/cards/received.vue";
-
 import average from "@/components/cards/averageTime.vue";
-
 import tick from "@/components/tickets/ticket1.vue";
 
 export default {
@@ -324,10 +322,8 @@ export default {
     resolved,
     received,
     lower,
-
     average,
-
-    tick
+    tick,
   },
   data() {
     return {
@@ -338,7 +334,7 @@ export default {
       overdue: [],
       open: [],
       unassigned: [],
-      onhold: []
+      onhold: [],
     };
   },
   beforeMount() {
@@ -393,7 +389,7 @@ export default {
       const onhold = await res.json();
       this.onhold = onhold;
     },
-    selectTab: function(tab) {
+    selectTab: function (tab) {
       if (this.selected_tab != tab) {
         this.selected_tab = tab;
         this.isactive = tab;
@@ -401,8 +397,8 @@ export default {
         this.selected_tab = "trend";
         this.isactive = "trend";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
