@@ -7,22 +7,22 @@
         <p><small> Accross Helpdesk</small><p/>
     <b-row>
     <b-col cols="8">Marketing</b-col>
-    <b-col cols="4">8</b-col>
+    <b-col cols="4">{{marketing.length}}</b-col>
   </b-row>
   <hr>
   <b-row>
     <b-col cols="8">IT Surport</b-col>
-    <b-col cols="4">35</b-col>
+    <b-col cols="4">{{itsupport.length}}</b-col>
   </b-row>
   <hr>
   <b-row>
     <b-col cols="8">Accounting</b-col>
-    <b-col cols="4">60</b-col>
+    <b-col cols="4">{{account.length}}</b-col>
   </b-row>
   <hr>
   <b-row>
     <b-col cols="8">Systems Development</b-col>
-    <b-col cols="4">0</b-col>
+    <b-col cols="4">{{software.length}}</b-col>
   </b-row>
   
   </b-col>
@@ -34,7 +34,7 @@
   <b-row>
     <b-col>
          Responses received
-        <H3>300</H3>
+        <H3>100</H3>
     
     </b-col>
     <b-col>Positive
@@ -101,6 +101,11 @@ export default {
       return{
         data:[], 
         selected:[],
+         admin:[],
+        marketing:[],
+        itsupport:[],
+        account:[],
+        software:[],
         
          addTodoInput: '',
          lists: [
@@ -120,6 +125,10 @@ export default {
         
       }
     },
+
+
+
+    
     
 computed: {
           filterLists: function(){
@@ -128,12 +137,48 @@ computed: {
         },
     beforeMount(){
     this.getName();
+    this.getSoftware();
+     this.getAdmin();
+    this.getMarketing();
+    this.getSupport();
+    this.getAccounts();
   },
   methods: {
     async getName(){
       const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php');
       const data = await res.json();
       this.data = data;
+    },
+
+    async getSoftware(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php');
+      const software = await res.json();
+      this.software = software;
+    },
+
+    async getAdmin(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=admin');
+      const admin = await res.json();
+      this.admin = admin;
+    },
+
+    
+     async getMarketing(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=marketing');
+      const marketing = await res.json();
+      this.marketing = marketing;
+    },
+    
+     async getSupport(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=itsupport');
+      const itsupport = await res.json();
+      this.itsupport = itsupport;
+    },
+
+    async getAccounts(){
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=accounts');
+      const account = await res.json();
+      this.account = account;
     },
 
     addTask: function(){
