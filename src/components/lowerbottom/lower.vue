@@ -1,71 +1,60 @@
 <template>
   <b-container class="bv-example-row">
     <b-row>
-      <b-col id="un">
-        <h4>Uresolved Tickets</h4>
-        <p><small> Across Helpdesk</small></p>
-        <p />
-        <b-row>
-          <b-col cols="8">Marketing</b-col>
-          <b-col cols="4">8</b-col>
-        </b-row>
-        <hr />
-        <b-row>
-          <b-col cols="8">IT Support</b-col>
-          <b-col cols="4">35</b-col>
-        </b-row>
-        <hr />
-        <b-row>
-          <b-col cols="8">Accounting</b-col>
-          <b-col cols="4">60</b-col>
-        </b-row>
-        <hr />
-        <b-row>
-          <b-col cols="8">Systems Development</b-col>
-          <b-col cols="4">0</b-col>
-        </b-row>
-      </b-col>
-
-      <b-col id="cs"
-        ><h4>Customer Satisfaction</h4>
-        <p><small>Accross help desk this mounth</small></p>
-        <b-container class="bv-example-row">
-          <b-row>
-            <b-col>
-              Responses received
-              <H3>300</H3>
-            </b-col>
-            <b-col
-              >Positive
-              <h3>
-                <b-icon icon="emoji-smile" scale="1" variant="success"></b-icon
-                >27%
-              </h3>
-            </b-col>
-            <hr />
-            <div class="w-100"></div>
-            <b-col
-              >Negative
-              <h3>
-                <b-icon icon="emoji-frown" scale="1" variant="danger"></b-icon
-                >27%
-              </h3>
-            </b-col>
-            <b-col
-              >Neutral
-              <h3>
-                <b-icon
-                  icon="emoji-neutral"
-                  scale="1"
-                  variant="warning"
-                ></b-icon
-                >27%
-              </h3>
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-col>
-
+    <b-col cols="8">Marketing</b-col>
+    <b-col cols="4">{{marketing.length}}</b-col>
+  </b-row>
+  <hr>
+  <b-row>
+    <b-col cols="8">IT Surport</b-col>
+    <b-col cols="4">{{itsupport.length}}</b-col>
+  </b-row>
+  <hr>
+  <b-row>
+    <b-col cols="8">Accounting</b-col>
+    <b-col cols="4">{{account.length}}</b-col>
+  </b-row>
+  <hr>
+  <b-row>
+    <b-col cols="8">Systems Development</b-col>
+    <b-col cols="4">{{software.length}}</b-col>
+  </b-row>
+  
+    <b-col id="cs"><h4> Customer Satisfaction</h4>
+             <p> <small>Accross help desk this mounth</small></p>
+<b-container class="bv-example-row">
+  <b-row>
+    <b-col>
+         Responses received
+        <H3>100</H3>
+    
+    </b-col>
+    <b-col>Positive
+        <h3> <b-icon icon="emoji-smile" scale="1" variant="success"></b-icon>27%</h3>
+    </b-col>
+    <hr>
+    <div class="w-100"></div>
+    <b-col>Negative
+        <h3> <b-icon icon="emoji-frown" scale="1" variant="danger"></b-icon>27%</h3>
+    </b-col>
+    <b-col>Neutral
+        <h3> <b-icon icon="emoji-neutral" scale="1" variant="warning"></b-icon>27%</h3>
+    </b-col>
+  </b-row>
+</b-container>
+    
+    </b-col>
+    
+    
+    <b-col id="td"><h4> To-do</h4>
+    <div id="todoApp">
+  
+  <form name="todo-form" method="post" action="" v-on:submit.prevent="addTask">
+    <input name="add-todo" type="text" v-model="addTodoInput"  v-bind:class="{error: hasError}"/>
+    <button type="submit">Add</button>
+  </form>
+</div>
+<b-row>
       <b-col id="td">
         <h4>My To-do</h4>
         <div id="todoApp">
@@ -108,6 +97,7 @@
           </ol>
         </div>
       </b-col>
+      
     </b-row>
   </b-container>
 </template>
@@ -119,11 +109,17 @@ export default {
   data() {
     return {
       data: [],
-      listData: [],
       selected: [],
-      addTodoInput: "",
+      admin: [],
+      marketing: [],
+      itsupport: [],
+      account: [],
+      software: [],
+      listData: [],
       lists: [],
       hasError: false,
+
+      addTodoInput: "",
     };
   },
 
@@ -132,8 +128,14 @@ export default {
       return _.orderBy(this.lists, ["completed", false]);
     },
   },
+
   beforeMount() {
     this.getName();
+    this.getSoftware();
+    this.getAdmin();
+    this.getMarketing();
+    this.getSupport();
+    this.getAccounts();
     this.getTask();
   },
 
@@ -144,7 +146,46 @@ export default {
       );
       const data = await res.json();
       this.data = data;
-      //console.log(this.data);
+    },
+
+    async getSoftware() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php"
+      );
+      const software = await res.json();
+      this.software = software;
+    },
+
+    async getAdmin() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=admin"
+      );
+      const admin = await res.json();
+      this.admin = admin;
+    },
+
+    async getMarketing() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=marketing"
+      );
+      const marketing = await res.json();
+      this.marketing = marketing;
+    },
+
+    async getSupport() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=itsupport"
+      );
+      const itsupport = await res.json();
+      this.itsupport = itsupport;
+    },
+
+    async getAccounts() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=accounts"
+      );
+      const account = await res.json();
+      this.account = account;
     },
 
     addTask: function () {
@@ -156,8 +197,8 @@ export default {
       this.hasError = false;
       this.lists.push({
         id: this.lists.length + 1,
-        task: this.addTodoInput,
-        completed: false,
+        title: this.addTodoInput,
+        isComplete: false,
       });
 
       // To format a content-type for CORS preflight request
@@ -180,13 +221,12 @@ export default {
 
     // Resolve this mess 😞
     async getTask() {
-      //let owner = localStorage.getItem("username");
-      const tasks = await fetch(
-        "http://itrackdevs.geo-fuel.com/tools_manager_api/getListItem.php"
-      );
+      const formData = new FormData();
+      formData.append("owner", localStorage.getItem("username"));
+      const tasks = await axios.post("getListItem.php", formData);
       //let userItems = [];
       this.listData = await tasks.json();
-      //console.log(this.listData);
+      console.log(this.listData);
     },
   },
 
@@ -202,6 +242,7 @@ export default {
 
   removeTask: function (list) {
     var index = _.findIndex(this.lists, list);
+
     this.lists.splice(index, 1);
   },
 };

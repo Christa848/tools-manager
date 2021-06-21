@@ -101,6 +101,41 @@
         </div>
       </b-col>
     </b-row>
+     
+  <table>
+    
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Adress</th>
+        <th>Contact</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+       
+     
+      <tr v-for="(row, index) in  filteredRows" :key="`fname-${index}`">
+        <td v-html="highlightMatches(row.fname)"></td>
+        <td v-html="highlightMatches(row.lname)"></td>
+        <td v-html="highlightMatches(row.adress)"></td>
+        <td v-html="highlightMatches(row.contact)"></td>
+        <td v-html="highlightMatches(row.email)"></td>
+         <!--<td >{{row.fname}}</td>
+       <td >{{row.lname}}</td>
+         <td >{{row.adress}}</td>
+        <td >{{row.contact}}</td>
+        <td >{{row.email}}</td>-->
+        
+                <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchData(row.id)">Edit</button></td>
+        <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td> 
+         
+      </tr>
+        
+    </tbody>
+  
+  </table>
 
     <table>
       <thead>
@@ -196,15 +231,19 @@ export default {
           console.log(error);
         });
     },
-
-    // Done 😃
-    deleteData: function (id) {
-      let formData = new FormData();
-      formData.append("id", id);
+    deleteContact() {
       axios
-        .post("deleteContact.php", formData)
-        .then((res) => console.log(res.statusText))
-        .catch((error) => console.error(error));
+        .post(
+          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then(res => console.log(res.statusText))
+        .catch(error => console.error(error));
     },
 
     showModal() {

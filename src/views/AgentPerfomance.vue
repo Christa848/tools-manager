@@ -50,6 +50,7 @@
         <th>Received Tickets</th>
         <th>Resolved Tickets</th>
         <th>Unresolved Tickets</th>
+        <th>%Perfomance</th>
       </tr>
     </thead>
     <tbody>

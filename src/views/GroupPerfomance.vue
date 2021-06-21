@@ -22,7 +22,7 @@
 
 <b-row >
   <b-col cols="2">
-    <input type="text" id="srch" placeholder="Search by Group" v-model="filter" />
+    <input type="text" id="srch" placeholder="Search " v-model="filter" />
     </b-col>
     <b-col cols="1" id="not" >
       <div>
@@ -45,22 +45,22 @@
     
     <thead>
       <tr>
-        <th>Group</th>
+        
+        <th>Department</th>
         <th>Received Tickets</th>
         <th>Resolved Tickets</th>
         <th>Unresolved Tickets</th>
-         
+        <th>%Perfomance</th>
       </tr>
     </thead>
     <tbody>
     
-      <tr v-for="(row, index) in  filteredRows" :key="`group-${index}`">
-        <td v-html="highlightMatches(row.group)"></td>
+      <tr v-for="(row, index) in  filteredRows" :key="`department-${index}`">
+        
+        <td v-html="highlightMatches(row.department)"></td>
         <td v-html="highlightMatches(row.received_tickets)"></td>
         <td v-html="highlightMatches(row.resolved_tickets)"></td>
         <td v-html="highlightMatches(row.unresolved_tickets)"></td>
-        
-       
          <!--<td >{{row.fname}}</td>
        <td >{{row.lname}}</td>
          <td >{{row.adress}}</td>
@@ -69,7 +69,7 @@
         
                 
       </tr>
-       {{data.length}}
+       
     </tbody>
   </table>
 
@@ -115,13 +115,13 @@
   },
   methods: {
     async getName(){
-      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/groupPerfomnce.php');
+      const res = await fetch('http://itrackdevs.geo-fuel.com/tools_manager_api/groupPerfomnce.php?');
       const data = await res.json();
       this.data = data;
     },
 
    
-            onReset(event) {
+        onReset(event) {
         event.preventDefault()
         // Reset our form values
         this.email = ''
@@ -153,14 +153,14 @@
   computed: {
     filteredRows() {
       return this.data.filter(row => {
-        const group = row.group.toString().toLowerCase();
+        const department = row.department.toString().toLowerCase();
         
          
         
         const searchTerm = this.filter.toLowerCase();
 
         return (
-          group.includes(searchTerm) 
+          department.includes(searchTerm) 
         );
       });
     }
@@ -218,3 +218,4 @@ input[type=text], select {
 }
 
 </style>
+
