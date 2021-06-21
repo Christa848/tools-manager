@@ -179,8 +179,7 @@ export default {
       this.data = data;
     },
 
-    createContact: function (e) {
-      e.preventDefault();
+    createContact: function () {
       console.log("Create contact!");
 
       let formData = new FormData();
@@ -191,15 +190,7 @@ export default {
       formData.append("email", this.email);
 
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .post("toolsapi.php", formData)
         .then((response) => console.log(response.statustext))
         .catch(function (error) {
           console.log(error);
@@ -211,17 +202,9 @@ export default {
       let formData = new FormData();
       formData.append("id", id);
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then(res => console.log(res.statusText))
-        .catch(error => console.error(error));
+        .post("deleteContact.php", formData)
+        .then((res) => console.log(res.statusText))
+        .catch((error) => console.error(error));
     },
 
     showModal() {

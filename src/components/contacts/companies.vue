@@ -174,7 +174,7 @@ export default {
       this.data = data;
     },
 
-    createContact: function () {
+    createContact: function() {
       let formData = new FormData();
       formData.append("Name", this.Name);
       formData.append("Region", this.Region);
@@ -193,36 +193,28 @@ export default {
           }
         )
         .then((response) => console.log(response.statustext))
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
     },
 
-    deleteData: function (id) {
+    deleteData: function(id) {
       let formData = new FormData();
       formData.append("id", id);
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteCompany.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .post("deleteCompany.php", formData)
         .then(this.$forceUpdate())
         .catch((error) => console.error(error));
     },
 
     // TODO: Resolve edit functionality
-    fetchData: function (id) {
+    fetchData: function(id) {
       let formData = new FormData();
       formData.append("id", id);
       axios
         .get()
-        .then(res => console.log(res))
-        .catch(error => console.error(error));
+        .then((res) => console.log(res))
+        .catch((error) => console.error(error));
     },
 
     showModal() {
@@ -278,7 +270,7 @@ export default {
         return (
           Name.includes(searchTerm) ||
           Region.includes(searchTerm) ||
-          Address.includes(searchTerm) 
+          Address.includes(searchTerm)
         );
       });
     },
