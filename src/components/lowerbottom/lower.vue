@@ -223,7 +223,6 @@ export default {
     async getTask() {
       const formData = new FormData();
       formData.append("owner", localStorage.getItem("username"));
-<<<<<<< HEAD
       axios
         .post("getListItem.php", formData)
         .then((response) => {
@@ -259,27 +258,6 @@ export default {
     completeTask: function (list) {
       list.completed = !list.completed;
     },
-=======
-      const tasks = await axios.post("getListItem.php", formData);
-      //let userItems = [];
-      this.listData = await tasks.json();
-      console.log(this.listData);
-    },
-  },
-
-  updateTask: function (e, list) {
-    e.preventDefault();
-    list.task = e.target.innerText;
-    e.target.blur();
-  },
-
-  completeTask: function (list) {
-    list.completed = !list.completed;
-  },
-
-  removeTask: function (list) {
-    var index = _.findIndex(this.lists, list);
->>>>>>> parent of 3f1a196 (todo now restores tasks from db)
 
     removeTask: function (list) {
       var index = _.findIndex(this.lists, list);

@@ -58,7 +58,7 @@
 
                   <b-form-group
                     id="input-group-6"
-                    label="Adress:"
+                    label="Address:"
                     label-for="input-2"
                   >
                     <b-form-input
@@ -71,7 +71,7 @@
 
                   <b-form-group
                     id="input-group-1"
-                    label="Email address:"
+                    label="Email Address:"
                     label-for="input-1"
                     description="We'll never share your email with anyone else."
                   >
@@ -101,48 +101,13 @@
         </div>
       </b-col>
     </b-row>
-     
-  <table>
-    
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Adress</th>
-        <th>Contact</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-       
-     
-      <tr v-for="(row, index) in  filteredRows" :key="`fname-${index}`">
-        <td v-html="highlightMatches(row.fname)"></td>
-        <td v-html="highlightMatches(row.lname)"></td>
-        <td v-html="highlightMatches(row.adress)"></td>
-        <td v-html="highlightMatches(row.contact)"></td>
-        <td v-html="highlightMatches(row.email)"></td>
-         <!--<td >{{row.fname}}</td>
-       <td >{{row.lname}}</td>
-         <td >{{row.adress}}</td>
-        <td >{{row.contact}}</td>
-        <td >{{row.email}}</td>-->
-        
-                <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchData(row.id)">Edit</button></td>
-        <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td> 
-         
-      </tr>
-        
-    </tbody>
-  
-  </table>
 
     <table>
       <thead>
         <tr>
           <th>Firstname</th>
           <th>Lastname</th>
-          <th>Address</th>
+          <th>Adress</th>
           <th>Contact</th>
           <th>Email</th>
         </tr>
@@ -154,6 +119,7 @@
           <td v-html="highlightMatches(row.adress)"></td>
           <td v-html="highlightMatches(row.contact)"></td>
           <td v-html="highlightMatches(row.email)"></td>
+
           <td>
             <button
               type="button"
@@ -186,15 +152,7 @@ export default {
     return {
       filter: "",
       data: [],
-
-      form: {
-        email: "",
-        name: "",
-        food: null,
-        checked: [],
-      },
       show: true,
-
       fname: "",
       lname: "",
       contact: "",
@@ -231,20 +189,18 @@ export default {
           console.log(error);
         });
     },
-    deleteContact() {
+    deleteData(id) {
+      const formData = new FormData();
+      formData.append("id", id);
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then(res => console.log(res.statusText))
-        .catch(error => console.error(error));
+        .post("deleteContact.php", formData)
+        .then((res) => {
+          console.log(res.statusText);
+          this.$router.go();
+        })
+        .catch((error) => console.error(error));
     },
+    fetchData() {},
 
     showModal() {
       this.$refs["my-modal"].show();
