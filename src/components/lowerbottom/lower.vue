@@ -1,66 +1,60 @@
 <template>
   <b-container class="bv-example-row">
     <b-row>
-      <b-col cols="8">Marketing</b-col>
-      <b-col cols="4">{{ marketing.length }}</b-col>
-    </b-row>
-    <hr />
-    <b-row>
-      <b-col cols="8">IT Surport</b-col>
-      <b-col cols="4">{{ itsupport.length }}</b-col>
-    </b-row>
-    <hr />
-    <b-row>
-      <b-col cols="8">Accounting</b-col>
-      <b-col cols="4">{{ account.length }}</b-col>
-    </b-row>
-    <hr />
-    <b-row>
-      <b-col cols="8">Systems Development</b-col>
-      <b-col cols="4">{{ software.length }}</b-col>
-    </b-row>
-
-    <b-row>
-      <b-col id="cs"
-        ><h4>Customer Satisfaction</h4>
-        <p><small>Across help desk this mounth</small></p>
-        <b-container class="bv-example-row">
-          <b-row>
-            <b-col>
-              Responses received
-              <H3>100</H3>
-            </b-col>
-            <b-col
-              >Positive
-              <h3>
-                <b-icon icon="emoji-smile" scale="1" variant="success"></b-icon
-                >27%
-              </h3>
-            </b-col>
-            <hr />
-            <div class="w-100"></div>
-            <b-col
-              >Negative
-              <h3>
-                <b-icon icon="emoji-frown" scale="1" variant="danger"></b-icon
-                >27%
-              </h3>
-            </b-col>
-            <b-col
-              >Neutral
-              <h3>
-                <b-icon
-                  icon="emoji-neutral"
-                  scale="1"
-                  variant="warning"
-                ></b-icon
-                >27%
-              </h3>
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-col>
-
+    <b-col cols="8">Marketing</b-col>
+    <b-col cols="4">{{marketing.length}}</b-col>
+  </b-row>
+  <hr>
+  <b-row>
+    <b-col cols="8">IT Surport</b-col>
+    <b-col cols="4">{{itsupport.length}}</b-col>
+  </b-row>
+  <hr>
+  <b-row>
+    <b-col cols="8">Accounting</b-col>
+    <b-col cols="4">{{account.length}}</b-col>
+  </b-row>
+  <hr>
+  <b-row>
+    <b-col cols="8">Systems Development</b-col>
+    <b-col cols="4">{{software.length}}</b-col>
+  </b-row>
+  
+    <b-col id="cs"><h4> Customer Satisfaction</h4>
+             <p> <small>Accross help desk this mounth</small></p>
+<b-container class="bv-example-row">
+  <b-row>
+    <b-col>
+         Responses received
+        <H3>100</H3>
+    
+    </b-col>
+    <b-col>Positive
+        <h3> <b-icon icon="emoji-smile" scale="1" variant="success"></b-icon>27%</h3>
+    </b-col>
+    <hr>
+    <div class="w-100"></div>
+    <b-col>Negative
+        <h3> <b-icon icon="emoji-frown" scale="1" variant="danger"></b-icon>27%</h3>
+    </b-col>
+    <b-col>Neutral
+        <h3> <b-icon icon="emoji-neutral" scale="1" variant="warning"></b-icon>27%</h3>
+    </b-col>
+  </b-row>
+</b-container>
+    
+    </b-col>
+    
+    
+    <b-col id="td"><h4> To-do</h4>
+    <div id="todoApp">
+  
+  <form name="todo-form" method="post" action="" v-on:submit.prevent="addTask">
+    <input name="add-todo" type="text" v-model="addTodoInput"  v-bind:class="{error: hasError}"/>
+    <button type="submit">Add</button>
+  </form>
+</div>
+<b-row>
       <b-col id="td">
         <h4>My To-do</h4>
         <div id="todoApp">
@@ -96,13 +90,14 @@
                 v-on:blur="updateTask($event, list)"
                 v-bind:class="{ completed: list.completed }"
               >
-                {{ list.title }}
+                {{ list.task }}
               </span>
               <span class="remove" v-on:click="removeTask(list)">x</span>
             </li>
           </ol>
         </div>
       </b-col>
+      
     </b-row>
   </b-container>
 </template>
@@ -195,8 +190,9 @@ export default {
 
     addTask: function () {
       if (!this.addTodoInput) {
+        // <--- If no value then we are setting error to `true`
         this.hasError = true;
-        return;
+        return; // <--- stops here
       }
       this.hasError = false;
       this.lists.push({
@@ -206,11 +202,11 @@ export default {
       });
 
       // To format a content-type for CORS preflight request
-      let completeness = this.isComplete ? "done" : "not done";
       let formData = new FormData();
+      let owner = localStorage.getItem("username");
       formData.append("task", this.addTodoInput);
-      formData.append("owner", localStorage.getItem("username"));
-      formData.append("completed", completeness);
+      formData.append("owner", owner);
+      formData.append("completed", "not done");
       axios
         .post("addListItem.php", formData)
         .then((response) => {
@@ -223,10 +219,11 @@ export default {
       this.addTodoInput = ""; //clear the input after successful submission
     },
 
-    // Mess fixed 😆
+    // Resolve this mess 😞
     async getTask() {
       const formData = new FormData();
       formData.append("owner", localStorage.getItem("username"));
+<<<<<<< HEAD
       axios
         .post("getListItem.php", formData)
         .then((response) => {
@@ -262,6 +259,27 @@ export default {
     completeTask: function (list) {
       list.completed = !list.completed;
     },
+=======
+      const tasks = await axios.post("getListItem.php", formData);
+      //let userItems = [];
+      this.listData = await tasks.json();
+      console.log(this.listData);
+    },
+  },
+
+  updateTask: function (e, list) {
+    e.preventDefault();
+    list.task = e.target.innerText;
+    e.target.blur();
+  },
+
+  completeTask: function (list) {
+    list.completed = !list.completed;
+  },
+
+  removeTask: function (list) {
+    var index = _.findIndex(this.lists, list);
+>>>>>>> parent of 3f1a196 (todo now restores tasks from db)
 
     removeTask: function (list) {
       var index = _.findIndex(this.lists, list);

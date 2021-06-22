@@ -235,7 +235,7 @@ export default {
       axios
         .post(
           "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-          
+          formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
