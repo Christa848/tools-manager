@@ -129,7 +129,7 @@ export default {
   },
 
   computed: {
-    filterLists: function() {
+    filterLists: function () {
       return _.orderBy(this.lists, ["completed", false]);
     },
   },
@@ -193,7 +193,7 @@ export default {
       this.account = account;
     },
 
-    addTask: function() {
+    addTask: function () {
       if (!this.addTodoInput) {
         this.hasError = true;
         return;
@@ -225,16 +225,12 @@ export default {
 
     // Mess fixed 😆
     async getTask() {
-      //console.log("Hello ", localStorage.getItem("username"))
       const formData = new FormData();
       formData.append("owner", localStorage.getItem("username"));
       axios
         .post("getListItem.php", formData)
         .then((response) => {
-          console.log(`All tasks for user: ${formData.get("owner")} returned!`);
-          //console.log(response.data);
           let userList = [...response.data];
-          console.log(userList);
           userList.forEach((val) => {
             let completeness = val.completed == "done" ? true : false;
             this.lists.push({
@@ -243,33 +239,40 @@ export default {
               isComplete: completeness,
             });
           });
+          console.log(response.statusText)
         })
         .catch((error) => console.error(error));
     },
-  },
 
-  // Modify to reflect in db 🤨
-  updateTask: function(e, list) {
-    e.preventDefault();
-    list.task = e.target.innerText;
-    const formData = new FormData()
-    formData.append("task", list.task)
-    axios
-      .put("editItemList.php", formData)
-      .then(() => console.log("Record modified"))
-      .catch((error) => console.error(error))
+    // Modify to reflect in db 🤨
+    updateTask: function (e, list) {
+      e.preventDefault();
+      list.task = e.target.innerText;
+      const formData = new FormData();
+      formData.append("task", list.task)
+      formData.append("id", list.id)
+      axios
+        .post("editItemList.php", formData)
+        .then(() => console.log("Record modified"))
+        .catch((error) => console.error(error));
 
-    e.target.blur();
-  },
+      e.target.blur();
+    },
 
-  completeTask: function(list) {
-    list.completed = !list.completed;
-  },
+    completeTask: function (list) {
+      list.completed = !list.completed;
+    },
 
-  removeTask: function(list) {
-    var index = _.findIndex(this.lists, list);
-
-    this.lists.splice(index, 1);
+    removeTask: function (list) {
+      var index = _.findIndex(this.lists, list);
+      const formData = new FormData();
+      formData.append("id", list.id);
+      axios
+        .post("deleteItemList.php", formData)
+        .then((response) => console.log(response.statusText))
+        .catch((error) => console.error(error));
+      this.lists.splice(index, 1);
+    },
   },
 };
 </script>
