@@ -1,60 +1,58 @@
 <template>
   <b-container class="bv-example-row">
     <b-row>
-    <b-col cols="8">Marketing</b-col>
-    <b-col cols="4">{{marketing.length}}</b-col>
-  </b-row>
-  <hr>
-  <b-row>
-    <b-col cols="8">IT Surport</b-col>
-    <b-col cols="4">{{itsupport.length}}</b-col>
-  </b-row>
-  <hr>
-  <b-row>
-    <b-col cols="8">Accounting</b-col>
-    <b-col cols="4">{{account.length}}</b-col>
-  </b-row>
-  <hr>
-  <b-row>
-    <b-col cols="8">Systems Development</b-col>
-    <b-col cols="4">{{software.length}}</b-col>
-  </b-row>
-  
-    <b-col id="cs"><h4> Customer Satisfaction</h4>
-             <p> <small>Accross help desk this mounth</small></p>
-<b-container class="bv-example-row">
-  <b-row>
-    <b-col>
-         Responses received
-        <H3>100</H3>
-    
-    </b-col>
-    <b-col>Positive
-        <h3> <b-icon icon="emoji-smile" scale="1" variant="success"></b-icon>27%</h3>
-    </b-col>
-    <hr>
-    <div class="w-100"></div>
-    <b-col>Negative
-        <h3> <b-icon icon="emoji-frown" scale="1" variant="danger"></b-icon>27%</h3>
-    </b-col>
-    <b-col>Neutral
-        <h3> <b-icon icon="emoji-neutral" scale="1" variant="warning"></b-icon>27%</h3>
-    </b-col>
-  </b-row>
-</b-container>
-    
-    </b-col>
-    
-    
-    <b-col id="td"><h4> To-do</h4>
-    <div id="todoApp">
-  
-  <form name="todo-form" method="post" action="" v-on:submit.prevent="addTask">
-    <input name="add-todo" type="text" v-model="addTodoInput"  v-bind:class="{error: hasError}"/>
-    <button type="submit">Add</button>
-  </form>
-</div>
-<b-row>
+      <b-col id="un">
+        <b-row>
+          <b-col cols="8">Marketing</b-col>
+          <b-col cols="4">{{ marketing.length }}</b-col>
+        </b-row>
+        <hr />
+        <b-row>
+          <b-col cols="8">IT Support</b-col>
+          <b-col cols="4">{{ itsupport.length }}</b-col>
+        </b-row>
+        <hr />
+        <b-row>
+          <b-col cols="8">Accounting</b-col>
+          <b-col cols="4">{{ account.length }}</b-col>
+        </b-row>
+        <hr />
+        <b-row>
+          <b-col cols="8">Systems Development</b-col>
+          <b-col cols="4">{{ software.length }}</b-col>
+        </b-row>
+      </b-col>
+      <b-col id="cs"
+        ><h4>Customer Satisfaction</h4>
+        <p><small>Across help desk this month</small></p>
+
+        <b-col>
+          Responses received
+          <H3>100</H3>
+        </b-col>
+        <b-col
+          >Positive
+          <h3>
+            <b-icon icon="emoji-smile" scale="1" variant="success"></b-icon>27%
+          </h3>
+        </b-col>
+        <hr />
+        <div class="w-100"></div>
+        <b-col
+          >Negative
+          <h3>
+            <b-icon icon="emoji-frown" scale="1" variant="danger"></b-icon>27%
+          </h3>
+        </b-col>
+        <hr />
+        <b-col
+          >Neutral
+          <h3>
+            <b-icon icon="emoji-neutral" scale="1" variant="warning"></b-icon
+            >27%
+          </h3>
+        </b-col>
+      </b-col>
       <b-col id="td">
         <h4>My To-do</h4>
         <div id="todoApp">
@@ -75,7 +73,7 @@
         </div>
 
         <div class="todo-lists" v-if="lists.length">
-          <h3>My Todo Tasks</h3>
+          <h6>Tasks for the Day</h6>
           <ol>
             <li v-for="list in filterLists" :key="list.id">
               <input
@@ -90,14 +88,13 @@
                 v-on:blur="updateTask($event, list)"
                 v-bind:class="{ completed: list.completed }"
               >
-                {{ list.task }}
+                {{ list.title }}
               </span>
               <span class="remove" v-on:click="removeTask(list)">x</span>
             </li>
           </ol>
         </div>
       </b-col>
-      
     </b-row>
   </b-container>
 </template>
@@ -115,18 +112,17 @@ export default {
       itsupport: [],
       account: [],
       software: [],
-      listData: [],
       lists: [],
       hasError: false,
 
-      addTodoInput: "",
+      addTodoInput: ""
     };
   },
 
   computed: {
-    filterLists: function () {
+    filterLists: function() {
       return _.orderBy(this.lists, ["completed", false]);
-    },
+    }
   },
 
   beforeMount() {
@@ -188,7 +184,7 @@ export default {
       this.account = account;
     },
 
-    addTask: function () {
+    addTask: function() {
       if (!this.addTodoInput) {
         // <--- If no value then we are setting error to `true`
         this.hasError = true;
@@ -198,7 +194,7 @@ export default {
       this.lists.push({
         id: this.lists.length + 1,
         title: this.addTodoInput,
-        isComplete: false,
+        isComplete: false
       });
 
       // To format a content-type for CORS preflight request
@@ -207,16 +203,17 @@ export default {
       formData.append("task", this.addTodoInput);
       formData.append("owner", owner);
       formData.append("completed", "not done");
+      
       axios
         .post("addListItem.php", formData)
-        .then((response) => {
+        .then(response => {
           console.log("Success: " + response.statusText);
+          this.addTodoInput = ""; //clear the input after successful submission
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
+          this.addTodoInput = ""; //clear the input after successful submission
         });
-
-      this.addTodoInput = ""; //clear the input after successful submission
     },
 
     // Resolve this mess 😞
@@ -225,51 +222,51 @@ export default {
       formData.append("owner", localStorage.getItem("username"));
       axios
         .post("getListItem.php", formData)
-        .then((response) => {
+        .then(response => {
           let userList = [...response.data];
-          userList.forEach((val) => {
+          userList.forEach(val => {
             let completeness = val.completed == "done" ? true : false;
             this.lists.push({
               id: val.id,
               title: val.task,
-              isComplete: completeness,
+              isComplete: completeness
             });
           });
-          console.log(response.statusText)
+          console.log(response.statusText);
         })
-        .catch((error) => console.error(error));
+        .catch(error => console.error(error));
     },
 
     // Modify to reflect in db 🤨
-    updateTask: function (e, list) {
+    updateTask: function(e, list) {
       e.preventDefault();
       list.task = e.target.innerText;
       const formData = new FormData();
-      formData.append("task", list.task)
-      formData.append("id", list.id)
+      formData.append("task", list.task);
+      formData.append("id", list.id);
       axios
         .post("editItemList.php", formData)
         .then(() => console.log("Record modified"))
-        .catch((error) => console.error(error));
+        .catch(error => console.error(error));
 
       e.target.blur();
     },
 
-    completeTask: function (list) {
+    completeTask: function(list) {
       list.completed = !list.completed;
     },
 
-    removeTask: function (list) {
+    removeTask: function(list) {
       var index = _.findIndex(this.lists, list);
       const formData = new FormData();
       formData.append("id", list.id);
       axios
         .post("deleteItemList.php", formData)
-        .then((response) => console.log(response.statusText))
-        .catch((error) => console.error(error));
+        .then(response => console.log(response.statusText))
+        .catch(error => console.error(error));
       this.lists.splice(index, 1);
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
@@ -277,7 +274,6 @@ export default {
   margin-right: 0.5rem;
   background-color: white;
 }
-
 #un:hover {
   transform: scale(1.1);
 }

@@ -88,12 +88,10 @@ export default {
   },
   async created() {
       this.username = localStorage.getItem("username");
-      console.log(this.username);
   },
   methods: {
     togleSidebar() {
       this.$emit("togle-sidebar");
-      console.log("clicked");
     }
   }
 };

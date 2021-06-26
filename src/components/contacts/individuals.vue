@@ -121,14 +121,16 @@
           <td v-html="highlightMatches(row.email)"></td>
 
           <td>
-            <button
+            <!-- <button
               type="button"
               name="edit"
               class="btn btn-primary btn-xs edit"
               @click="fetchData(row.id)"
             >
               Edit
-            </button>
+            </button> -->
+            <router-link class="btn btn-primary"
+            :to="{name: 'editContact', params: {contact_id: row.id}}">Edit</router-link>
           </td>
           <td>
             <button
@@ -158,6 +160,7 @@ export default {
       contact: "",
       adress: "",
       email: "",
+      contact_id: null
     };
   },
   beforeMount() {
@@ -192,6 +195,7 @@ export default {
     deleteData(id) {
       const formData = new FormData();
       formData.append("id", id);
+      if (confirm("Are you sure to delete this record?")) {
       axios
         .post("deleteContact.php", formData)
         .then((res) => {
@@ -199,6 +203,7 @@ export default {
           this.$router.go();
         })
         .catch((error) => console.error(error));
+      } 
     },
     fetchData() {},
 
