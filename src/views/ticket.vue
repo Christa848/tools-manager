@@ -140,6 +140,7 @@
                           :name="ticket.name"
                           :massage="ticket.massage"
                           :date="ticket.date"
+                          :id="ticket.id"
                         />
                       </b-col>
                     </b-row>
@@ -352,6 +353,7 @@ export default {
         "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php?action=read"
       );
       const data = await res.json();
+      console.log(data);
       this.data = data;
     },
     async getAdmin() {

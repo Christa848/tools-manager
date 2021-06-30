@@ -42,7 +42,7 @@
                 <b-icon-person-circle></b-icon-person-circle>{{username}}</em
               >
             </template>
-            <b-dropdown-item href="#">Setting</b-dropdown-item>
+            <b-dropdown-item href="#">Settings</b-dropdown-item>
             <b-dropdown-item href="/">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -83,7 +83,8 @@ export default {
   },
   data() {
     return {
-      username: ''
+      username: '',
+      massage: null
     }
   },
   async created() {

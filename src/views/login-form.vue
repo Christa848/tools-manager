@@ -40,8 +40,8 @@
         </div>
       </b-form>
     </div>
-    {{ data[0]["username"] }}
-    {{ data.length }}
+    <!-- {{ data[0]["username"] }}
+    {{ data.length }} -->
   </div>
 </template>
 <script>

@@ -13,94 +13,93 @@ import agentPerfomance from "../views/AgentPerfomance.vue";
 import groupPerfomance from "../views/GroupPerfomance.vue";
 import perfomanceAnalysis from "../views/PerfomanceAnalysis.vue";
 import editContact from "../components/contacts/editContact.vue";
-import comContacts from "../views/comContacts.vue"
+import comContacts from "../views/comContacts.vue";
 import editCompany from "../components/contacts/editCompany.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-
   {
     path: "/home",
     name: "Home",
-    component:Home
+    component: Home,
   },
   {
     path: "/edit/:contact_id",
     name: "editContact",
-    component:editContact
+    component: editContact,
   },
   {
     path: "/editcompany/:company_id",
     name: "editCompany",
-    component:editCompany
+    component: editCompany,
   },
   {
     path: "/",
     name: "loginPage",
-    component:loginPage,
-    meta:{hideSideBar: true}
+    component: loginPage,
+    meta: { hideSideBar: true },
   },
-   {
+  {
     path: "/report",
     name: "report",
-    component:reports
+    component: reports,
   },
   {
     path: "/individualContacts",
     name: "individualContacts",
-    component:indiContacts
+    component: indiContacts,
   },
   {
     path: "/ticket",
     name: "report",
-    component:ticket
+    component: ticket,
   },
   {
     path: "/ticketsolve",
     name: "ticketsolve",
-    component:tickets
+    component: tickets,
   },
   {
     path: "/HelpDeskInDepth",
     name: "HelpDeskInDepth",
-    component:helpDeskInDepth
+    component: helpDeskInDepth,
   },
   {
     path: "/GroupPerfomance",
     name: "GroupPerfomance",
-    component:groupPerfomance
+    component: groupPerfomance,
   },
   {
     path: "/PerfomanceAnalysis",
     name: "PerfomanceAnalysis",
-    component:perfomanceAnalysis
+    component: perfomanceAnalysis,
   },
   {
     path: "/AgentPerfomance",
     name: "AgentPerfomance",
-    component:agentPerfomance
+    component: agentPerfomance,
   },
   {
     path: "/TicketVolume",
     name: "TicketVolume",
-    component:ticketvolume
+    component: ticketvolume,
   },
   {
     path: "/TicketVolume",
     name: "TicketVolume",
-    component:ticketvolume
+    component: ticketvolume,
   },
   {
     path: "/comContacts",
     name: "comContacts",
-    component: comContacts
+    component: comContacts,
   },
 ];
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  mode: "history",
 });
 
 export default router;
