@@ -216,17 +216,14 @@ export default {
       
       axios
         .post("addListItem.php", formData)
-        .then(response => {
-          console.log("Success: " + response.statusText);
-          this.addTodoInput = ""; //clear the input after successful submission
+        .then(() => {
+          this.addTodoInput = ""; 
         })
         .catch(error => {
           console.error(error);
-          this.addTodoInput = ""; //clear the input after successful submission
+          this.addTodoInput = ""; 
         });
     },
-
-    // Done 😃
     async getTask() {
       const formData = new FormData();
       formData.append("owner", localStorage.getItem("username"));
@@ -242,12 +239,9 @@ export default {
               isComplete: completeness
             });
           });
-          console.log(response.statusText);
         })
         .catch(error => console.error(error));
     },
-
-    // Modify to reflect in db 🤨
     updateTask: function(e, list) {
       e.preventDefault();
       list.task = e.target.innerText;
@@ -256,7 +250,7 @@ export default {
       formData.append("id", list.id);
       axios
         .post("editItemList.php", formData)
-        .then(() => console.log("Record modified"))
+        .then(() => console.log("Record modified successfully"))
         .catch(error => console.error(error));
 
       e.target.blur();

@@ -78,7 +78,7 @@ export default {
 
       name: "",
       email: "",
-      message: "",
+      massage: "",
       department: "",
     };
   },

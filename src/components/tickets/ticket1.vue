@@ -110,6 +110,11 @@
 import axios from "axios";
 export default {
   props: ["status", "name", "massage", "date", "id", "reply"],
+  data() {
+    return {
+      subject: null
+    }
+  },
   methods: {
     showModal() {
       this.$refs["my-modal"].show();

@@ -105,7 +105,6 @@ export default {
     showDeptStats: function() {
       axios
         .get("getDeptStats.php")
-        .then((response) => console.log(response.data))
         .catch((error) => console.error(error));
     },
 
