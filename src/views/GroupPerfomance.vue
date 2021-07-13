@@ -101,7 +101,7 @@ export default {
       this.data = data;
     },
 
-    //TODO: Fix responses for record count 🙍 
+    //FIXME: Fix responses for record count 🙍 
     showDeptStats: function() {
       axios
         .get("getDeptStats.php")

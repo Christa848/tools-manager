@@ -13,8 +13,8 @@ import agentPerfomance from "../views/AgentPerfomance.vue";
 import groupPerfomance from "../views/GroupPerfomance.vue";
 import perfomanceAnalysis from "../views/PerfomanceAnalysis.vue";
 import editContact from "../components/contacts/editContact.vue";
-import comContacts from "../views/comContacts.vue";
 import editCompany from "../components/contacts/editCompany.vue";
+import comContacts from "../views/comContacts.vue";
 
 Vue.use(VueRouter);
 

@@ -18,12 +18,14 @@ export default {
   },
   data() {
     return {
+      labels: [],
+      data: [],
       barChartData: {
         labels: ["February", "March", "April", "May", "June", "July"],
         datasets: [
           {
+            data: [122, 19, 13, 55, 22, 58],
             label: "# of Tickets",
-            data: [12, 19, 3, 5, 22, 3],
             backgroundColor: [
               "rgba(255, 99, 132, 0.8)",
               "rgba(54, 162, 235, 0.8)",

@@ -2,6 +2,7 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col id="un">
+        <b-row cols="10"><b>Tickets by department</b></b-row>
         <b-row>
           <b-col cols="8">Marketing</b-col>
           <b-col cols="4">{{ marketing.length }}</b-col>
@@ -144,13 +145,22 @@ export default {
       this.data = data;
     },
 
-    async getSoftware() {
+    // async getSoftware() {
+    //   const res = await fetch(
+    //     "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php"
+    //   );
+    //   const software = await res.json();
+    //   this.software = software;
+    // },
+
+        async getSoftware() {
       const res = await fetch(
-        "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php"
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=devs"
       );
       const software = await res.json();
       this.software = software;
     },
+
 
     async getAdmin() {
       const res = await fetch(
@@ -216,7 +226,7 @@ export default {
         });
     },
 
-    // Resolve this mess 😞
+    // Done 😃
     async getTask() {
       const formData = new FormData();
       formData.append("owner", localStorage.getItem("username"));
