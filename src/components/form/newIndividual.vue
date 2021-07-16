@@ -85,7 +85,7 @@ export default {
         email: "",
         name: "",
         food: null,
-        checked: []
+        checked: [],
       },
       show: true,
 
@@ -93,7 +93,7 @@ export default {
       lname: "",
       contact: "",
       adress: "",
-      email: ""
+      email: "",
     };
   },
 
@@ -122,7 +122,7 @@ export default {
         method: "post",
         url: "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
         data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } }
+        config: { headers: { "Content-Type": "multipart/form-data" } },
       }).catch(function(response) {
         //handle error
         console.log(response);
@@ -144,7 +144,7 @@ export default {
         method: "post",
         url: "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
         data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } }
+        config: { headers: { "Content-Type": "multipart/form-data" } },
       }).catch(function(response) {
         //handle error
         console.log(response);
@@ -163,8 +163,12 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    
+    hideModal() {
+
     }
-  }
+  },
 };
 </script>
 

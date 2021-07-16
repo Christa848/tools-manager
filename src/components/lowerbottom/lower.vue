@@ -88,7 +88,7 @@
                 v-on:blur="updateTask($event, list)"
                 v-bind:class="{ completed: list.completed }"
               >
-                {{ list.task }}
+                {{ list.title }}
               </span>
               <span class="remove" v-on:click="removeTask(list)">x</span>
             </li>
@@ -147,9 +147,17 @@ export default {
       this.data = data;
     },
 
-    async getSoftware() {
+    // async getSoftware() {
+    //   const res = await fetch(
+    //     "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php"
+    //   );
+    //   const software = await res.json();
+    //   this.software = software;
+    // },
+
+        async getSoftware() {
       const res = await fetch(
-        "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php"
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=devs"
       );
       const software = await res.json();
       this.software = software;
@@ -212,19 +220,17 @@ export default {
       formData.append("task", this.addTodoInput);
       formData.append("owner", owner);
       formData.append("completed", "not done");
+      
       axios
         .post("addListItem.php", formData)
-        .then((response) => {
-          console.log("Success: " + response.statusText);
+        .then(() => {
+          this.addTodoInput = ""; 
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
+          this.addTodoInput = ""; 
         });
-
-      this.addTodoInput = ""; //clear the input after successful submission
     },
-
-    // Resolve this mess 😞
     async getTask() {
       const formData = new FormData();
       formData.append("owner", localStorage.getItem("username"));
@@ -237,15 +243,12 @@ export default {
             this.lists.push({
               id: val.id,
               title: val.task,
-              isComplete: completeness,
+              isComplete: completeness
             });
           });
-          console.log(response.statusText);
         })
-        .catch((error) => console.error(error));
+        .catch(error => console.error(error));
     },
-
-    // Modify to reflect in db 🤨
     updateTask: function(e, list) {
       e.preventDefault();
       list.task = e.target.innerText;
@@ -254,8 +257,8 @@ export default {
       formData.append("id", list.id);
       axios
         .post("editItemList.php", formData)
-        .then(() => console.log("Record modified"))
-        .catch((error) => console.error(error));
+        .then(() => console.log("Record modified successfully"))
+        .catch(error => console.error(error));
 
       e.target.blur();
     },
@@ -270,11 +273,11 @@ export default {
       formData.append("id", list.id);
       axios
         .post("deleteItemList.php", formData)
-        .then((response) => console.log(response.statusText))
-        .catch((error) => console.error(error));
+        .then(response => console.log(response.statusText))
+        .catch(error => console.error(error));
       this.lists.splice(index, 1);
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

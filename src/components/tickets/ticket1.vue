@@ -29,7 +29,7 @@
           style="color:black"
           v-b-popover.hover="{
             title: 'Elvin Kakokmo',
-            content: 'My vehicle have been offline for a while'
+            content: 'My vehicle have been offline for a while',
           }"
         >
           {{ massage }}
@@ -84,12 +84,14 @@
                   placeholder=" Reply"
                   rows="3"
                   no-resize
-                  v-model="message"
+                  v-model="reply"
                 ></b-form-textarea>
               </div>
               <b-row id="butto">
                 <b-col cols="2">
-                  <b-button variant="outline-success">Send</b-button>
+                  <b-button variant="outline-success" v-on:click="saveAction"
+                    >Send</b-button
+                  >
                 </b-col>
                 <b-col></b-col>
               </b-row>
@@ -102,16 +104,31 @@
   </b-row>
 </template>
 <script>
+import axios from "axios";
 export default {
-  props: ["status", "name", "massage", "date", "id"],
+  props: ["status", "name", "massage", "date", "id", "reply"],
+  data() {
+    return {
+      subject: null
+    }
+  },
   methods: {
     showModal() {
       this.$refs["my-modal"].show();
     },
     hideModal() {
       this.$refs["my-modal"].hide();
-    }
-  }
+    },
+    saveAction: function() {
+      let formData = new FormData();
+      formData.append("reply", this.reply);
+      formData.append("id", this.id);
+      axios
+        .post("updateResponseMessage.php", formData)
+        .then(console.log(`Message ${this.reply} for id: ${this.id} updated successfully`))
+        .catch((error) => console.error(error));
+    },
+  },
 };
 </script>
 <style>

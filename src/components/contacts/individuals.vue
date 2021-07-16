@@ -58,7 +58,7 @@
 
                   <b-form-group
                     id="input-group-6"
-                    label="Adress:"
+                    label="Address:"
                     label-for="input-2"
                   >
                     <b-form-input
@@ -71,7 +71,7 @@
 
                   <b-form-group
                     id="input-group-1"
-                    label="Email address:"
+                    label="Email Address:"
                     label-for="input-1"
                     description="We'll never share your email with anyone else."
                   >
@@ -107,7 +107,7 @@
         <tr>
           <th>Firstname</th>
           <th>Lastname</th>
-          <th>Address</th>
+          <th>Adress</th>
           <th>Contact</th>
           <th>Email</th>
         </tr>
@@ -119,14 +119,21 @@
           <td v-html="highlightMatches(row.adress)"></td>
           <td v-html="highlightMatches(row.contact)"></td>
           <td v-html="highlightMatches(row.email)"></td>
+
           <td>
-            <b-icon
-              variant="info"
-              icon="card-text"
-              font-scale="1"
-              @click="deleteData(row.id)"
-              v-b-popover.hover="'Edit'"
-            ></b-icon>
+            <!-- <button
+              type="button"
+              name="edit"
+              class="btn btn-primary btn-xs edit"
+              @click="fetchData(row.id)"
+            >
+              Edit
+            </button> -->
+            <router-link
+              class="btn btn-primary"
+              :to="{ name: 'editContact', params: { contact_id: row.id } }"
+              >Edit</router-link
+            >
           </td>
           <td>
             <b-icon
@@ -149,20 +156,13 @@ export default {
     return {
       filter: "",
       data: [],
-
-      form: {
-        email: "",
-        name: "",
-        food: null,
-        checked: []
-      },
       show: true,
-
       fname: "",
       lname: "",
       contact: "",
       adress: "",
-      email: ""
+      email: "",
+      contact_id: null,
     };
   },
   beforeMount() {
@@ -177,7 +177,7 @@ export default {
       this.data = data;
     },
 
-    createContact: function() {
+    createContact: function () {
       console.log("Create contact!");
 
       let formData = new FormData();
@@ -188,38 +188,26 @@ export default {
       formData.append("email", this.email);
 
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
-          }
-        )
-        .then(response => console.log(response.statustext))
-        .catch(function(error) {
+        .post("toolsapi.php", formData)
+        .then((response) => console.log(response.statustext))
+        .catch(function (error) {
           console.log(error);
         });
     },
-
-    // Done 😃
-    deleteData: function(id) {
-      let formData = new FormData();
+    deleteData(id) {
+      const formData = new FormData();
       formData.append("id", id);
-      axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteContact.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
-          }
-        )
-        .then(res => console.log(res.statusText))
-        .catch(error => console.error(error));
+      if (confirm("Are you sure to delete this record?")) {
+        axios
+          .post("deleteContact.php", formData)
+          .then((res) => {
+            console.log(res.statusText);
+            this.$router.go();
+          })
+          .catch((error) => console.error(error));
+      }
     },
+    fetchData() {},
 
     showModal() {
       this.$refs["my-modal"].show();
@@ -256,13 +244,16 @@ export default {
       if (!matchExists) return text;
 
       const re = new RegExp(this.filter, "ig");
-      return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
-    }
+      return text.replace(
+        re,
+        (matchedText) => `<strong>${matchedText}</strong>`
+      );
+    },
   },
 
   computed: {
     filteredRows() {
-      return this.data.filter(row => {
+      return this.data.filter((row) => {
         const fname = row.fname.toString().toLowerCase();
         const lname = row.lname.toLowerCase();
         const contact = row.contact.toLowerCase();
@@ -275,8 +266,8 @@ export default {
           contact.includes(searchTerm)
         );
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

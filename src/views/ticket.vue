@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 <template>
   <div class="text-left">
     <b-card>
@@ -339,6 +338,9 @@ export default {
       marketing: [],
       itsupport: [],
       account: [],
+      ticket: null,
+      agent: [],
+      name: null,
 
       selected_tab: "all",
       isactive: false,
@@ -362,7 +364,7 @@ export default {
         "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php?action=read"
       );
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       this.data = data;
     },
     async getAdmin() {

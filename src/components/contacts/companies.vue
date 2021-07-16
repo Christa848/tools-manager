@@ -70,7 +70,6 @@
                       required
                     ></b-form-input>
                   </b-form-group>
-
                   <b-form-group
                     id="input-group-6"
                     label="Address:"
@@ -88,7 +87,6 @@
                   <b-button type="reset" variant="danger">Reset</b-button>
                 </b-form>
               </div>
-
               <b-button
                 class="mt-3"
                 variant="outline-danger"
@@ -101,7 +99,6 @@
         </div>
       </b-col>
     </b-row>
-
     <table>
       <thead>
         <tr>
@@ -113,7 +110,6 @@
         </tr>
       </thead>
       <tbody>
-        <!--<tr v-for="(row, index) of filteredRows" :key="index">  -->
         <tr v-for="(row, index) in filteredRows" :key="`Name-${index}`">
           <td v-html="highlightMatches(row.Name)"></td>
           <td v-html="highlightMatches(row.Region)"></td>
@@ -121,14 +117,19 @@
           <td v-html="highlightMatches(row.Contact)"></td>
           <td v-html="highlightMatches(row.Email)"></td>
           <td>
-            <button
+            <!-- <button
               type="button"
               name="edit"
               class="btn btn-primary btn-xs edit"
               @click="fetchData(row.Id)"
             >
               Edit
-            </button>
+            </button> -->
+            <router-link
+              class="btn btn-secondary"
+              :to="{ name: 'editCompany', params: { company_id: row.Id } }"
+              >Edit</router-link
+            >
           </td>
           <td>
             <button
@@ -174,7 +175,7 @@ export default {
       this.data = data;
     },
 
-    createContact: function () {
+    createContact: function() {
       let formData = new FormData();
       formData.append("Name", this.Name);
       formData.append("Region", this.Region);
@@ -183,46 +184,30 @@ export default {
       formData.append("Address", this.Address);
 
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/companiesCont.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .post("companiesCont.php", formData)
         .then((response) => console.log(response.statustext))
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
     },
 
-    deleteData: function (id) {
+    deleteData: function(id) {
+      console.log(19);
       let formData = new FormData();
       formData.append("id", id);
       axios
-        .post(
-          "http://itrackdevs.geo-fuel.com/tools_manager_api/deleteCompany.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then(this.$forceUpdate())
+        .post("deleteCompany.php", formData)
+        .then(this.$router.go())
         .catch((error) => console.error(error));
     },
 
-    // TODO: Resolve edit functionality
-    fetchData: function (id) {
+    fetchData: function(id) {
       let formData = new FormData();
       formData.append("id", id);
       axios
         .get()
-        .then(res => console.log(res))
-        .catch(error => console.error(error));
+        .then((res) => console.log(res))
+        .catch((error) => console.error(error));
     },
 
     showModal() {
@@ -232,14 +217,11 @@ export default {
       this.$refs["my-modal"].hide();
     },
     toggleModal() {
-      // We pass the ID of the button that we want to return focus to
-      // when the modal has hidden
       this.$refs["my-modal"].toggle("#toggle-btn");
     },
 
     onReset(event) {
       event.preventDefault();
-      // Reset our form values
       this.Email = "";
       this.Name = "";
       this.Adress = "";
@@ -278,7 +260,7 @@ export default {
         return (
           Name.includes(searchTerm) ||
           Region.includes(searchTerm) ||
-          Address.includes(searchTerm) 
+          Address.includes(searchTerm)
         );
       });
     },

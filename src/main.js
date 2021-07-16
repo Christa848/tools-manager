@@ -9,8 +9,9 @@ import store from "./store";
 import { BootstrapVueIcons } from 'bootstrap-vue';
 import VueTableDynamic from 'vue-table-dynamic';
 import './axios';
-//import { mdbTbl, mdbTblHead, mdbTblBody } from 'mdbvue';
+import VueResizeText from 'vue-resize-text';
 
+Vue.use(VueResizeText)
 Vue.use(VueTableDynamic)
 Vue.use(BootstrapVueIcons)
 

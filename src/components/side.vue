@@ -1,4 +1,5 @@
 <template>
+<div>
   <b-col>
     <b-row class="mb-2 cards">
       <b-col cols="2" sm="2" class="p-3">
@@ -276,11 +277,11 @@
       <b-col cols="5" sm="4" class="p-3">
         <b-container fluid class="bv-example-row">
           <b-row>
-            <b-col sm="9">
+            <b-col sm="12">
               <H4>Statistics</H4>
               <b-row>
-                <b-col cols="8" sm="6"><resolved /></b-col>
-                <b-col cols="4" sm="6"><received /></b-col>
+                <b-col cols="6" sm="6"><resolved /></b-col>
+                <b-col cols="6" sm="6"><received /></b-col>
               </b-row>
               <b-row>
                 <b-col cols="8" sm="12" align-self="centre"><average /></b-col>
@@ -293,6 +294,7 @@
 
     <lower />
   </b-col>
+  </div>
 </template>
 
 <script>

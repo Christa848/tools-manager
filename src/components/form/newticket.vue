@@ -78,8 +78,8 @@ export default {
 
       name: "",
       email: "",
-      message: "",
-      department: ""
+      massage: "",
+      department: "",
     };
   },
 
