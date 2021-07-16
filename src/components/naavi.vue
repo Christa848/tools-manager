@@ -4,7 +4,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-icon v-on:click="togleSidebar()" icon="list"></b-icon><log1 />
+        <b-icon v-on:click="togleSidebar()" icon="list" variant="light"></b-icon><log1 />
         <alar />
         <msg />
 

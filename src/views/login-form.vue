@@ -80,14 +80,14 @@ export default {
       }
     },
 
-    islogedIn: function () {
+    islogedIn: function() {
       var i = 0;
       while (i < this.data.length) {
         if (
           this.username === this.data[i]["username"] &&
           this.passw === this.data[i]["password"]
         ) {
-          localStorage.setItem('username', this.username);
+          localStorage.setItem("username", this.username);
           this.$router.push("/home");
           this.$emit("log-in");
           break;
@@ -138,8 +138,8 @@ export default {
       else {
       alert('Please enter username & password');
      } */
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

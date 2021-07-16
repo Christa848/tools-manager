@@ -40,7 +40,7 @@
           >
         </p>
 
-        <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+        <b-modal ref="my-modal" hide-footer title="Reply the ticket">
           <div class="d-block text-center">
             <div id="ticket">
               <b-col cols="">
@@ -59,10 +59,7 @@
                     <span class="badge badge-success">K</span>
                   </b-col>
 
-                  <b-col cols="">
-                    {{ name }} <i>via email </i>
-                    <p><i>14 days ago</i></p>
-                  </b-col>
+                  <b-col cols=""> {{ name }} <i>via email </i> </b-col>
                 </b-row>
 
                 <b-row>
@@ -73,7 +70,7 @@
                   <b-col>
                     <p><i>Hie iTrack Zim</i></p>
                     <p>{{ massage }}</p>
-                    <p><i>Regards</i></p>
+                    <i>Regards</i>
                     {{ name }}
                   </b-col>
                 </b-row>

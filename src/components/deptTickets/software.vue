@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h6>Admin</h6>
+    <h6>Software</h6>
 
-    <hr v-if="active === 'admin_active'" class="activebar" />
+    <hr v-if="active === 'software_active'" class="activebar" />
   </div>
 </template>
 <script>

@@ -101,44 +101,6 @@
         </div>
       </b-col>
     </b-row>
-<<<<<<< HEAD
-     
-  <table>
-    
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Adress</th>
-        <th>Contact</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-       
-     
-      <tr v-for="(row, index) in  filteredRows" :key="`fname-${index}`">
-        <td v-html="highlightMatches(row.fname)"></td>
-        <td v-html="highlightMatches(row.lname)"></td>
-        <td v-html="highlightMatches(row.adress)"></td>
-        <td v-html="highlightMatches(row.contact)"></td>
-        <td v-html="highlightMatches(row.email)"></td>
-         <!--<td >{{row.fname}}</td>
-       <td >{{row.lname}}</td>
-         <td >{{row.adress}}</td>
-        <td >{{row.contact}}</td>
-        <td >{{row.email}}</td>-->
-        
-                <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchData(row.id)">Edit</button></td>
-        <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td> 
-         
-      </tr>
-        
-    </tbody>
-  
-  </table>
-=======
->>>>>>> cea98711d91999f6bb7b0834473927f4fe63eb96
 
     <table>
       <thead>
@@ -158,24 +120,22 @@
           <td v-html="highlightMatches(row.contact)"></td>
           <td v-html="highlightMatches(row.email)"></td>
           <td>
-            <button
-              type="button"
-              name="edit"
-              class="btn btn-primary btn-xs edit"
-              @click="fetchData(row.id)"
-            >
-              Edit
-            </button>
+            <b-icon
+              variant="info"
+              icon="card-text"
+              font-scale="1"
+              @click="deleteData(row.id)"
+              v-b-popover.hover="'Edit'"
+            ></b-icon>
           </td>
           <td>
-            <button
-              type="button"
-              name="delete"
-              class="btn btn-danger btn-xs delete"
+            <b-icon
+              variant="danger"
+              icon="trash-fill"
+              font-scale="1"
               @click="deleteData(row.id)"
-            >
-              Delete
-            </button>
+              v-b-popover.hover="'Delete'"
+            ></b-icon>
           </td>
         </tr>
       </tbody>
@@ -194,7 +154,7 @@ export default {
         email: "",
         name: "",
         food: null,
-        checked: [],
+        checked: []
       },
       show: true,
 
@@ -202,7 +162,7 @@ export default {
       lname: "",
       contact: "",
       adress: "",
-      email: "",
+      email: ""
     };
   },
   beforeMount() {
@@ -217,8 +177,7 @@ export default {
       this.data = data;
     },
 
-    createContact: function (e) {
-      e.preventDefault();
+    createContact: function() {
       console.log("Create contact!");
 
       let formData = new FormData();
@@ -234,64 +193,18 @@ export default {
           formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-            },
+              "Content-Type": "multipart/form-data"
+            }
           }
         )
-        .then((response) => console.log(response.statustext))
-        .catch(function (error) {
+        .then(response => console.log(response.statustext))
+        .catch(function(error) {
           console.log(error);
         });
     },
 
-<<<<<<< HEAD
-        axios({
-            method: 'post',
-            url: 'http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php',
-            data: formData,
-            config: { headers: {'Content-Type': 'multipart/form-data' }}
-        })
-       
-        .catch(function (response) {
-            //handle error
-            console.log(response)
-            
-        });
-
-        
-    },
-
-     Delete: function(){
-        console.log("Create contact!")
-
-        let formData = new FormData();
-        console.log("id:", this.id),
-        formData.append('id', this.id)
-       
-        
-           
-        var contact = {};
-        formData.forEach(function(value, key){
-            contact[key] = value;
-        });
-
-        axios({
-            method: 'post',
-            url: 'http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php',
-            data: formData,
-            config: { headers: {'Content-Type': 'multipart/form-data' }}
-        })
-       
-        .catch(function (response) {
-            //handle error
-            console.log(response)
-            
-        });
-
-        
-=======
     // Done 😃
-    deleteData: function (id) {
+    deleteData: function(id) {
       let formData = new FormData();
       formData.append("id", id);
       axios
@@ -300,13 +213,12 @@ export default {
           formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-            },
+              "Content-Type": "multipart/form-data"
+            }
           }
         )
         .then(res => console.log(res.statusText))
         .catch(error => console.error(error));
->>>>>>> cea98711d91999f6bb7b0834473927f4fe63eb96
     },
 
     showModal() {
@@ -344,16 +256,13 @@ export default {
       if (!matchExists) return text;
 
       const re = new RegExp(this.filter, "ig");
-      return text.replace(
-        re,
-        (matchedText) => `<strong>${matchedText}</strong>`
-      );
-    },
+      return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
+    }
   },
 
   computed: {
     filteredRows() {
-      return this.data.filter((row) => {
+      return this.data.filter(row => {
         const fname = row.fname.toString().toLowerCase();
         const lname = row.lname.toLowerCase();
         const contact = row.contact.toLowerCase();
@@ -366,8 +275,8 @@ export default {
           contact.includes(searchTerm)
         );
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
