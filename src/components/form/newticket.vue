@@ -72,7 +72,7 @@ export default {
         email: "",
         fname: "",
         food: null,
-        checked: [],
+        checked: []
       },
       show: true,
 
@@ -84,7 +84,7 @@ export default {
   },
 
   methods: {
-    createContact: function () {
+    createContact: function() {
       console.log("Create contact!");
 
       let formData = new FormData();
@@ -98,7 +98,7 @@ export default {
         formData.append("email", this.email);
 
       var contact = {};
-      formData.forEach(function (value, key) {
+      formData.forEach(function(value, key) {
         contact[key] = value;
       });
 
@@ -106,21 +106,21 @@ export default {
         method: "post",
         url: "http://itrackdevs.geo-fuel.com/tools_manager_api/newTicket.php",
         data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } },
-      }).catch(function (response) {
+        config: { headers: { "Content-Type": "multipart/form-data" } }
+      }).catch(function(response) {
         //handle error
         console.log(response);
       });
     },
 
-    Delete: function () {
+    Delete: function() {
       console.log("Create contact!");
 
       let formData = new FormData();
       console.log("id:", this.id), formData.append("id", this.id);
 
       var contact = {};
-      formData.forEach(function (value, key) {
+      formData.forEach(function(value, key) {
         contact[key] = value;
       });
 
@@ -128,8 +128,8 @@ export default {
         method: "post",
         url: "http://itrackdevs.geo-fuel.com/tools_manager_api/toolsapi.php",
         data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } },
-      }).catch(function (response) {
+        config: { headers: { "Content-Type": "multipart/form-data" } }
+      }).catch(function(response) {
         //handle error
         console.log(response);
       });
@@ -147,8 +147,8 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

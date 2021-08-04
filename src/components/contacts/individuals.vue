@@ -129,18 +129,20 @@
             >
               Edit
             </button> -->
-            <router-link class="btn btn-primary"
-            :to="{name: 'editContact', params: {contact_id: row.id}}">Edit</router-link>
+            <router-link
+              class="btn btn-primary"
+              :to="{ name: 'editContact', params: { contact_id: row.id } }"
+              >Edit</router-link
+            >
           </td>
           <td>
-            <button
-              type="button"
-              name="delete"
-              class="btn btn-danger btn-xs delete"
+            <b-icon
+              variant="danger"
+              icon="trash-fill"
+              font-scale="1"
               @click="deleteData(row.id)"
-            >
-              Delete
-            </button>
+              v-b-popover.hover="'Delete'"
+            ></b-icon>
           </td>
         </tr>
       </tbody>
@@ -160,7 +162,7 @@ export default {
       contact: "",
       adress: "",
       email: "",
-      contact_id: null
+      contact_id: null,
     };
   },
   beforeMount() {
@@ -196,14 +198,14 @@ export default {
       const formData = new FormData();
       formData.append("id", id);
       if (confirm("Are you sure to delete this record?")) {
-      axios
-        .post("deleteContact.php", formData)
-        .then((res) => {
-          console.log(res.statusText);
-          this.$router.go();
-        })
-        .catch((error) => console.error(error));
-      } 
+        axios
+          .post("deleteContact.php", formData)
+          .then((res) => {
+            console.log(res.statusText);
+            this.$router.go();
+          })
+          .catch((error) => console.error(error));
+      }
     },
     fetchData() {},
 

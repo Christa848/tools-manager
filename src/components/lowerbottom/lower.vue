@@ -2,7 +2,6 @@
   <b-container class="bv-example-row">
     <b-row>
       <b-col id="un">
-        <b-row cols="10"><b>Tickets by department</b></b-row>
         <b-row>
           <b-col cols="8">Marketing</b-col>
           <b-col cols="4">{{ marketing.length }}</b-col>
@@ -20,7 +19,7 @@
         <hr />
         <b-row>
           <b-col cols="8">Systems Development</b-col>
-          <b-col cols="4">{{ software.length }}</b-col>
+          <b-col cols="4">{{ systems.length }}</b-col>
         </b-row>
       </b-col>
       <b-col id="cs"
@@ -113,17 +112,19 @@ export default {
       itsupport: [],
       account: [],
       software: [],
+      systems: [],
+      listData: [],
       lists: [],
       hasError: false,
 
-      addTodoInput: ""
+      addTodoInput: "",
     };
   },
 
   computed: {
     filterLists: function() {
       return _.orderBy(this.lists, ["completed", false]);
-    }
+    },
   },
 
   beforeMount() {
@@ -134,6 +135,7 @@ export default {
     this.getSupport();
     this.getAccounts();
     this.getTask();
+    this.getSystems();
   },
 
   methods: {
@@ -160,7 +162,6 @@ export default {
       const software = await res.json();
       this.software = software;
     },
-
 
     async getAdmin() {
       const res = await fetch(
@@ -193,7 +194,13 @@ export default {
       const account = await res.json();
       this.account = account;
     },
-
+    async getSystems() {
+      const res = await fetch(
+        "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=systems"
+      );
+      const systems = await res.json();
+      this.systems = systems;
+    },
     addTask: function() {
       if (!this.addTodoInput) {
         // <--- If no value then we are setting error to `true`
@@ -204,7 +211,7 @@ export default {
       this.lists.push({
         id: this.lists.length + 1,
         title: this.addTodoInput,
-        isComplete: false
+        isComplete: false,
       });
 
       // To format a content-type for CORS preflight request
@@ -230,9 +237,9 @@ export default {
       formData.append("owner", localStorage.getItem("username"));
       axios
         .post("getListItem.php", formData)
-        .then(response => {
+        .then((response) => {
           let userList = [...response.data];
-          userList.forEach(val => {
+          userList.forEach((val) => {
             let completeness = val.completed == "done" ? true : false;
             this.lists.push({
               id: val.id,
