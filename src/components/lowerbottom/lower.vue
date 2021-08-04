@@ -74,13 +74,13 @@
         </div>
 
         <div class="todo-lists" v-if="lists.length">
-          <h6>Tasks for the Day</h6>
+          <h6>Tasks for the Day ({{ lists.filter(item => !item.completed).length }} remaining)</h6>
           <ol>
             <li v-for="list in filterLists" :key="list.id">
               <input
                 type="checkbox"
-                v-on:change="completeTask(list)"
-                v-bind:checked="list.completed"
+                v-model="list.completed"
+                v-on:change="updateTask($event, list)"
               />
               <span
                 class="title"
@@ -217,14 +217,15 @@ export default {
       axios
         .post("addListItem.php", formData)
         .then(() => {
-          this.addTodoInput = ""; 
+          this.addTodoInput = "";
+          console.log("Task added successfully") 
         })
         .catch(error => {
           console.error(error);
           this.addTodoInput = ""; 
         });
     },
-    async getTask() {
+    getTask: function() {
       const formData = new FormData();
       formData.append("owner", localStorage.getItem("username"));
       axios
@@ -246,7 +247,8 @@ export default {
       e.preventDefault();
       list.task = e.target.innerText;
       const formData = new FormData();
-      formData.append("task", list.task);
+      formData.append("task", list.title);
+      formData.append("completed", list.completed);
       formData.append("id", list.id);
       axios
         .post("editItemList.php", formData)
@@ -266,7 +268,6 @@ export default {
       formData.append("id", list.id);
       axios
         .post("deleteItemList.php", formData)
-        .then(response => console.log(response.statusText))
         .catch(error => console.error(error));
       this.lists.splice(index, 1);
     }

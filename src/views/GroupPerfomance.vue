@@ -101,11 +101,9 @@ export default {
       this.data = data;
     },
 
-    //FIXME: Fix responses for record count 🙍 
+    //FIXME: Fix responses for record count 🙍
     showDeptStats: function() {
-      axios
-        .get("getDeptStats.php")
-        .catch((error) => console.error(error));
+      axios.get("getDeptStats.php").catch((error) => console.error(error));
     },
 
     onReset(event) {
@@ -140,9 +138,7 @@ export default {
     filteredRows() {
       return this.data.filter((row) => {
         const department = row.department.toString().toLowerCase();
-
         const searchTerm = this.filter.toLowerCase();
-
         return department.includes(searchTerm);
       });
     },

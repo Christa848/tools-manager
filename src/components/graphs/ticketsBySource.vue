@@ -7,7 +7,6 @@
       :width="600"
       :height="300"
     />
-    {{emails}}
   </mdb-container>
 </template>
 <script>
@@ -29,7 +28,7 @@
           datasets: [
             {
               
-              data: [1,100,5],
+              data: [19,50,45],
               backgroundColor: [
                 "#F7464A",
                 "#46BFBD",
