@@ -24,7 +24,7 @@
           labels: ["Open", "Pending", "Closed"],
           datasets: [
             {
-              data: [240, 80, 100],
+              data: [5, 0, 1],
               backgroundColor: [
                 "#F7464A",
                 "#46BFBD",

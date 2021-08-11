@@ -12,18 +12,41 @@
           ></b-icon
         ></router-link>
         <h3>Group Performance</h3>
-        <small>Last Updated 30 minutes ago</small>
       </b-card-text>
       <b-row>
-        <b-col cols="1">
-          <b-button href="#" variant="primary"> Filter</b-button>
-        </b-col>
+        <b-col cols="1"> </b-col>
         <b-col>
-          <p>
-            <small>Filter by: Time Period: </small>
-            <b> 7 Feb, 2021- 9 Feb 2021 </b>
-          </p></b-col
-        >
+          <p></p>
+
+          <div>
+            <b-row>
+              <b-col cols="4">
+                <label for="example-datepicker"><b>Start date</b></label>
+                <b-form-datepicker
+                  id="example-datepicker"
+                  v-model="value"
+                  class="mb-2"
+                ></b-form-datepicker>
+                <p>Value: '{{ value }}'</p>
+              </b-col>
+              <b-col cols="4">
+                <label for="example-datepicker"><b>End date</b></label>
+                <b-form-datepicker
+                  id="example-datepicker1"
+                  v-model="value2"
+                  class="mb-2"
+                ></b-form-datepicker>
+              </b-col>
+              <b-col cols="3">
+                <p></p>
+                <p></p>
+                <b-button href="#" variant="primary" id="filt">
+                  Filter</b-button
+                >
+              </b-col>
+            </b-row>
+          </div>
+        </b-col>
       </b-row>
     </b-card>
 
@@ -72,12 +95,13 @@ export default {
     return {
       filter: "",
       data: [],
+      value: "",
 
       form: {
         email: "",
         name: "",
         food: null,
-        checked: [],
+        checked: []
       },
       show: true,
 
@@ -85,7 +109,7 @@ export default {
       lname: "",
       contact: "",
       adress: "",
-      email: "",
+      email: ""
     };
   },
   beforeMount() {
@@ -101,11 +125,9 @@ export default {
       this.data = data;
     },
 
-    //FIXME: Fix responses for record count 🙍 
+    //FIXME: Fix responses for record count 🙍
     showDeptStats: function() {
-      axios
-        .get("getDeptStats.php")
-        .catch((error) => console.error(error));
+      axios.get("getDeptStats.php").catch(error => console.error(error));
     },
 
     onReset(event) {
@@ -129,24 +151,21 @@ export default {
       if (!matchExists) return text;
 
       const re = new RegExp(this.filter, "ig");
-      return text.replace(
-        re,
-        (matchedText) => `<strong>${matchedText}</strong>`
-      );
-    },
+      return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
+    }
   },
 
   computed: {
     filteredRows() {
-      return this.data.filter((row) => {
+      return this.data.filter(row => {
         const department = row.department.toString().toLowerCase();
 
         const searchTerm = this.filter.toLowerCase();
 
         return department.includes(searchTerm);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

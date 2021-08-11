@@ -1,5 +1,6 @@
 <template>
   <div id="tabb">
+  <h4>  Companies Contacts</h4>
     <b-row>
       <b-col cols="2">
         <input type="text" id="srch" placeholder="Search " v-model="filter" />
@@ -126,7 +127,7 @@
               Edit
             </button> -->
             <router-link
-              class="btn btn-secondary"
+              class="btn btn-primary btn-xs edit"
               :to="{ name: 'editCompany', params: { company_id: row.Id } }"
               >Edit</router-link
             >

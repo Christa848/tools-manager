@@ -12,23 +12,46 @@
           ></b-icon
         ></router-link>
         <h3>Agent Perfomance</h3>
-        <small>Last Updated 30 minutes ago</small>
       </b-card-text>
       <b-row>
-        <b-col cols="1">
-          <b-button href="#" variant="primary"> Filter</b-button>
-        </b-col>
+        <b-col cols="1"> </b-col>
         <b-col>
-          <p>
-            <small>Filter by: Time Period: </small>
-            <b> 7 Feb, 2021- 9 Feb 2021 </b>
-          </p></b-col
-        >
+          <p></p>
+
+          <div>
+            <b-row>
+              <b-col cols="4">
+                <label for="example-datepicker"><b>Start date</b></label>
+                <b-form-datepicker
+                  id="example-datepicker"
+                  v-model="value"
+                  class="mb-2"
+                ></b-form-datepicker>
+                <p>Value: '{{ value }}'</p>
+              </b-col>
+              <b-col cols="4">
+                <label for="example-datepicker"><b>End date</b></label>
+                <b-form-datepicker
+                  id="example-datepicker1"
+                  v-model="value2"
+                  class="mb-2"
+                ></b-form-datepicker>
+              </b-col>
+              <b-col cols="3">
+                <p></p>
+                <p></p>
+                <b-button href="#" variant="primary" id="filt">
+                  Filter</b-button
+                >
+              </b-col>
+            </b-row>
+          </div>
+        </b-col>
       </b-row>
     </b-card>
 
     <b-row>
-      <b-col cols="2">
+      <b-col cols="2" id="">
         <input type="text" id="srch" placeholder="Search " v-model="filter" />
       </b-col>
       <b-col cols="1" id="not">
@@ -73,6 +96,7 @@ export default {
     return {
       filter: "",
       data: [],
+      value: "",
 
       form: {
         email: "",
@@ -188,5 +212,8 @@ select {
 #back {
   margin-left: 98%;
   margin-top: 2px;
+}
+#filt {
+  margin-top: 20px;
 }
 </style>

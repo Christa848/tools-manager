@@ -1,8 +1,5 @@
 <template>
   <b-row align-v="center">
-    <b-col cols="1">
-      <h2><b-badge>K</b-badge></h2>
-    </b-col>
     <b-col cols="7" @click="showModal">
       <b-badge v-if="status === 'Unsolved'" variant="light">{{
         status
@@ -23,21 +20,12 @@
         status
       }}</b-badge>
       <div>
-        <h6
-          @click="showModal"
-          id="my-nav-dropdown"
-          style="color:black"
-          v-b-popover.hover="{
-            title: 'Elvin Kakokmo',
-            content: 'My vehicle have been offline for a while',
-          }"
-        >
+        <h6 @click="showModal" id="my-nav-dropdown" style="color:black">
+          
           {{ massage }}
         </h6>
         <p>
-          {{ name }} .<small>Received On:{{ date }}</small> .<small
-            >Due in 2 days</small
-          >
+       From {{ name }}...<small>Received On:{{ date }}</small> ...<small>Due in 2 days</small>
         </p>
 
         <b-modal ref="my-modal" hide-footer title="Reply the ticket">
@@ -46,17 +34,17 @@
               <b-col cols="">
                 <b-row>
                   <b-col cols="3">
-                    <b-icon icon="envelope"></b-icon>
+                    <!-- <b-icon icon="envelope"></b-icon> -->
                   </b-col>
 
                   <b-col>
-                    <h5>{{ subject }} Car is offline</h5>
+                    <!--<h5>{{ subject }} Car is offline</h5> -->
                   </b-col>
                 </b-row>
 
                 <b-row>
                   <b-col cols="3">
-                    <span class="badge badge-success">K</span>
+                    <span class="badge badge-success">Client</span>
                   </b-col>
 
                   <b-col cols=""> {{ name }} <i>via email </i> </b-col>
@@ -69,6 +57,7 @@
 
                   <b-col>
                     <p><i>Hie iTrack Zim</i></p>
+
                     <p>{{ massage }}</p>
                     <i>Regards</i>
                     {{ name }}
@@ -100,7 +89,7 @@
         </b-modal>
       </div>
     </b-col>
-    <b-col> <b-badge variant="success">New</b-badge> </b-col>
+    <b-col> <b-badge variant="success">@ITrack Zim</b-badge> </b-col>
   </b-row>
 </template>
 <script>
@@ -110,7 +99,7 @@ export default {
   data() {
     return {
       subject: null
-    }
+    };
   },
   methods: {
     showModal() {
@@ -125,10 +114,14 @@ export default {
       formData.append("id", this.id);
       axios
         .post("updateResponseMessage.php", formData)
-        .then(console.log(`Message ${this.reply} for id: ${this.id} updated successfully`))
-        .catch((error) => console.error(error));
-    },
-  },
+        .then(
+          console.log(
+            `Message ${this.reply} for id: ${this.id} updated successfully`
+          )
+        )
+        .catch(error => console.error(error));
+    }
+  }
 };
 </script>
 <style>

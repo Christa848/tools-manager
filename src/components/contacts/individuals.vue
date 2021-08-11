@@ -1,5 +1,6 @@
 <template>
   <div id="tabb">
+    <h4>Individual Contacts</h4>
     <b-row>
       <b-col cols="2">
         <input type="text" id="srch" placeholder="Search " v-model="filter" />
@@ -129,20 +130,30 @@
             >
               Edit
             </button> -->
+
             <router-link
-              class="btn btn-primary"
+              class="btn btn-primary btn-xs edit"
               :to="{ name: 'editContact', params: { contact_id: row.id } }"
               >Edit</router-link
             >
           </td>
           <td>
-            <b-icon
+            <!-- <b-icon
               variant="danger"
               icon="trash-fill"
               font-scale="1"
               @click="deleteData(row.id)"
               v-b-popover.hover="'Delete'"
-            ></b-icon>
+            ></b-icon> -->
+
+            <button
+              type="button"
+              name="delete"
+              class="btn btn-danger btn-xs delete"
+              @click="deleteData(row.id)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -162,7 +173,7 @@ export default {
       contact: "",
       adress: "",
       email: "",
-      contact_id: null,
+      contact_id: null
     };
   },
   beforeMount() {
@@ -177,7 +188,7 @@ export default {
       this.data = data;
     },
 
-    createContact: function () {
+    createContact: function() {
       console.log("Create contact!");
 
       let formData = new FormData();
@@ -189,22 +200,24 @@ export default {
 
       axios
         .post("toolsapi.php", formData)
-        .then((response) => console.log(response.statustext))
-        .catch(function (error) {
+        .then(response => console.log(response.statustext))
+        .catch(function(error) {
           console.log(error);
         });
     },
     deleteData(id) {
       const formData = new FormData();
+     
       formData.append("id", id);
       if (confirm("Are you sure to delete this record?")) {
+         console.log(id);
         axios
           .post("deleteContact.php", formData)
-          .then((res) => {
+          .then(res => {
             console.log(res.statusText);
             this.$router.go();
           })
-          .catch((error) => console.error(error));
+          .catch(error => console.error(error));
       }
     },
     fetchData() {},
@@ -244,16 +257,13 @@ export default {
       if (!matchExists) return text;
 
       const re = new RegExp(this.filter, "ig");
-      return text.replace(
-        re,
-        (matchedText) => `<strong>${matchedText}</strong>`
-      );
-    },
+      return text.replace(re, matchedText => `<strong>${matchedText}</strong>`);
+    }
   },
 
   computed: {
     filteredRows() {
-      return this.data.filter((row) => {
+      return this.data.filter(row => {
         const fname = row.fname.toString().toLowerCase();
         const lname = row.lname.toLowerCase();
         const contact = row.contact.toLowerCase();
@@ -266,8 +276,8 @@ export default {
           contact.includes(searchTerm)
         );
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
