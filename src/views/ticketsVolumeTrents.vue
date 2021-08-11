@@ -98,7 +98,6 @@
 
 <script>
 import volume from "@/components/graphs/weeklyTrents.vue";
-//TODO: Work on dynamic values for card
 export default {
   name: "weeklyTrents",
   components: {

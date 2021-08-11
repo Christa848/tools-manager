@@ -159,9 +159,7 @@ export default {
     filteredRows() {
       return this.data.filter(row => {
         const department = row.department.toString().toLowerCase();
-
         const searchTerm = this.filter.toLowerCase();
-
         return department.includes(searchTerm);
       });
     }

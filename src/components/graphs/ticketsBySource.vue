@@ -1,3 +1,4 @@
+
 <template>
   <mdb-container>
     <mdb-pie-chart
@@ -15,73 +16,52 @@ export default {
   name: "ChartPage",
   components: {
     mdbPieChart,
-    mdbContainer
+    mdbContainer,
   },
   data() {
     return {
-      emails: [],
-    
-
       pieChartData: {
-        labels: ["WhatsApp", "Facebook", "Email"],
-
+        labels: ["Open", "Pending", "Closed"],
         datasets: [
           {
-            data: [0, 0, 100],
+            data: [5, 0, 1],
             backgroundColor: [
               "#F7464A",
               "#46BFBD",
               "#FDB45C",
               "#949FB1",
-              "#4D5360"
+              "#4D5360",
             ],
             hoverBackgroundColor: [
               "#FF5A5E",
               "#5AD3D1",
               "#FFC870",
               "#A8B3C5",
-              "#616774"
-            ]
-          }
-        ]
+              "#616774",
+            ],
+          },
+        ],
       },
-
       pieChartOptions: {
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: false,
         plugins: {
           datalabels: {
             color: "white",
             align: "center",
             font: {
-              size: 16
+              size: 16,
             },
-            formatter: value => {
+            formatter: (value) => {
               const [dataset] = this.pieChartData.datasets;
               const setValue = dataset.data.reduce((a, b) => a + b);
 
               return `${Math.round((value / setValue) * 100)}%`;
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     };
   },
-  beforeMount() {
-    this.getName();
-  },
-  methods: {
-    async getName() {
-      const res = await fetch(
-        "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php?action=read"
-      );
-      const emails = await res.json();
-      this.emails = emails;
-      const kiki = parseInt(this.emails.length);
-      console.log(kiki);
-
-      return kiki;
-    }
-  }
 };
 </script>
