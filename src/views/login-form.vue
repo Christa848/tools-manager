@@ -40,8 +40,15 @@
         </div>
       </b-form>
     </div>
-    <!-- {{ data[0]["username"] }}
-    {{ data.length }} -->
+    <router-link to="/home" class="iterms"
+      ><b-button class="searchBtn" variant="primary"
+        >login</b-button
+      ></router-link
+    >
+    <div class="admin">
+      <b-link v-on:click="setAdmin()">Login as {{ defaultUser }} </b-link
+      >|<b-link v-on:click="setAgent()"> fogot password</b-link>
+    </div>
   </div>
 </template>
 <script>
@@ -54,7 +61,7 @@ export default {
       user: "Tools Manager",
       defaultUser: "Admin",
       data: {},
-      passw: ""
+      passw: "",
     };
   },
 
@@ -80,7 +87,7 @@ export default {
       }
     },
 
-    islogedIn: function() {
+    islogedIn: function () {
       var i = 0;
       while (i < this.data.length) {
         if (
@@ -138,8 +145,8 @@ export default {
       else {
       alert('Please enter username & password');
      } */
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
