@@ -207,10 +207,10 @@ export default {
     },
     deleteData(id) {
       const formData = new FormData();
-     
+
       formData.append("id", id);
       if (confirm("Are you sure to delete this record?")) {
-         console.log(id);
+        console.log(id);
         axios
           .post("deleteContact.php", formData)
           .then(res => {

@@ -1,4 +1,3 @@
-
 <template>
   <mdb-container>
     <mdb-pie-chart
@@ -16,12 +15,12 @@ export default {
   name: "ChartPage",
   components: {
     mdbPieChart,
-    mdbContainer,
+    mdbContainer
   },
   data() {
     return {
       pieChartData: {
-        labels: ["Open", "Pending", "Closed"],
+        labels: ["Whatsapp", "Emails", "facebook"],
         datasets: [
           {
             data: [5, 0, 1],
@@ -30,17 +29,17 @@ export default {
               "#46BFBD",
               "#FDB45C",
               "#949FB1",
-              "#4D5360",
+              "#4D5360"
             ],
             hoverBackgroundColor: [
               "#FF5A5E",
               "#5AD3D1",
               "#FFC870",
               "#A8B3C5",
-              "#616774",
-            ],
-          },
-        ],
+              "#616774"
+            ]
+          }
+        ]
       },
       pieChartOptions: {
         responsive: false,
@@ -50,18 +49,18 @@ export default {
             color: "white",
             align: "center",
             font: {
-              size: 16,
+              size: 16
             },
-            formatter: (value) => {
+            formatter: value => {
               const [dataset] = this.pieChartData.datasets;
               const setValue = dataset.data.reduce((a, b) => a + b);
 
               return `${Math.round((value / setValue) * 100)}%`;
-            },
-          },
-        },
-      },
+            }
+          }
+        }
+      }
     };
-  },
+  }
 };
 </script>
