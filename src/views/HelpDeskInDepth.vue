@@ -22,12 +22,13 @@
             <b-row>
               <b-col cols="4">
                 <label for="example-datepicker"><b>Start date</b></label>
+              
                 <b-form-datepicker
                   id="example-datepicker"
                   v-model="value"
                   class="mb-2"
                 ></b-form-datepicker>
-                <p>Value: '{{ value }}'</p>
+               
               </b-col>
               <b-col cols="4">
                 <label for="example-datepicker"><b>End date</b></label>
@@ -41,9 +42,11 @@
                 <p></p>
                 <p></p>
                 <b-button href="#" variant="primary" id="filt">
-                  Filter</b-button
-                >
+                  Filter</b-button>
+                
+               
               </b-col>
+              
             </b-row>
           </div>
         </b-col>
@@ -58,7 +61,7 @@
         <b-col cols="2">
           <b-row>
             <b-col cols="12">
-              <h2>7</h2>
+              <h2>5</h2>
 
               <p>Resolved Tickets</p>
             </b-col>

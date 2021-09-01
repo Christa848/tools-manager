@@ -84,6 +84,61 @@
         </b-input-group>
       </b-col>
     </b-row>
+
+    
+
+        <b-row class="mb-1 sidelink" v-b-modal.modal-3>
+      <b-col cols="12" sm="12" class="p-3 "
+        ><router-link to="/ticket" class="iterms">
+          <b-icon icon="dice6"></b-icon> User Logs</router-link
+        ></b-col
+      >
+    </b-row>
+
+    <div>
+  <b-modal id="modal-3" size="xl" title="User Logs">
+    <div>
+            <b-row>
+              <b-col cols="3">
+              <div>
+                
+  <b-dropdown id="dropdown-1" text="Choose User" class="m-md-2">
+    <b-dropdown-item>Christa</b-dropdown-item>
+    <b-dropdown-item>Tinashe</b-dropdown-item>
+    <b-dropdown-item>Kelvin</b-dropdown-item>
+    <b-dropdown-divider></b-dropdown-divider>
+
+  </b-dropdown>
+</div>
+              </b-col>
+              <b-col cols="4">
+                <label for="example-datepicker"><b>Start date</b></label>
+                <b-form-datepicker
+                  id="example-datepicker"
+                  v-model="value"
+                  class="mb-2"
+                ></b-form-datepicker>
+                
+              </b-col>
+              <b-col cols="4">
+                <label for="example-datepicker"><b>End date</b></label>
+                <b-form-datepicker
+                  id="example-datepicker1"
+                  v-model="value2"
+                  class="mb-2"
+                ></b-form-datepicker>
+              </b-col>
+              <b-col cols="1">
+                <p></p>
+                <p></p>
+                <b-button href="#" variant="primary" id="filt">
+                  Filter</b-button
+                >
+              </b-col>
+            </b-row>
+          </div>
+  </b-modal>
+</div>
   </div>
 </template>
 <script>

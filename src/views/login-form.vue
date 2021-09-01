@@ -40,7 +40,7 @@
         </div>
       </b-form>
     </div>
-    <router-link to="/home" class="iterms"
+   <!-- <router-link to="/home" class="iterms"
       ><b-button class="searchBtn" variant="primary"
         >login</b-button
       ></router-link
@@ -48,7 +48,7 @@
     <div class="admin">
       <b-link v-on:click="setAdmin()">Login as {{ defaultUser }} </b-link
       >|<b-link v-on:click="setAgent()"> fogot password</b-link>
-    </div>
+    </div>-->
   </div>
 </template>
 <script>

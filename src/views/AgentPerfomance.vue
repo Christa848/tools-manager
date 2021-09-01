@@ -27,7 +27,7 @@
                   v-model="value"
                   class="mb-2"
                 ></b-form-datepicker>
-                <p>Value: '{{ value }}'</p>
+                
               </b-col>
               <b-col cols="4">
                 <label for="example-datepicker"><b>End date</b></label>

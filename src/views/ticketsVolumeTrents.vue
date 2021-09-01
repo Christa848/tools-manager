@@ -27,7 +27,7 @@
                   v-model="value"
                   class="mb-2"
                 ></b-form-datepicker>
-                <p>Value: '{{ value }}'</p>
+                
               </b-col>
               <b-col cols="4">
                 <label for="example-datepicker"><b>End date</b></label>
@@ -51,45 +51,22 @@
     </b-card>
 
     <b-card id="volume">
-      <b-row id="top">
-        <b-col cols="">
-          <p>MONTHLY TRENTS OF TICKETS RECEIVED, RESOLVED AND UNRESOLVED</p>
-        </b-col>
-        <b-col cols="4">
-          <div>
-            <b-button squared variant="outline-success">Daily</b-button>
-            <b-button squared variant="outline-success">Weekly</b-button>
-            <b-button squared variant="outline-success">Monthly</b-button>
-            <b-button squared variant="outline-success">Yearly</b-button>
-          </div>
-        </b-col>
-      </b-row>
+  
 
       <b-row>
         <b-col id="dat">
           Total Received tickets
-          <h5>77</h5></b-col
+          <h5>6</h5></b-col
         >
         <b-col id="dat">
           Total Resolved tickets
-          <h5>70</h5></b-col
+          <h5>1</h5></b-col
         >
         <b-col id="dat">
           Total Unsolved tickets
-          <h5>07</h5></b-col
+          <h5>5</h5></b-col
         >
-        <b-col id="dat">
-          Average Received tickets
-          <h5>77</h5></b-col
-        >
-        <b-col id="dat">
-          Average Resolved tickets
-          <h5>70</h5></b-col
-        >
-        <b-col id="dat">
-          Average Unsolved tickets
-          <h5>07</h5></b-col
-        >
+     
       </b-row>
       <volume />
     </b-card>
