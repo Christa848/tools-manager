@@ -106,14 +106,7 @@
               >Delete</b-button
             ></b-navbar-brand
           >
-          <b-navbar-brand
-            ><b-button
-              variant="outline-success"
-              class="my-2 my-sm-0"
-              type="submit"
-              >Spam</b-button
-            ></b-navbar-brand
-          >
+ 
         </b-col>
         <b-col cols="1">
           <router-link to="/home" class="iterms">

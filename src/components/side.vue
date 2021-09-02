@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dash">
     <b-col>
       <b-row class="mb-2 cards">
         <b-col cols="2" sm="2" class="p-3">
@@ -78,7 +78,7 @@
 
       <b-row class="mb-2">
         <!-- tabs start -->
-        <b-col cols="7" sm="8" class="p-3" id="trents">
+        <b-col cols="8" sm="8" class="p-3" id="trents">
           <b-tabs>
             <b-tab title="Trends" v-if="selected_tab === 'trend'">
               <trent />
@@ -282,7 +282,7 @@
           </b-tabs>
         </b-col>
         <!-- tabs start -->
-        <b-col cols="5" sm="4" class="p-3">
+        <b-col cols="4" sm="4" class="p-3">
           <b-container fluid class="bv-example-row">
             <b-row>
               <b-col sm="12">
@@ -305,6 +305,7 @@
       <lower />
     </b-col>
   </div>
+ 
 </template>
 
 <script>
@@ -418,5 +419,8 @@ export default {
   max-height: 450px;
   overflow-y: hidden;
   overflow-y: scroll;
+}
+.dash{
+  width: 1300px;
 }
 </style>

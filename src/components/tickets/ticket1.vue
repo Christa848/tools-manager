@@ -1,6 +1,6 @@
 <template>
   <b-row align-v="center">
-    <b-col cols="7" @click="showModal">
+    <b-col cols="9" @click="showModal">
       <b-badge v-if="status === 'Unsolved'" variant="light">{{
         status
       }}</b-badge>
@@ -24,7 +24,7 @@
           {{ massage }}
         </h6>
         <p>
-          From {{ name }}...<small>Received On:{{ date }}</small> ...<small
+          From {{ name }}...<small>Received On:{{ date }}</small> ..<small
             >Due in 2 days</small
           >
         </p>

@@ -83,18 +83,15 @@
             </b-col>
           </b-row>
           <hr />
-          <b-row>
-            <b-col>
-              <h2>0hrs 30min 45sec</h2>
-              <p>Average Resolution Time</p>
-            </b-col>
-          </b-row>
-          <hr />
+
         </b-col>
         <b-col cols="5" id="graphs">
           <b-row>
             <h4>Created Tickets Split By Source</h4>
             <bySource />
+
+
+     
           </b-row>
           <!-- <b-row> Created Tickets Split By Status
             <byStatus/>
@@ -103,7 +100,7 @@
           <b-row></b-row>
         </b-col>
         <b-col cols="5">
-          <h4>Created Tickets Split By Status</h4>
+         
           <!--<byPriority/>   -->
           <byStatus
         /></b-col>
@@ -119,7 +116,13 @@ export default {
   components: {
     bySource,
     byStatus
-  }
+  },
+    data() {
+    return {
+      isHidden: false,
+    
+    };
+  },
 };
 </script>
 <style>

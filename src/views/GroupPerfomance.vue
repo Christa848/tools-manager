@@ -40,7 +40,7 @@
               <b-col cols="3">
                 <p></p>
                 <p></p>
-                <b-button href="#" variant="primary" id="filt">
+                <b-button v-on:click="isHidden = !isHidden" variant="primary" id="filt">
                   Filter</b-button
                 >
               </b-col>
@@ -71,7 +71,9 @@
           <th>%Perfomance</th>
         </tr>
       </thead>
-      <tbody>
+   
+      
+      <tbody v-if="!isHidden">
         <tr v-for="(row, index) in filteredRows" :key="`department-${index}`">
           <td v-html="highlightMatches(row.department)"></td>
           <td v-html="highlightMatches(row.received_tickets)"></td>
@@ -84,6 +86,8 @@
         <td >{{row.email}}</td>-->
         </tr>
       </tbody>
+     
+ 
     </table>
   </div>
 </template>
@@ -96,7 +100,7 @@ export default {
       filter: "",
       data: [],
       value: "",
-
+isHidden: false,
       form: {
         email: "",
         name: "",

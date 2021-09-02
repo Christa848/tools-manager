@@ -23,36 +23,7 @@
         </b-row>
       </b-col>
       <b-col id="cs"
-        ><h4>Customer Satisfaction</h4>
-        <p><small>Across help desk this month</small></p>
-
-        <b-col>
-          Responses received
-          <H3>100</H3>
-        </b-col>
-        <b-col
-          >Positive
-          <h3>
-            <b-icon icon="emoji-smile" scale="1" variant="success"></b-icon>27%
-          </h3>
-        </b-col>
-        <hr />
-        <div class="w-100"></div>
-        <b-col
-          >Negative
-          <h3>
-            <b-icon icon="emoji-frown" scale="1" variant="danger"></b-icon>27%
-          </h3>
-        </b-col>
-        <hr />
-        <b-col
-          >Neutral
-          <h3>
-            <b-icon icon="emoji-neutral" scale="1" variant="warning"></b-icon
-            >27%
-          </h3>
-        </b-col>
-      </b-col>
+        ></b-col>
       <b-col id="td">
         <h4>My To-do</h4>
         <div id="todoApp">

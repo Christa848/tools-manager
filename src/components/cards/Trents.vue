@@ -30,14 +30,31 @@ export default {
     this.$data.lineChartData.datasets[0].data.push(55)
     this.$data.lineChartData.datasets[0].data.push(90)
     this.$data.lineChartData.datasets[0].data.push(40)
+    this.$data.lineChartData.datasets[0].data.push(80)
+    this.$data.lineChartData.datasets[0].data.push(81)
+    this.$data.lineChartData.datasets[0].data.push(55)
+    this.$data.lineChartData.datasets[0].data.push(90)
+    this.$data.lineChartData.datasets[0].data.push(40)
     //console.log(this.$data.lineChartData.datasets[0].data)
+    this.$data.lineChartData.datasets[1].data.push(20)
+    this.$data.lineChartData.datasets[1].data.push(59)
+    this.$data.lineChartData.datasets[1].data.push(90)
+    this.$data.lineChartData.datasets[1].data.push(71)
+    this.$data.lineChartData.datasets[1].data.push(65)
+    this.$data.lineChartData.datasets[1].data.push(100)
+    this.$data.lineChartData.datasets[1].data.push(40)
+    this.$data.lineChartData.datasets[1].data.push(88)
+    this.$data.lineChartData.datasets[1].data.push(81)
+    this.$data.lineChartData.datasets[1].data.push(22)
+    this.$data.lineChartData.datasets[1].data.push(9)
+    this.$data.lineChartData.datasets[1].data.push(40)
   },
   data() {
     var yesterday = []
-    var today = [28, 48, 40, 19, 86, 27, 90]
+    var today = []
     return {
       lineChartData: {
-        labels: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"],
+        labels: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00","22:00","24:00","02:00","04:00","06:00"],
         datasets: [
           {
             label: "Yesterday",

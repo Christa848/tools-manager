@@ -23,7 +23,7 @@ export default {
         labels: ["Whatsapp", "Emails", "facebook"],
         datasets: [
           {
-            data: [5, 0, 1],
+            data: [5, 7, 1],
             backgroundColor: [
               "#F7464A",
               "#46BFBD",
