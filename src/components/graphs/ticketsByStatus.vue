@@ -18,10 +18,19 @@
       mdbPieChart,
       mdbContainer
     },
+      created() {
+    // Replicate the following snippet for dynamic value extraction to chart values
+    this.$data.lineChartData.datasets[0].data.push(70)
+    this.$data.lineChartData.datasets[0].data.push(59)
+
+  },
     data() {
+      
       return {
         pieChartData: {
           labels: ["Open", "Pending", "Closed"],
+
+          
           datasets: [
             {
               data: [6, 0, 1],

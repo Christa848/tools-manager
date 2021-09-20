@@ -114,6 +114,7 @@
   </b-row>
 </template>
 <script>
+//import { MailSlurp } from "mailslurp-client";
 import axios from "axios";
 import emailjs from "emailjs-com";
 export default {
@@ -175,6 +176,10 @@ export default {
           console.log(error);
         });
     }
+
+
+
+  
   }
 };
 </script>

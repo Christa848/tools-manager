@@ -76,22 +76,22 @@
             class="m-md-2"
             variant="outline-success"
           >
-            <b-dropdown-item v-model="support" @click="assignSupport"
+            <b-dropdown-item v-model="support" @click="assignSupport,reloadPage"
               >Support
             </b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item v-model="finance" @click="assignAccounts"
+            <b-dropdown-item v-model="finance" @click="assignAccounts,reloadPage"
               >Accounts</b-dropdown-item
             >
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item v-model="admin" @click="assignAdmin"
+            <b-dropdown-item v-model="admin" @click="assignAdmin,reloadPage"
               >Admin
             </b-dropdown-item>
-            <b-dropdown-item v-model="admin" @click="assignSoftware"
+            <b-dropdown-item v-model="admin" @click="assignSoftware,reloadPage"
               >Software Development
             </b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item v-model="marketing" @click="assignMarketing"
+            <b-dropdown-item v-model="marketing" @click="assignMarketing,reloadPage"
               >Marketing</b-dropdown-item
             >
             <b-dropdown-divider></b-dropdown-divider>
@@ -102,7 +102,7 @@
               variant="outline-success"
               class="my-2 my-sm-0"
               type="submit"
-              @click="deleteData()"
+              @click="deleteData(),reloadPage()"
               >Delete</b-button
             ></b-navbar-brand
           >
@@ -552,7 +552,13 @@ export default {
           });
         i++;
       }
-    }
+    },
+        reloadPage() {
+      window.location.reload();
+       alert("Ticket Deleted");
+       }
+     
+    
   },
 
   watch: {

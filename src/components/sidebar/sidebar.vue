@@ -89,9 +89,8 @@
 
         <b-row class="mb-1 sidelink" v-b-modal.modal-3>
       <b-col cols="12" sm="12" class="p-3 "
-        ><router-link to="/ticket" class="iterms">
-          <b-icon icon="dice6"></b-icon> User Logs</router-link
-        ></b-col
+        >
+          <b-icon icon="dice6"></b-icon>  User Logs</b-col
       >
     </b-row>
 

@@ -31,7 +31,7 @@
             remember me
           </b-form-checkbox>
         </div>
-        <b-button v-on:click="islogedIn()" class="searchBtn" variant="primary"
+        <b-button v-on:click="islogedIn(); createLogs()" class="searchBtn" variant="primary"
           >login</b-button
         >
         <div class="admin">
@@ -52,6 +52,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 //import axios from 'axios';
 export default {
   data() {
@@ -69,6 +70,30 @@ export default {
     this.getName();
   },
   methods: {
+        createLogs: function() {
+      console.log("Create logs!");
+
+      let formData = new FormData();
+      console.log("username:", this.username);
+       ;
+        
+
+      var contact = {};
+      formData.forEach(function(value, key) {
+        contact[key] = value;
+      });
+
+      axios({
+        method: "post",
+        url: "http://itrackdevs.geo-fuel.com/tools_manager_api/userLogs.php",
+        data: formData,
+        config: { headers: { "Content-Type": "multipart/form-data" } },
+      }).catch(function(response) {
+        //handle error
+        console.log(response);
+      });
+    },
+
     async getName() {
       const res = await fetch(
         "https://itrackdevs.geo-fuel.com/tools_manager_api/login.php"
@@ -86,6 +111,8 @@ export default {
         this.user = "Admin";
       }
     },
+
+
 
     islogedIn: function () {
       var i = 0;
@@ -146,6 +173,8 @@ export default {
       alert('Please enter username & password');
      } */
     },
+
+    
   },
 };
 </script>

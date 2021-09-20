@@ -102,7 +102,7 @@
         <b-col cols="5">
          
           <!--<byPriority/>   -->
-          <byStatus
+          <byStatus 
         /></b-col>
       </b-row>
     </b-card>
