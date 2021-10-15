@@ -76,37 +76,116 @@
             class="m-md-2"
             variant="outline-success"
           >
-            <b-dropdown-item v-model="support" @click="assignSupport,reloadPage"
-              >Support
-            </b-dropdown-item>
+            <b-dropdown-item
+              v-model="support"
+              @click="assignSupport, reloadPage"
+              >Support</b-dropdown-item
+            >
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item v-model="finance" @click="assignAccounts,reloadPage"
+            <b-dropdown-item
+              v-model="finance"
+              @click="assignAccounts, reloadPage"
               >Accounts</b-dropdown-item
             >
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item v-model="admin" @click="assignAdmin,reloadPage"
-              >Admin
-            </b-dropdown-item>
-            <b-dropdown-item v-model="admin" @click="assignSoftware,reloadPage"
-              >Software Development
-            </b-dropdown-item>
+            <b-dropdown-item v-model="admin" @click="assignAdmin, reloadPage"
+              >Admin</b-dropdown-item
+            >
+            <b-dropdown-item v-model="admin" @click="assignSoftware, reloadPage"
+              >Software Development</b-dropdown-item
+            >
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item v-model="marketing" @click="assignMarketing,reloadPage"
+            <b-dropdown-item
+              v-model="marketing"
+              @click="assignMarketing, reloadPage"
               >Marketing</b-dropdown-item
             >
             <b-dropdown-divider></b-dropdown-divider>
           </b-dropdown>
 
-          <b-navbar-brand
-            ><b-button
+          <b-navbar-brand>
+            <b-button
               variant="outline-success"
               class="my-2 my-sm-0"
               type="submit"
-              @click="deleteData(),reloadPage()"
+              @click="deleteData(), reloadPage()"
               >Delete</b-button
-            ></b-navbar-brand
+            >
+          </b-navbar-brand>
+          <b-button
+            variant="outline-success"
+            size="md"
+            id="show-btn"
+            @click="showModal"
+            >Create Ticket</b-button
           >
- 
+          <b-modal ref="my-modal" hide-footer title="Enter Ticket Details">
+            <div>
+              <b-form @submit.stop="createTicket" @reset="onReset" v-if="show">
+                <b-form-group
+                  id="input-group-2"
+                  label="Ticket Message:"
+                  label-for="input-2"
+                >
+                  <b-form-input
+                    id="input-2"
+                    v-model="ticket_msg"
+                    placeholder="Ticket Message"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                  id="input-group-4"
+                  label="Assigned To:"
+                  label-for="input-2"
+                >
+                  <b-form-input
+                    id="input-4"
+                    v-model="assigned_to"
+                    placeholder="Assigned To"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                  id="input-group-3"
+                  label="Status:"
+                  label-for="input-2"
+                >
+                  <b-form-input
+                    id="input-3"
+                    v-model="ticket_status"
+                    placeholder="Open, In-Progress or Closed"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                  id="input-group-6"
+                  label="Priority:"
+                  label-for="input-2"
+                >
+                  <b-form-input
+                    id="input-6"
+                    v-model="priority"
+                    placeholder="Low, Medium, High"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+                <b-button type="submit" variant="primary">Submit</b-button>
+                <b-button type="reset" variant="danger">Reset</b-button>
+              </b-form>
+            </div>
+
+            <b-button
+              class="mt-3"
+              variant="outline-danger"
+              block
+              @click="hideModal"
+              >Close</b-button
+            >
+          </b-modal>
         </b-col>
         <b-col cols="1">
           <router-link to="/home" class="iterms">
@@ -116,8 +195,8 @@
               variant="danger"
               id="back"
               v-b-popover.hover="'Exit'"
-            ></b-icon
-          ></router-link>
+            ></b-icon>
+          </router-link>
         </b-col>
       </b-row>
     </b-card>
@@ -291,7 +370,7 @@
             <b-col cols="7">
               <h6>Filter by name</h6>
             </b-col>
-            <b-col cols="1"> </b-col>
+            <b-col cols="1"></b-col>
             <b-col cols="2">
               <h6>O</h6>
             </b-col>
@@ -334,7 +413,13 @@ export default {
       ticket: null,
       agent: [],
       name: null,
-
+      show: true,
+      support: "",
+      ticket_msg: "",
+      logged_by: "",
+      assigned_to: "",
+      ticket_status: "",
+      priority: "",
       selected_tab: "all",
       isactive: false,
       searchText: "",
@@ -402,6 +487,38 @@ export default {
     },
     toggleAll(checked) {
       this.selected = checked ? this.flavours.slice() : [];
+    },
+
+    onReset(event) {
+      event.preventDefault();
+      // Reset our form values
+      this.ticket_msg = "";
+      this.logged_by = "";
+      this.ticket_status = "";
+      this.priority = "";
+      this.assigned_to = "";
+
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
+
+    createTicket: function() {
+      console.log("starting creating process")
+      let formData = new FormData();
+      formData.append("ticket_msg", this.ticket_msg);
+      formData.append("assigned_to", this.assigned_to);
+      formData.append("logged_by", localStorage.getItem("username"));
+      formData.append("ticket_status", this.ticket_status);
+      formData.append("priority", this.priority);
+      formData.append("createdOn", new Date());
+
+      axios
+        .post("createTicket.php", formData)
+        .then(response => console.log(response.statustext))
+        .catch(err => console.error(err));
     },
 
     assignAdmin: function() {
@@ -528,6 +645,12 @@ export default {
         i++;
       }
     },
+    showModal() {
+      this.$refs["my-modal"].show();
+    },
+    hideModal() {
+      this.$refs["my-modal"].hide();
+    },
     // Done 😃
     deleteData: function() {
       console.log(this.selected[0]);
@@ -553,12 +676,10 @@ export default {
         i++;
       }
     },
-        reloadPage() {
+    reloadPage() {
       window.location.reload();
-       alert("Ticket Deleted");
-       }
-     
-    
+      alert("Ticket Deleted");
+    }
   },
 
   watch: {

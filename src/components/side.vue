@@ -421,6 +421,7 @@ export default {
   overflow-y: scroll;
 }
 .dash{
-  width: 1300px;
+  width: auto;
+  font-size: medium;
 }
 </style>

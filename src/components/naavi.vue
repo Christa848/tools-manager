@@ -15,7 +15,7 @@
               Search</b-form-input
             >
 
-            <b-icon icon="search" variant="light"></b-icon>
+            <!-- <b-icon icon="search" variant="light"></b-icon> -->
           </b-nav-form>
 
           <b-nav-item-dropdown right>

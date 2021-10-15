@@ -20,26 +20,26 @@
                 <b-form @submit="createContact" @reset="onReset" v-if="show">
                   <b-form-group
                     id="input-group-2"
-                    label="First Name:"
+                    label="Ticket Message:"
                     label-for="input-2"
                   >
                     <b-form-input
                       id="input-2"
-                      v-model="fname"
-                      placeholder="First Name"
+                      v-model="ticket_msg"
+                      placeholder="Ticket MEssage"
                       required
                     ></b-form-input>
                   </b-form-group>
 
                   <b-form-group
                     id="input-group-4"
-                    label="Last Name:"
+                    label="Assigned To:"
                     label-for="input-2"
                   >
                     <b-form-input
                       id="input-4"
-                      v-model="lname"
-                      placeholder="Last name"
+                      v-model="assigned_to"
+                      placeholder="Assigned To"
                       required
                     ></b-form-input>
                   </b-form-group>
@@ -122,15 +122,6 @@
           <td v-html="highlightMatches(row.email)"></td>
 
           <td>
-            <!-- <button
-              type="button"
-              name="edit"
-              class="btn btn-primary btn-xs edit"
-              @click="fetchData(row.id)"
-            >
-              Edit
-            </button> -->
-
             <router-link
               class="btn btn-primary btn-xs edit"
               :to="{ name: 'editContact', params: { contact_id: row.id } }"
@@ -138,14 +129,6 @@
             >
           </td>
           <td>
-            <!-- <b-icon
-              variant="danger"
-              icon="trash-fill"
-              font-scale="1"
-              @click="deleteData(row.id)"
-              v-b-popover.hover="'Delete'"
-            ></b-icon> -->
-
             <button
               type="button"
               name="delete"
@@ -189,14 +172,14 @@ export default {
     },
 
     createContact: function() {
-      console.log("Create contact!");
-
       let formData = new FormData();
       formData.append("fname", this.fname);
       formData.append("lname", this.lname);
       formData.append("contact", this.contact);
       formData.append("adress", this.adress);
       formData.append("email", this.email);
+
+      console.log(`Use with name ${this.fname}`);
 
       axios
         .post("toolsapi.php", formData)
