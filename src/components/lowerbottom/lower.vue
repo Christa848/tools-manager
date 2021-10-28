@@ -118,15 +118,7 @@ export default {
       this.data = data;
     },
 
-    // async getSoftware() {
-    //   const res = await fetch(
-    //     "http://itrackdevs.geo-fuel.com/tools_manager_api/getAllmail.php"
-    //   );
-    //   const software = await res.json();
-    //   this.software = software;
-    // },
-
-        async getSoftware() {
+    async getSoftware() {
       const res = await fetch(
         "http://itrackdevs.geo-fuel.com/tools_manager_api/getDepartmentstickets.php?action=devs"
       );

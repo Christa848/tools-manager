@@ -401,7 +401,7 @@ export default {
     atick,
     mtick,
     stick,
-    actick
+    actick,
   },
   data() {
     return {
@@ -425,7 +425,7 @@ export default {
       searchText: "",
       selected: [],
       allSelected: false,
-      indeterminate: false
+      indeterminate: false,
     };
   },
 
@@ -476,7 +476,7 @@ export default {
       const account = await res.json();
       this.account = account;
     },
-    selectTab: function(tab) {
+    selectTab: function (tab) {
       if (this.selected_tab != tab) {
         this.selected_tab = tab;
         this.isactive = tab;
@@ -505,8 +505,8 @@ export default {
       });
     },
 
-    createTicket: function() {
-      console.log("starting creating process")
+    createTicket: function () {
+      console.log("starting creating process");
       let formData = new FormData();
       formData.append("ticket_msg", this.ticket_msg);
       formData.append("assigned_to", this.assigned_to);
@@ -517,11 +517,11 @@ export default {
 
       axios
         .post("createTicket.php", formData)
-        .then(response => console.log(response.statustext))
-        .catch(err => console.error(err));
+        .then((response) => console.log(response.statustext))
+        .catch((err) => console.error(err));
     },
 
-    assignAdmin: function() {
+    assignAdmin: function () {
       console.log(this.selected[0]);
       let i = 0;
       while (i < this.selected.length) {
@@ -534,19 +534,19 @@ export default {
             formData,
             {
               headers: {
-                "Content-Type": "multipart/form-data"
-              }
+                "Content-Type": "multipart/form-data",
+              },
             }
           )
-          .then(response => console.log(response.statusText))
-          .catch(function(error) {
+          .then((response) => console.log(response.statusText))
+          .catch(function (error) {
             console.log(error);
           });
         i++;
       }
     },
 
-    assignMarkerting: function() {
+    assignMarkerting: function () {
       console.log(this.selected[0]);
       let i = 0;
       while (i < this.selected.length) {
@@ -559,19 +559,19 @@ export default {
             formData,
             {
               headers: {
-                "Content-Type": "multipart/form-data"
-              }
+                "Content-Type": "multipart/form-data",
+              },
             }
           )
-          .then(response => console.log(response.statusText))
-          .catch(function(error) {
+          .then((response) => console.log(response.statusText))
+          .catch(function (error) {
             console.log(error);
           });
         i++;
       }
     },
 
-    assignSupport: function() {
+    assignSupport: function () {
       console.log(this.selected[0]);
       let i = 0;
       while (i < this.selected.length) {
@@ -584,19 +584,19 @@ export default {
             formData,
             {
               headers: {
-                "Content-Type": "multipart/form-data"
-              }
+                "Content-Type": "multipart/form-data",
+              },
             }
           )
-          .then(response => console.log(response.statusText))
-          .catch(function(error) {
+          .then((response) => console.log(response.statusText))
+          .catch(function (error) {
             console.log(error);
           });
         i++;
       }
     },
 
-    assignSoftware: function() {
+    assignSoftware: function () {
       console.log(this.selected[0]);
       let i = 0;
       while (i < this.selected.length) {
@@ -609,19 +609,19 @@ export default {
             formData,
             {
               headers: {
-                "Content-Type": "multipart/form-data"
-              }
+                "Content-Type": "multipart/form-data",
+              },
             }
           )
-          .then(response => console.log(response.statusText))
-          .catch(function(error) {
+          .then((response) => console.log(response.statusText))
+          .catch(function (error) {
             console.log(error);
           });
         i++;
       }
     },
 
-    assignAccounts: function() {
+    assignAccounts: function () {
       console.log(this.selected[0]);
       let i = 0;
       while (i < this.selected.length) {
@@ -634,12 +634,12 @@ export default {
             formData,
             {
               headers: {
-                "Content-Type": "multipart/form-data"
-              }
+                "Content-Type": "multipart/form-data",
+              },
             }
           )
-          .then(response => console.log(response.statusText))
-          .catch(function(error) {
+          .then((response) => console.log(response.statusText))
+          .catch(function (error) {
             console.log(error);
           });
         i++;
@@ -652,7 +652,7 @@ export default {
       this.$refs["my-modal"].hide();
     },
     // Done 😃
-    deleteData: function() {
+    deleteData: function () {
       console.log(this.selected[0]);
       let i = 0;
       while (i < this.selected.length) {
@@ -665,12 +665,12 @@ export default {
             formData,
             {
               headers: {
-                "Content-Type": "multipart/form-data"
-              }
+                "Content-Type": "multipart/form-data",
+              },
             }
           )
-          .then(response => console.log(response.statusText))
-          .catch(function(error) {
+          .then((response) => console.log(response.statusText))
+          .catch(function (error) {
             console.log(error);
           });
         i++;
@@ -679,7 +679,7 @@ export default {
     reloadPage() {
       window.location.reload();
       alert("Ticket Deleted");
-    }
+    },
   },
 
   watch: {
@@ -695,29 +695,29 @@ export default {
         this.indeterminate = true;
         this.allSelected = false;
       }
-    }
+    },
   },
 
   computed: {
     selectAll: {
-      get: function() {
+      get: function () {
         return this.data ? this.selected.length == this.data.length : false;
       },
-      set: function(value) {
+      set: function (value) {
         var selected = [];
 
         if (value) {
-          this.data.forEach(function(ticket) {
+          this.data.forEach(function (ticket) {
             selected.push(ticket.id);
           });
         }
 
         this.selected = selected;
-      }
+      },
     },
 
     filteredRows() {
-      return this.data.filter(row => {
+      return this.data.filter((row) => {
         const name = row.name.toString().toLowerCase();
 
         const searchTerm = this.filter.toLowerCase();
@@ -726,59 +726,59 @@ export default {
       });
     },
 
-    itemsSearched: function() {
+    itemsSearched: function () {
       var self = this;
       if (this.searchText == "") {
         return this.data;
       }
-      return this.data.filter(function(ticket) {
+      return this.data.filter(function (ticket) {
         // console.log(ticket.indexOf(self.searchText))
         return ticket.name.indexOf(self.searchText) >= 0;
       });
     },
 
-    itemsSearchedm: function() {
+    itemsSearchedm: function () {
       var self = this;
       if (this.searchText == "") {
         return this.marketing;
       }
-      return this.marketing.filter(function(ticket) {
+      return this.marketing.filter(function (ticket) {
         // console.log(ticket.indexOf(self.searchText))
         return ticket.name.indexOf(self.searchText) >= 0;
       });
     },
-    itemsSearcheda: function() {
+    itemsSearcheda: function () {
       var self = this;
       if (this.searchText == "") {
         return this.admin;
       }
-      return this.admin.filter(function(ticket) {
+      return this.admin.filter(function (ticket) {
         // console.log(ticket.indexOf(self.searchText))
         return ticket.name.indexOf(self.searchText) >= 0;
       });
     },
-    itemsSearcheds: function() {
+    itemsSearcheds: function () {
       var self = this;
       if (this.searchText == "") {
         return this.itsupport;
       }
-      return this.itsupport.filter(function(ticket) {
+      return this.itsupport.filter(function (ticket) {
         // console.log(ticket.indexOf(self.searchText))
         return ticket.name.indexOf(self.searchText) >= 0;
       });
     },
 
-    itemsSearchedac: function() {
+    itemsSearchedac: function () {
       var self = this;
       if (this.searchText == "") {
         return this.account;
       }
-      return this.account.filter(function(ticket) {
+      return this.account.filter(function (ticket) {
         // console.log(ticket.indexOf(self.searchText))
         return ticket.name.indexOf(self.searchText) >= 0;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

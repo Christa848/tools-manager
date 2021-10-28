@@ -51,12 +51,12 @@
           />
         </b-col>
         <b-col cols="2" sm="2" class="p-3">
-          <unassighned
+          <unassigned
             v-if="isactive === 'unsigned'"
             v-on:click.native="selectTab('unsigned')"
             active="unsigned_active"
           />
-          <unassighned
+          <unassigned
             v-else
             v-on:click.native="selectTab('unsigned')"
             active="notactive"
@@ -315,7 +315,7 @@ import solvedcard from "@/components/cards/Overdue.vue";
 import newcard from "@/components/cards/Duetoday.vue";
 import open from "@/components/cards/open.vue";
 import onhold from "@/components/cards/Onhold.vue";
-import unassighned from "@/components/cards/unassigned.vue";
+import unassigned from "@/components/cards/unassigned.vue";
 import trent from "@/components/cards/Trents.vue";
 import resolved from "@/components/cards/resolved.vue";
 import received from "@/components/cards/received.vue";
@@ -328,7 +328,7 @@ export default {
     opencard,
     solvedcard,
     newcard,
-    unassighned,
+    unassigned,
     trent,
     open,
     onhold,
