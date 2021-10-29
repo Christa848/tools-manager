@@ -66,7 +66,7 @@
 
             <b-dropdown-item
               ><router-link to="/TicketVolume" id="my-nav-dropdown"
-                >Ticket Volome</router-link
+                >Ticket Volume</router-link
               ></b-dropdown-item
             >
 

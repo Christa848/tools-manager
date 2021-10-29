@@ -4,12 +4,13 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-icon v-on:click="togleSidebar()" icon="list" variant="light"></b-icon><log1 />
+        <b-icon v-on:click="togleSidebar()" icon="list" variant="light"></b-icon
+        ><log1 />
         <alar />
         <msg />
 
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto ">
+        <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input size="sm" class="mr-sm-2" placeholder="Seach">
               Search</b-form-input
@@ -39,7 +40,7 @@
             <!-- Using 'button-content' slot -->
             <template #button-content id="llog">
               <em variant="light">
-                <b-icon-person-circle></b-icon-person-circle>{{username}}</em
+                <b-icon-person-circle></b-icon-person-circle>{{ username }}</em
               >
             </template>
             <b-dropdown-item href="#">Settings</b-dropdown-item>
@@ -53,7 +54,6 @@
     <b-sidebar id="sidebar-right" title=" New Ticket" right shadow>
       <newt />
     </b-sidebar>
-
     <b-sidebar id="bar1-right" title=" New Contact" right shadow>
       <newIndi />
     </b-sidebar>
@@ -83,18 +83,18 @@ export default {
   },
   data() {
     return {
-      username: '',
-      massage: null
-    }
+      username: "",
+      massage: null,
+    };
   },
   async created() {
-      this.username = localStorage.getItem("username");
+    this.username = localStorage.getItem("username");
   },
   methods: {
     togleSidebar() {
       this.$emit("togle-sidebar");
-    }
-  }
+    },
+  },
 };
 </script>
 
